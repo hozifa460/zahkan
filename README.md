@@ -1,36 +1,49 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# زهقان | Zawhan
 
-## Getting Started
+> حوّل مللك إلى بناء حقيقي
 
-First, run the development server:
+PWA يحوّل لحظات الزهقان إلى مهام إنتاجية صغيرة.
+
+## المميزات
+
+- 🌍 **6 لغات** (عربي فصحى + مصري + خليجي + شامي + مغاربي + إنجليزي)
+- 🧠 **ذكاء وتعلّم** — خوارزمية توصية + تقييم 5⭐
+- 🎮 **Gamification** — 4 مستويات + 10 إنجازات + XP
+- 📊 **إحصائيات عميقة** — خريطة حرارية، مقارنات، سجل
+- 🎯 **80+ مهمة** — ذهنية، حركية، إبداعية، تعلّم، بناء، صفاء، اكتشاف
+- 🌍 **موسمي** — رمضان، صيف، دراسة، شتاء
+- 💕 **للزوجين والأطفال**
+- 📅 **تحديات 30 يوم** لتغيير العادات
+- 🧑‍🚀 **مدرب ذكي** "زيد" يتكلم معك
+- 🔍 **مهام من التاريخ** (Wikipedia)
+- ☀️ **مهام مبنية على الطقس** (Open-Meteo)
+
+## التقنيات
+
+- Next.js 16 + React 19 + TypeScript
+- Tailwind CSS 4
+- Framer Motion
+- Zustand (مع persist)
+- PWA (Manifest + Service Worker)
+- canvas-confetti
+
+## البناء
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm install
+npm run dev    # تطوير
+npm run build  # إنتاج
+npm start      # تشغيل النسخة المُنتجة
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## النشر
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+مُجهّز للنشر على **Cloudflare Pages** (مجاني):
+1. اربط مع GitHub
+2. Framework: Next.js
+3. Build command: `npm run build`
+4. Output dir: `out`
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## الترخيص
 
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+مفتوح المصدر.

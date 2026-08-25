@@ -1,0 +1,21 @@
+{
+  "name": "زهقان | Zawhan",
+  "short_name": "زهقان",
+  "description": "حوّل مللك إلى بناء حقيقي",
+  "start_url": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#0a0a0a",
+  "theme_color": "#0a0a0a",
+  "lang": "ar",
+  "dir": "rtl",
+  "categories": ["productivity", "lifestyle", "education"],
+  "icons": [
+    {
+      "src": "/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
