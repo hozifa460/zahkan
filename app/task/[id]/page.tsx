@@ -76,11 +76,11 @@ export default function TaskPage() {
       {/* Header */}
       <header className="absolute top-4 inset-x-4 flex items-center justify-between z-10">
         <button
-          onClick={handleStop}
+          onClick={() => router.push("/energy")}
           className="flex items-center gap-1 text-sm text-muted-foreground hover:text-foreground transition-colors"
         >
           {dir === "rtl" ? <ArrowRight className="w-4 h-4" /> : <ArrowLeft className="w-4 h-4" />}
-          <span>{t("common.cancel")}</span>
+          <span>{t("common.back")}</span>
         </button>
         <LanguageSelector />
       </header>
@@ -140,6 +140,7 @@ export default function TaskPage() {
             onStop={handleStop}
             color={category?.color || "#10b981"}
             autoStart={timerStarted}
+            canComplete={false}
           />
         </motion.div>
 

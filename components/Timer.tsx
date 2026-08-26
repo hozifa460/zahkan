@@ -2,7 +2,7 @@
 
 import { useEffect, useState, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Play, Pause, RotateCcw, Check } from "lucide-react";
+import { Play, Pause, RotateCcw, Check, Clock } from "lucide-react";
 import clsx from "clsx";
 
 interface TimerProps {
@@ -12,9 +12,10 @@ interface TimerProps {
   color?: string;
   size?: number;
   autoStart?: boolean; // يبدأ تلقائياً
+  canComplete?: boolean; // هل يُسمح بالإنهاء المبكر؟ (false = فقط بعد انتهاء الوقت)
 }
 
-export function Timer({ durationMinutes, onComplete, onStop, color = "#10b981", size = 240, autoStart = false }: TimerProps) {
+export function Timer({ durationMinutes, onComplete, onStop, color = "#10b981", size = 240, autoStart = false, canComplete = false }: TimerProps) {
   const totalSeconds = durationMinutes * 60;
   const [remaining, setRemaining] = useState(totalSeconds);
   const [running, setRunning] = useState(autoStart);
@@ -187,7 +188,7 @@ export function Timer({ durationMinutes, onComplete, onStop, color = "#10b981", 
           </motion.button>
         )}
 
-        {remaining > 0 && (
+        {remaining > 0 && canComplete && (
           <motion.button
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
@@ -197,6 +198,13 @@ export function Timer({ durationMinutes, onComplete, onStop, color = "#10b981", 
             <Check className="w-4 h-4" />
             خلصت
           </motion.button>
+        )}
+
+        {remaining > 0 && !canComplete && (
+          <div className="flex items-center gap-2 px-4 py-2.5 rounded-full text-xs text-muted-foreground bg-muted/50">
+            <Clock className="w-3.5 h-3.5" />
+            <span>الإنجاز متاح بعد انتهاء الوقت</span>
+          </div>
         )}
       </div>
     </div>

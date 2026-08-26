@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Inter, IBM_Plex_Sans_Arabic } from "next/font/google";
 import "./globals.css";
 import { LocaleBootstrap } from "@/components/LocaleBootstrap";
+import { VideoBackground } from "@/components/VideoBackground";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -13,6 +14,9 @@ const ibmPlexArabic = IBM_Plex_Sans_Arabic({
   subsets: ["arabic"],
   weight: ["300", "400", "500", "600", "700"],
 });
+
+// رابط الفيديو (استبدله بالفيديو الخاص بك)
+const BG_VIDEO_SRC = "/bg-video.mp4";
 
 export const metadata: Metadata = {
   title: "زهقان | Zawhan",
@@ -53,6 +57,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         <meta name="apple-mobile-web-app-capable" content="yes" />
       </head>
       <body className="min-h-full flex flex-col bg-background text-foreground">
+        <VideoBackground src={BG_VIDEO_SRC} />
         <LocaleBootstrap />
         {children}
         <script

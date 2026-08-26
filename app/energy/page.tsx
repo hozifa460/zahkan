@@ -112,6 +112,21 @@ export default function EnergyPage() {
 
     const chosen = candidates[Math.floor(Math.random() * candidates.length)];
 
+    // منع تكرار آخر مهمة اختيرت (إذا كانت ضمن المرشحين)
+    const lastTaskId = sessionStorage.getItem("lastChosenTaskId");
+    if (lastTaskId && candidates.length > 1) {
+      const alt = candidates.filter((c) => c.id !== lastTaskId);
+      if (alt.length > 0) {
+        const newChosen = alt[Math.floor(Math.random() * alt.length)];
+        sessionStorage.setItem("lastChosenTaskId", newChosen.id);
+        if (mood) sessionStorage.setItem("selectedMood", mood);
+        sessionStorage.setItem("currentTaskId", newChosen.id);
+        router.push(`/task/${newChosen.id}`);
+        return;
+      }
+    }
+
+    sessionStorage.setItem("lastChosenTaskId", chosen.id);
     if (mood) {
       sessionStorage.setItem("selectedMood", mood);
     }
