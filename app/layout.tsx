@@ -57,7 +57,8 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         <meta name="apple-mobile-web-app-capable" content="yes" />
       </head>
       <body className="min-h-full flex flex-col bg-background text-foreground">
-        <ThreeBackground />
+        {/* TEMP: ThreeBackground disabled to debug 'page couldn't load' */}
+        {/* <ThreeBackground /> */}
         <LocaleBootstrap />
         {children}
         <script
