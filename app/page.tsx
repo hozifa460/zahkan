@@ -79,7 +79,12 @@ export default function Home() {
               transition={{ delay: 0.4, duration: 0.4 }}
               className="text-sm text-muted-foreground max-w-xs mx-auto"
             >
-              {t("home.tagline")}
+              <span className="block text-sm sm:text-base text-muted-foreground max-w-xs mx-auto leading-relaxed">
+                {t("home.tagline") || "حوّل زهقك لشي يتفيد بجد"}
+              </span>
+              <span className="block text-xs text-muted-foreground/70 max-w-xs mx-auto mt-1.5">
+                {t("home.hint") || "دقيقتين ممكن يغيّروا يومك كله."}
+              </span>
             </motion.p>
           </div>
 
