@@ -39,6 +39,20 @@ export const arMaghreb: Translations = {
   "task.complete.title": "تبارك الله!",
   "task.complete.rate": "كيفاش كانت؟",
 
+  // العادات اليومية
+  "daily.title": "عادات اليوم",
+  "daily.subtitle": "روتين يومي من 3 مهام",
+  "daily.choose": "اختار روتينك",
+  "daily.morning": "صباحي",
+  "daily.evening": "مسائي",
+  "daily.work": "خدمة",
+  "daily.study": "قراية",
+  "daily.task1of3": "مهمة 1 من 3",
+  "daily.task2of3": "مهمة 2 من 3",
+  "daily.task3of3": "مهمة 3 من 3",
+  "daily.completeAll": "كملتي الروتين! 🎉",
+  "daily.xpBonus": "مكافأة إكمال الروتين",
+
   // الضربة الجاية
   "next.title": "تبارك الله!",
   "next.continue": "الضربة الجاية",

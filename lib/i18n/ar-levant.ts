@@ -39,6 +39,20 @@ export const arLevant: Translations = {
   "task.complete.title": "أحسنت!",
   "task.complete.rate": "كيف كانت؟",
 
+  // العادات اليومية
+  "daily.title": "عادات اليوم",
+  "daily.subtitle": "روتين يومي من 3 مهام",
+  "daily.choose": "اختار روتينك",
+  "daily.morning": "صبحي",
+  "daily.evening": "مسائي",
+  "daily.work": "شغل",
+  "daily.study": "دراسة",
+  "daily.task1of3": "مهمة 1 من 3",
+  "daily.task2of3": "مهمة 2 من 3",
+  "daily.task3of3": "مهمة 3 من 3",
+  "daily.completeAll": "كملت الروتين! 🎉",
+  "daily.xpBonus": "مكافأة إكمال الروتين",
+
   // الضربة الجاية
   "next.title": "أحسنت!",
   "next.continue": "الضربة الجاية",
