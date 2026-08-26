@@ -1,209 +1,215 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import * as THREE from "three";
 
 /**
- * خلفية جزيئات تفاعلية (Canvas 2D نقي)
+ * خلفية Three.js تفاعلية (Vanilla — لا React Three Fiber)
  *
- * - يعمل على أي متصفح وجهاز (حتى الأجهزة القديمة)
- * - أخف 10x من Three.js
+ * لماذا Vanilla وليس react-three-fiber؟
+ *  - @react-three/fiber يفشل صامتاً في بعض بيئات Static Export
+ *  - Vanilla Three.js مضمون 100% على أي بيئة
+ *  - نفس النتيجة المرئية: جزيئات + تفاعل + دوران
+ *
+ * - 1500 جزيء مضيء (ذهبي/بنفسجي)
  * - يتفاعل مع الماوس/اللمس
- * - رمزية: جزيئات ذهبية/بنفسجية = تحويل الملل لبناء
+ * - دوران بطيء + تنفّس
+ * - يبقى خلف كل الصفحات (في layout)
  */
 export function ThreeBackground() {
-  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const canvas = canvasRef.current;
-    if (!canvas) return;
+    const container = containerRef.current;
+    if (!container) return;
 
-    const ctx = canvas.getContext("2d");
-    if (!ctx) return;
+    // ---------- تهيئة المشهد ----------
+    const scene = new THREE.Scene();
+    scene.fog = new THREE.FogExp2(0x0a0a0a, 0.04);
 
-    // تحجيم Canvas ليتناسب مع DPR والشاشة
+    const camera = new THREE.PerspectiveCamera(
+      60,
+      window.innerWidth / window.innerHeight,
+      0.1,
+      100
+    );
+    camera.position.z = 8;
+
     let dpr = Math.min(window.devicePixelRatio || 1, 2);
-    let W = window.innerWidth;
-    let H = window.innerHeight;
-    const setSize = () => {
-      W = window.innerWidth;
-      H = window.innerHeight;
-      canvas.width = W * dpr;
-      canvas.height = H * dpr;
-      canvas.style.width = W + "px";
-      canvas.style.height = H + "px";
-      ctx.scale(dpr, dpr);
-    };
-    setSize();
+    const renderer = new THREE.WebGLRenderer({
+      antialias: true,
+      alpha: true,
+      powerPreference: "high-performance",
+    });
+    renderer.setPixelRatio(dpr);
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.setClearColor(0x0a0a0a, 0); // شفاف
+    container.appendChild(renderer.domElement);
 
-    // الجزيئات
-    const COUNT = 140;
-    type P = {
-      x: number;
-      y: number;
-      vx: number;
-      vy: number;
-      r: number;
-      baseR: number;
-      color: string;
-      phase: number;
-    };
-    const colors = ["#f59e0b", "#fbbf24", "#8b5cf6", "#a78bfa", "#fde68a"];
-    const particles: P[] = [];
+    // ---------- الجزيئات ----------
+    const COUNT = 1500;
+    const positions = new Float32Array(COUNT * 3);
+    const colors = new Float32Array(COUNT * 3);
+    const sizes = new Float32Array(COUNT);
+
+    const gold = new THREE.Color(0xf59e0b);
+    const violet = new THREE.Color(0x8b5cf6);
+    const light = new THREE.Color(0xfde68a);
+
     for (let i = 0; i < COUNT; i++) {
-      particles.push({
-        x: Math.random() * W,
-        y: Math.random() * H,
-        vx: (Math.random() - 0.5) * 0.25,
-        vy: (Math.random() - 0.5) * 0.25,
-        r: Math.random() * 1.8 + 0.6,
-        baseR: 0,
-        color: colors[Math.floor(Math.random() * colors.length)],
-        phase: Math.random() * Math.PI * 2,
-      });
-      particles[i].baseR = particles[i].r;
+      // توزيع في كرة
+      const r = 3 + Math.random() * 6;
+      const theta = Math.random() * Math.PI * 2;
+      const phi = Math.acos(2 * Math.random() - 1);
+      positions[i * 3] = r * Math.sin(phi) * Math.cos(theta);
+      positions[i * 3 + 1] = r * Math.sin(phi) * Math.sin(theta);
+      positions[i * 3 + 2] = r * Math.cos(phi);
+
+      // لون عشوائي بين الذهبي والبنفسجي
+      const c = gold
+        .clone()
+        .lerp(violet, Math.random() * 0.7)
+        .lerp(light, Math.random() * 0.2);
+      colors[i * 3] = c.r;
+      colors[i * 3 + 1] = c.g;
+      colors[i * 3 + 2] = c.b;
+
+      sizes[i] = Math.random() * 0.05 + 0.02;
     }
 
-    // خطوط ربط بين الجزيئات القريبة
-    const MAX_LINK_DIST = 110;
+    const geometry = new THREE.BufferGeometry();
+    geometry.setAttribute("position", new THREE.BufferAttribute(positions, 3));
+    geometry.setAttribute("color", new THREE.BufferAttribute(colors, 3));
+    geometry.setAttribute("size", new THREE.BufferAttribute(sizes, 1));
 
-    const mouse = { x: W / 2, y: H / 2, active: false };
+    // Shader مخصّص: جزيء دائري مضيء
+    const vertexShader = `
+      attribute float size;
+      varying vec3 vColor;
+      void main() {
+        vColor = color;
+        vec4 mvPosition = modelViewMatrix * vec4(position, 1.0);
+        gl_PointSize = size * (300.0 / -mvPosition.z);
+        gl_Position = projectionMatrix * mvPosition;
+      }
+    `;
 
-    const onResize = () => setSize();
+    const fragmentShader = `
+      varying vec3 vColor;
+      void main() {
+        // جزيء دائري ناعم
+        float d = length(gl_PointCoord - vec2(0.5));
+        if (d > 0.5) discard;
+        float alpha = smoothstep(0.5, 0.0, d);
+        gl_FragColor = vec4(vColor, alpha * 0.9);
+      }
+    `;
+
+    const material = new THREE.ShaderMaterial({
+      vertexShader,
+      fragmentShader,
+      transparent: true,
+      depthWrite: false,
+      blending: THREE.AdditiveBlending,
+      vertexColors: true,
+    });
+
+    const particles = new THREE.Points(geometry, material);
+    scene.add(particles);
+
+    // ---------- الماوس / اللمس ----------
+    const mouse = { x: 0, y: 0, active: false };
     const onMouseMove = (e: MouseEvent) => {
-      mouse.x = e.clientX;
-      mouse.y = e.clientY;
+      mouse.x = (e.clientX / window.innerWidth) * 2 - 1;
+      mouse.y = -(e.clientY / window.innerHeight) * 2 + 1;
       mouse.active = true;
     };
     const onTouchMove = (e: TouchEvent) => {
       if (e.touches[0]) {
-        mouse.x = e.touches[0].clientX;
-        mouse.y = e.touches[0].clientY;
+        mouse.x = (e.touches[0].clientX / window.innerWidth) * 2 - 1;
+        mouse.y = -(e.touches[0].clientY / window.innerHeight) * 2 + 1;
         mouse.active = true;
       }
     };
-    const onMouseLeave = () => (mouse.active = false);
+    const onLeave = () => (mouse.active = false);
     const onTouchEnd = () => (mouse.active = false);
 
-    window.addEventListener("resize", onResize);
     window.addEventListener("mousemove", onMouseMove);
     window.addEventListener("touchmove", onTouchMove, { passive: true });
-    window.addEventListener("mouseleave", onMouseLeave);
+    window.addEventListener("mouseleave", onLeave);
     window.addEventListener("touchend", onTouchEnd);
 
-    let raf = 0;
-    let start = performance.now();
-
-    const tick = (now: number) => {
-      const t = (now - start) / 1000;
-
-      // مسح بتعتيم خفيف (إعطاء أثر "ذيول")
-      ctx.fillStyle = "rgba(10, 10, 10, 0.18)";
-      ctx.fillRect(0, 0, W, H);
-
-      // رسم الخطوط بين الجزيئات القريبة
-      for (let i = 0; i < particles.length; i++) {
-        const p = particles[i];
-        p.x += p.vx;
-        p.y += p.vy;
-        // ارتداد من الحواف
-        if (p.x < 0 || p.x > W) p.vx *= -1;
-        if (p.y < 0 || p.y > H) p.vy *= -1;
-        // تنفّس بطيء
-        p.r = p.baseR * (0.8 + Math.sin(t * 0.8 + p.phase) * 0.3);
-      }
-
-      for (let i = 0; i < particles.length; i++) {
-        const a = particles[i];
-        for (let j = i + 1; j < particles.length; j++) {
-          const b = particles[j];
-          const dx = a.x - b.x;
-          const dy = a.y - b.y;
-          const d = Math.sqrt(dx * dx + dy * dy);
-          if (d < MAX_LINK_DIST) {
-            const alpha = (1 - d / MAX_LINK_DIST) * 0.18;
-            ctx.strokeStyle = `rgba(245, 158, 11, ${alpha})`;
-            ctx.lineWidth = 0.6;
-            ctx.beginPath();
-            ctx.moveTo(a.x, a.y);
-            ctx.lineTo(b.x, b.y);
-            ctx.stroke();
-          }
-        }
-      }
-
-      // رسم الجزيئات + تفاعل الماوس
-      for (const p of particles) {
-        // جذب/صدّ من الماوس
-        if (mouse.active) {
-          const dx = p.x - mouse.x;
-          const dy = p.y - mouse.y;
-          const d2 = dx * dx + dy * dy;
-          if (d2 < 12000) {
-            const d = Math.sqrt(d2);
-            const force = (1 - d / 110) * 0.4;
-            p.x += (dx / d) * force;
-            p.y += (dy / d) * force;
-            p.r = p.baseR * 2.2;
-          }
-        }
-
-        ctx.fillStyle = p.color;
-        ctx.shadowBlur = 12;
-        ctx.shadowColor = p.color;
-        ctx.beginPath();
-        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-        ctx.fill();
-      }
-      ctx.shadowBlur = 0;
-
-      // توهج إضافي عند الماوس
-      if (mouse.active) {
-        const grad = ctx.createRadialGradient(
-          mouse.x,
-          mouse.y,
-          0,
-          mouse.x,
-          mouse.y,
-          180
-        );
-        grad.addColorStop(0, "rgba(245, 158, 11, 0.18)");
-        grad.addColorStop(1, "rgba(245, 158, 11, 0)");
-        ctx.fillStyle = grad;
-        ctx.fillRect(0, 0, W, H);
-      }
-
-      raf = requestAnimationFrame(tick);
+    // ---------- التفاعل مع التمرير ----------
+    const onScroll = () => {
+      const sy = window.scrollY / Math.max(1, document.body.scrollHeight);
+      particles.rotation.y = sy * Math.PI * 0.5;
     };
-    raf = requestAnimationFrame(tick);
+    window.addEventListener("scroll", onScroll, { passive: true });
 
+    // ---------- تحجيم ----------
+    const onResize = () => {
+      dpr = Math.min(window.devicePixelRatio || 1, 2);
+      camera.aspect = window.innerWidth / window.innerHeight;
+      camera.updateProjectionMatrix();
+      renderer.setPixelRatio(dpr);
+      renderer.setSize(window.innerWidth, window.innerHeight);
+    };
+    window.addEventListener("resize", onResize);
+
+    // ---------- حلقة الرسم ----------
+    const clock = new THREE.Clock();
+    let raf = 0;
+    let lastRender = 0;
+
+    const tick = () => {
+      raf = requestAnimationFrame(tick);
+      const t = clock.getElapsedTime();
+
+      // دوران تلقائي بطيء
+      particles.rotation.y += 0.0008;
+      particles.rotation.x = Math.sin(t * 0.1) * 0.15;
+
+      // تفاعل الماوس: ميلان المجموعة
+      if (mouse.active) {
+        const targetRotX = mouse.y * 0.3;
+        const targetRotY = mouse.x * 0.3;
+        particles.rotation.x +=
+          (targetRotX - particles.rotation.x) * 0.04;
+        particles.rotation.y +=
+          (targetRotY - particles.rotation.y) * 0.04;
+      }
+
+      // تنفّس: تكبير/تصغير
+      const scale = 1 + Math.sin(t * 0.5) * 0.04;
+      particles.scale.setScalar(scale);
+
+      renderer.render(scene, camera);
+    };
+    tick();
+
+    // ---------- تنظيف ----------
     return () => {
       cancelAnimationFrame(raf);
-      window.removeEventListener("resize", onResize);
       window.removeEventListener("mousemove", onMouseMove);
       window.removeEventListener("touchmove", onTouchMove);
-      window.removeEventListener("mouseleave", onMouseLeave);
+      window.removeEventListener("mouseleave", onLeave);
       window.removeEventListener("touchend", onTouchEnd);
+      window.removeEventListener("resize", onResize);
+      window.removeEventListener("scroll", onScroll);
+      geometry.dispose();
+      material.dispose();
+      renderer.dispose();
+      if (container.contains(renderer.domElement)) {
+        container.removeChild(renderer.domElement);
+      }
     };
   }, []);
 
   return (
     <div
+      ref={containerRef}
       className="fixed inset-0 pointer-events-none"
       style={{ zIndex: 0 }}
-    >
-      <canvas
-        ref={canvasRef}
-        className="absolute inset-0 w-full h-full"
-        style={{ display: "block" }}
-      />
-      {/* توهج ذهبي خفيف في الأسفل */}
-      <div
-        className="absolute inset-x-0 bottom-0 h-1/3 opacity-50 pointer-events-none"
-        style={{
-          background:
-            "radial-gradient(ellipse at bottom, rgba(245,158,11,0.20), transparent 70%)",
-        }}
-      />
-    </div>
+    />
   );
 }
