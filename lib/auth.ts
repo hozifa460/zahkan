@@ -50,7 +50,8 @@ export async function signInWithGoogle() {
   return supabase.auth.signInWithOAuth({
     provider: "google",
     options: {
-      redirectTo: typeof window !== "undefined" ? window.location.origin : undefined,
+      // رابط التطبيق بعد تسجيل الدخول (يجب أن يكون في Supabase redirect URLs)
+      redirectTo: "https://zahkan.pages.dev",
     },
   });
 }
