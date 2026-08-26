@@ -8,7 +8,8 @@ export const arEg: Translations = {
   // الشاشة الرئيسية
   "home.placeholder": "أنا زهقان...",
   "home.cta": "حوّلها",
-  "home.hint": "اكتب أي حاجة. دوس حوّلها. ابدأ.",
+  "home.tagline": "حوّل زهقك لشي يتفيد بجد",
+  "home.hint": "دقيقتين ممكن يغيّروا يومك كله.",
   "home.footer": "أول نسخة · لسه بنطوّر",
 
   // اختيار الوقت

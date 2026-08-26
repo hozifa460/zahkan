@@ -8,7 +8,8 @@ export const arLevant: Translations = {
   // الشاشة الرئيسية
   "home.placeholder": "أنا زهقان...",
   "home.cta": "حوّلها",
-  "home.hint": "اكتب أي شي. اضغط حوّلها. ابلش.",
+  "home.tagline": "حوّل زهقك لشي يفيد",
+  "home.hint": "دقيقتين ممكن يغيّروا يومك.",
   "home.footer": "النسخة الأولى · قيد التطوير",
 
   // اختيار الوقت

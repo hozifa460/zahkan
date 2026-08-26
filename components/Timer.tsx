@@ -11,12 +11,13 @@ interface TimerProps {
   onStop?: () => void;
   color?: string;
   size?: number;
+  autoStart?: boolean; // يبدأ تلقائياً
 }
 
-export function Timer({ durationMinutes, onComplete, onStop, color = "#10b981", size = 240 }: TimerProps) {
+export function Timer({ durationMinutes, onComplete, onStop, color = "#10b981", size = 240, autoStart = false }: TimerProps) {
   const totalSeconds = durationMinutes * 60;
   const [remaining, setRemaining] = useState(totalSeconds);
-  const [running, setRunning] = useState(false);
+  const [running, setRunning] = useState(autoStart);
   const intervalRef = useRef<number | null>(null);
   const completedRef = useRef(false);
 

@@ -8,7 +8,8 @@ export const en: Translations = {
   // الشاشة الرئيسية
   "home.placeholder": "I'm bored...",
   "home.cta": "Transform",
-  "home.hint": "Type anything. Pick your time.",
+  "home.tagline": "Turn your boredom into real building",
+  "home.hint": "Two minutes can change your day.",
   "home.footer": "Initial version · Under development",
 
   // اختيار الوقت

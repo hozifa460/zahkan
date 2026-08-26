@@ -37,6 +37,7 @@ export type TranslationKey =
   | "home.placeholder"
   | "home.cta"
   | "home.hint"
+  | "home.tagline"
   | "home.footer"
   // اختيار الوقت
   | "time.title"

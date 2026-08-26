@@ -8,7 +8,8 @@ export const arMaghreb: Translations = {
   // الشاشة الرئيسية
   "home.placeholder": "أنا زهقان...",
   "home.cta": "حوّلها",
-  "home.hint": "اكتب أي حاجة. اضغط حوّلها. ابدأ.",
+  "home.tagline": "حوّل الملّ ديالك لشي ينفع",
+  "home.hint": "دقيقتين ممكن يبدّلو نهارك.",
   "home.footer": "النسخة اللّولى · في التطوير",
 
   // اختيار الوقت

@@ -8,7 +8,8 @@ export const arSa: Translations = {
   // الشاشة الرئيسية
   "home.placeholder": "أنا زهقان...",
   "home.cta": "حوّلها",
-  "home.hint": "اكتب أي شي. اضغط حوّلها. ابدأ.",
+  "home.tagline": "حوّل زهقك لشي يفيد",
+  "home.hint": "دقيقتين ممكن تغيّر يومك.",
   "home.footer": "النسخة الأولى · تحت التطوير",
 
   // اختيار الوقت

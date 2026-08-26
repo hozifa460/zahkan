@@ -3,7 +3,7 @@
 import { useParams, useRouter } from "next/navigation";
 import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
-import { ArrowRight, ArrowLeft, Check, Sparkles } from "lucide-react";
+import { ArrowRight, ArrowLeft, Check, Sparkles, Clock, AlertCircle } from "lucide-react";
 import { useLocale } from "@/hooks/useLocale";
 import { LanguageSelector } from "@/components/LanguageSelector";
 import { Timer } from "@/components/Timer";
@@ -17,6 +17,8 @@ export default function TaskPage() {
   const { t, locale, dir } = useLocale();
   const task = useTask(params.id);
   const [showAllSteps, setShowAllSteps] = useState(false);
+  const [timerCompleted, setTimerCompleted] = useState(false);
+  const [timerStarted, setTimerStarted] = useState(false);
 
   // إن لم تكن هناك مهمة، عُد للرئيسية
   useEffect(() => {
@@ -43,11 +45,21 @@ export default function TaskPage() {
   const taskSteps = task.steps.map((s) => s[locale]);
   const taskOutput = task.output[locale];
 
+  // يبدأ المؤقت تلقائياً عند تحميل الصفحة
+  useEffect(() => {
+    setTimerStarted(true);
+  }, []);
+
   const handleComplete = () => {
+    if (!timerCompleted) return; // لا تسمح بالإنهاء قبل الوقت
     // احفظ في sessionStorage أن المهمة انتهت (للصفحة التالية)
     sessionStorage.setItem("completedTaskId", task.id);
     sessionStorage.setItem("taskXp", String(task.xp));
     router.push("/done");
+  };
+
+  const handleTimerComplete = () => {
+    setTimerCompleted(true);
   };
 
   const handleStop = () => {
@@ -73,7 +85,7 @@ export default function TaskPage() {
         <LanguageSelector />
       </header>
 
-      <main className="flex flex-1 flex-col items-center justify-center px-6 py-12 gap-8">
+      <main className="flex flex-1 flex-col items-center justify-center px-6 py-12 gap-6">
         {/* فئة المهمة */}
         {category && (
           <motion.div
@@ -86,6 +98,8 @@ export default function TaskPage() {
               style={{ background: category.color }}
             />
             <span>{category.name[locale]}</span>
+            <span>·</span>
+            <span>{task.duration} {dir === "rtl" ? "دقيقة" : "min"}</span>
             <span>·</span>
             <span className="text-primary">+{task.xp} {t("next.xp")}</span>
           </motion.div>
@@ -118,14 +132,28 @@ export default function TaskPage() {
           initial={{ opacity: 0, scale: 0.9 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ delay: 0.3, duration: 0.4 }}
+          className="my-2"
         >
           <Timer
             durationMinutes={task.duration}
-            onComplete={handleComplete}
+            onComplete={handleTimerComplete}
             onStop={handleStop}
             color={category?.color || "#10b981"}
+            autoStart={timerStarted}
           />
         </motion.div>
+
+        {/* شريط الحالة: يظهر متى ينتهي الوقت */}
+        {timerCompleted && (
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            className="flex items-center gap-2 px-4 py-2 rounded-full bg-green-500/10 border border-green-500/30 text-green-600 dark:text-green-400 text-sm font-medium"
+          >
+            <Check className="w-4 h-4" />
+            <span>انتهى الوقت! يمكنك الإنجاز الآن</span>
+          </motion.div>
+        )}
 
         {/* الخطوات */}
         <motion.div
@@ -178,22 +206,40 @@ export default function TaskPage() {
           <span dir={dir}>{t("task.output")}: {taskOutput}</span>
         </motion.div>
 
-        {/* زر الإنجاز اليدوي */}
-        <motion.button
+        {/* زر الإنجاز - مُعطّل حتى ينتهي الوقت */}
+        <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.6 }}
-          onClick={handleComplete}
-          className={clsx(
-            "flex items-center gap-2 px-6 py-3 rounded-full",
-            "bg-primary text-primary-foreground",
-            "hover:bg-primary/90 transition-colors",
-            "text-sm font-medium"
-          )}
+          className="flex flex-col items-center gap-2"
         >
-          <Check className="w-4 h-4" />
-          {t("task.done")}
-        </motion.button>
+          {timerCompleted ? (
+            <button
+              onClick={handleComplete}
+              className={clsx(
+                "flex items-center gap-2 px-8 py-3 rounded-full",
+                "bg-gradient-to-br from-green-500 to-green-600 text-white",
+                "hover:shadow-lg hover:scale-105 active:scale-95 transition-all",
+                "text-base font-medium"
+              )}
+            >
+              <Check className="w-5 h-5" />
+              {t("task.done")}
+            </button>
+          ) : (
+            <button
+              disabled
+              className={clsx(
+                "flex items-center gap-2 px-8 py-3 rounded-full",
+                "bg-muted text-muted-foreground/50 cursor-not-allowed",
+                "text-base font-medium"
+              )}
+            >
+              <Clock className="w-5 h-5" />
+              <span dir={dir}>انتظر انتهاء الوقت للإنجاز</span>
+            </button>
+          )}
+        </motion.div>
       </main>
     </div>
   );

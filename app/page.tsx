@@ -79,7 +79,7 @@ export default function Home() {
               transition={{ delay: 0.4, duration: 0.4 }}
               className="text-sm text-muted-foreground max-w-xs mx-auto"
             >
-              {t("home.hint")}
+              {t("home.tagline")}
             </motion.p>
           </div>
 
