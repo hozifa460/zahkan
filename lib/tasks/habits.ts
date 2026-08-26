@@ -2,12 +2,12 @@
  * مهام العادات الإيجابية والإسلامية
  *
  * 30 مهمة في 6 فئات:
- * - صحة الجسد
- * - صحة الذهن
- * - النوم والراحة
- * - صلة الرحم (بدون غزل - فقط بر وإحسان)
- * - الإنتاجية
- * - الإيمان والأعمال الصالحة
+ * - صحة الجسد (habit-body)
+ * - صحة الذهن (habit-mind)
+ * - النوم والراحة (habit-sleep)
+ * - صلة الرحم (habit-silah)
+ * - الإنتاجية (habit-productivity)
+ * - الإيمان والأعمال الصالحة (habit-deen)
  *
  * كلها مكتوبة يدوياً، مجانية 100%، 6 لغات
  */
@@ -16,10 +16,10 @@ import type { Task, LocalizedText } from "./types";
 import { t, tSteps } from "./types";
 
 export const HABIT_TASKS: Task[] = [
-  // ========== 1. صحة الجسد ==========
+  // ========== 1. صحة الجسد (habit-body) ==========
   {
     id: "habit-water",
-    category: "physical",
+    category: "habit-body",
     duration: 2,
     energy: "low",
     title: t(
@@ -48,12 +48,12 @@ export const HABIT_TASKS: Task[] = [
     ),
     output: t("Refreshed body", "جسد منعش", "جسم منعش", "جسد منعّش", "جسد منعّش", "جسم منعّش"),
     difficulty: 1,
-    tags: ["habit", "health", "hydration"],
+    tags: ["habit", "body", "hydration"],
     xp: 5,
   },
   {
     id: "habit-7min",
-    category: "physical",
+    category: "habit-body",
     duration: 10,
     energy: "high",
     title: t(
@@ -82,12 +82,12 @@ export const HABIT_TASKS: Task[] = [
     ),
     output: t("Energy boost", "دفعة طاقة", "دفعة طاقة", "دفعة طاقة", "دفعة طاقة", "دفعة طاقة"),
     difficulty: 2,
-    tags: ["habit", "health", "exercise"],
+    tags: ["habit", "body", "exercise"],
     xp: 20,
   },
   {
     id: "habit-stretch",
-    category: "physical",
+    category: "habit-body",
     duration: 2,
     energy: "low",
     title: t(
@@ -116,12 +116,12 @@ export const HABIT_TASKS: Task[] = [
     ),
     output: t("Looser body", "جسد أرتخى", "جسم ريح", "جسد أرتخى", "جسد أرتخى", "جسم ريح"),
     difficulty: 1,
-    tags: ["habit", "health", "desk"],
+    tags: ["habit", "body", "desk"],
     xp: 5,
   },
   {
     id: "habit-stand",
-    category: "physical",
+    category: "habit-body",
     duration: 2,
     energy: "low",
     title: t(
@@ -150,12 +150,12 @@ export const HABIT_TASKS: Task[] = [
     ),
     output: t("Better circulation", "دورة دموية أفضل", "دورة دموية أحسن", "دورة دموية أفضل", "دورة دموية أفضل", "دورة دموية أحسن"),
     difficulty: 1,
-    tags: ["habit", "health", "movement"],
+    tags: ["habit", "body", "movement"],
     xp: 5,
   },
   {
     id: "habit-no-sugar",
-    category: "physical",
+    category: "habit-body",
     duration: 2,
     energy: "low",
     title: t(
@@ -184,14 +184,14 @@ export const HABIT_TASKS: Task[] = [
     ),
     output: t("Stable energy", "طاقة مستقرة", "طاقة ثابتة", "طاقة مستقرة", "طاقة مستقرة", "طاقة مستقرة"),
     difficulty: 2,
-    tags: ["habit", "health", "nutrition"],
+    tags: ["habit", "body", "nutrition"],
     xp: 15,
   },
 
-  // ========== 2. صحة الذهن ==========
+  // ========== 2. صحة الذهن (habit-mind) ==========
   {
     id: "habit-meditate",
-    category: "mindfulness",
+    category: "habit-mind",
     duration: 10,
     energy: "low",
     title: t(
@@ -225,7 +225,7 @@ export const HABIT_TASKS: Task[] = [
   },
   {
     id: "habit-breath",
-    category: "mindfulness",
+    category: "habit-mind",
     duration: 2,
     energy: "low",
     title: t(
@@ -259,7 +259,7 @@ export const HABIT_TASKS: Task[] = [
   },
   {
     id: "habit-gratitude",
-    category: "mindfulness",
+    category: "habit-mind",
     duration: 2,
     energy: "low",
     title: t(
@@ -293,7 +293,7 @@ export const HABIT_TASKS: Task[] = [
   },
   {
     id: "habit-screen-break",
-    category: "mindfulness",
+    category: "habit-mind",
     duration: 10,
     energy: "low",
     title: t(
@@ -326,10 +326,10 @@ export const HABIT_TASKS: Task[] = [
     xp: 10,
   },
 
-  // ========== 3. النوم والراحة ==========
+  // ========== 3. النوم والراحة (habit-sleep) ==========
   {
     id: "habit-no-screens-before-bed",
-    category: "mindfulness",
+    category: "habit-sleep",
     duration: 2,
     energy: "low",
     title: t(
@@ -363,7 +363,7 @@ export const HABIT_TASKS: Task[] = [
   },
   {
     id: "habit-evening-routine",
-    category: "mindfulness",
+    category: "habit-sleep",
     duration: 10,
     energy: "low",
     title: t(
@@ -397,7 +397,7 @@ export const HABIT_TASKS: Task[] = [
   },
   {
     id: "habit-sleep-early",
-    category: "mindfulness",
+    category: "habit-sleep",
     duration: 2,
     energy: "low",
     title: t(
@@ -430,10 +430,10 @@ export const HABIT_TASKS: Task[] = [
     xp: 15,
   },
 
-  // ========== 4. صلة الرحم (بدون غزل - بر وإحسان) ==========
+  // ========== 4. صلة الرحم (habit-silah) - إسلامية بدون غزل ==========
   {
     id: "habit-call-parents",
-    category: "discovery",
+    category: "habit-silah",
     duration: 10,
     energy: "low",
     title: t(
@@ -467,7 +467,7 @@ export const HABIT_TASKS: Task[] = [
   },
   {
     id: "habit-message-friend",
-    category: "discovery",
+    category: "habit-silah",
     duration: 2,
     energy: "low",
     title: t(
@@ -501,7 +501,7 @@ export const HABIT_TASKS: Task[] = [
   },
   {
     id: "habit-brother-advice",
-    category: "discovery",
+    category: "habit-silah",
     duration: 2,
     energy: "low",
     title: t(
@@ -535,7 +535,7 @@ export const HABIT_TASKS: Task[] = [
   },
   {
     id: "habit-help-neighbor",
-    category: "discovery",
+    category: "habit-silah",
     duration: 10,
     energy: "medium",
     title: t(
@@ -569,7 +569,7 @@ export const HABIT_TASKS: Task[] = [
   },
   {
     id: "habit-visit-sick",
-    category: "discovery",
+    category: "habit-silah",
     duration: 30,
     energy: "medium",
     title: t(
@@ -603,7 +603,7 @@ export const HABIT_TASKS: Task[] = [
   },
   {
     id: "habit-spread-salam",
-    category: "discovery",
+    category: "habit-silah",
     duration: 2,
     energy: "low",
     title: t(
@@ -615,7 +615,7 @@ export const HABIT_TASKS: Task[] = [
       "فشّر السلام"
     ),
     description: t(
-      "You will not enter Paradise until you believe, and you will not believe until you love one another.",
+      "You will not enter Paradise until you love one another.",
       "لا تدخلون الجنة حتى تؤمنوا، ولا تؤمنون حتى تحبّوا بعضكم.",
       "متدخلوش الجنة لحد ما تؤمنوا، وماتؤمنوش لحد ما تحبوا بعض.",
       "لا تدخلون الجنة حتى تؤمنوا، ولا تؤمنون حتى تحبّوا بعضكم.",
@@ -637,7 +637,7 @@ export const HABIT_TASKS: Task[] = [
   },
   {
     id: "habit-forgive",
-    category: "discovery",
+    category: "habit-silah",
     duration: 2,
     energy: "low",
     title: t(
@@ -670,10 +670,10 @@ export const HABIT_TASKS: Task[] = [
     xp: 20,
   },
 
-  // ========== 5. الإنتاجية ==========
+  // ========== 5. الإنتاجية (habit-productivity) ==========
   {
     id: "habit-top-3",
-    category: "building",
+    category: "habit-productivity",
     duration: 2,
     energy: "low",
     title: t(
@@ -707,7 +707,7 @@ export const HABIT_TASKS: Task[] = [
   },
   {
     id: "habit-tidy-desk",
-    category: "building",
+    category: "habit-productivity",
     duration: 10,
     energy: "low",
     title: t(
@@ -741,7 +741,7 @@ export const HABIT_TASKS: Task[] = [
   },
   {
     id: "habit-finish-task",
-    category: "building",
+    category: "habit-productivity",
     duration: 10,
     energy: "medium",
     title: t(
@@ -775,7 +775,7 @@ export const HABIT_TASKS: Task[] = [
   },
   {
     id: "habit-learn-15",
-    category: "learning",
+    category: "habit-productivity",
     duration: 30,
     energy: "medium",
     title: t(
@@ -809,7 +809,7 @@ export const HABIT_TASKS: Task[] = [
   },
   {
     id: "habit-no-messages-morning",
-    category: "building",
+    category: "habit-productivity",
     duration: 30,
     energy: "medium",
     title: t(
@@ -842,10 +842,10 @@ export const HABIT_TASKS: Task[] = [
     xp: 30,
   },
 
-  // ========== 6. الإيمان والأعمال الصالحة (جديد) ==========
+  // ========== 6. الإيمان والأعمال الصالحة (habit-deen) ==========
   {
     id: "habit-subhan-allah",
-    category: "mindfulness",
+    category: "habit-deen",
     duration: 2,
     energy: "low",
     title: t(
@@ -879,7 +879,7 @@ export const HABIT_TASKS: Task[] = [
   },
   {
     id: "habit-read-quran",
-    category: "learning",
+    category: "habit-deen",
     duration: 10,
     energy: "low",
     title: t(
@@ -913,7 +913,7 @@ export const HABIT_TASKS: Task[] = [
   },
   {
     id: "habit-dua-morning",
-    category: "mindfulness",
+    category: "habit-deen",
     duration: 2,
     energy: "low",
     title: t(
@@ -947,7 +947,7 @@ export const HABIT_TASKS: Task[] = [
   },
   {
     id: "habit-sadaqah",
-    category: "discovery",
+    category: "habit-deen",
     duration: 2,
     energy: "low",
     title: t(
@@ -981,7 +981,7 @@ export const HABIT_TASKS: Task[] = [
   },
   {
     id: "habit-dua-evening",
-    category: "mindfulness",
+    category: "habit-deen",
     duration: 2,
     energy: "low",
     title: t(
@@ -1015,7 +1015,7 @@ export const HABIT_TASKS: Task[] = [
   },
   {
     id: "habit-intention",
-    category: "mindfulness",
+    category: "habit-deen",
     duration: 2,
     energy: "low",
     title: t(
