@@ -39,6 +39,20 @@ export const arSa: Translations = {
   "task.complete.title": "ما شاء الله عليك!",
   "task.complete.rate": "كيف كانت؟",
 
+  // العادات اليومية
+  "daily.title": "العادات اليومية",
+  "daily.subtitle": "روتين يومي من 3 مهام",
+  "daily.choose": "اختر روتينك",
+  "daily.morning": "صباحي",
+  "daily.evening": "مسائي",
+  "daily.work": "شغل",
+  "daily.study": "دراسة",
+  "daily.task1of3": "مهمة 1 من 3",
+  "daily.task2of3": "مهمة 2 من 3",
+  "daily.task3of3": "مهمة 3 من 3",
+  "daily.completeAll": "أكملت الروتين! 🎉",
+  "daily.xpBonus": "مكافأة إكمال الروتين",
+
   // الضربة الجاية
   "next.title": "ما شاء الله!",
   "next.continue": "الضربة الجاية",

@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Sparkles, ArrowDown, Flame, Compass, Target, Brain, LogIn, LogOut, Cloud, CloudOff, Loader2, X } from "lucide-react";
+import { Sparkles, ArrowDown, Flame, Compass, Target, Brain, LogIn, LogOut, Cloud, CloudOff, Loader2, X, Calendar } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useLocale } from "@/hooks/useLocale";
 import { LanguageSelector } from "@/components/LanguageSelector";
@@ -11,6 +11,7 @@ import { StreakBadge } from "@/components/StreakBadge";
 import { LevelBadge } from "@/components/LevelBadge";
 import { MotivationalQuote } from "@/components/MotivationalQuote";
 import { CoachBubble } from "@/components/CoachBubble";
+import { DailyHabitsDialog } from "@/components/DailyHabitsDialog";
 import { useStats } from "@/hooks/useStats";
 import { useAuth } from "@/lib/auth";
 
@@ -19,6 +20,7 @@ export default function Home() {
   const { t, dir } = useLocale();
   const stats = useStats();
   const { user } = useAuth();
+  const [dailyOpen, setDailyOpen] = useState(false);
 
   return (
     <div className="flex flex-col flex-1 min-h-screen">
@@ -143,6 +145,20 @@ export default function Home() {
             </span>
           </motion.button>
 
+          {/* زر عادات اليوم */}
+          <motion.button
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.9, duration: 0.5 }}
+            onClick={() => setDailyOpen(true)}
+            type="button"
+            className="group flex items-center gap-2 px-5 py-2.5 bg-card border border-border rounded-full text-sm text-foreground hover:border-primary/50 hover:bg-card/80 transition-all"
+          >
+            <Calendar className="w-4 h-4 text-primary" />
+            <span>عادات اليوم</span>
+            <span className="text-xs text-muted-foreground">روتين من 3 مهام</span>
+          </motion.button>
+
           {/* تلميح */}
           <motion.p
             initial={{ opacity: 0 }}
@@ -198,6 +214,8 @@ export default function Home() {
           </>
         )}
       </footer>
+      {/* Dialog عادات اليوم */}
+      <DailyHabitsDialog open={dailyOpen} onClose={() => setDailyOpen(false)} />
     </div>
   );
 }

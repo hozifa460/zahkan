@@ -39,6 +39,20 @@ export const arEg: Translations = {
   "task.complete.title": "برافو عليك!",
   "task.complete.rate": "كانت عاملة إزاي؟",
 
+  // العادات اليومية
+  "daily.title": "عادات اليوم",
+  "daily.subtitle": "روتين يومي من 3 مهام",
+  "daily.choose": "اختر روتينك",
+  "daily.morning": "صباحي",
+  "daily.evening": "مسائي",
+  "daily.work": "عمل",
+  "daily.study": "دراسة",
+  "daily.task1of3": "مهمة 1 من 3",
+  "daily.task2of3": "مهمة 2 من 3",
+  "daily.task3of3": "مهمة 3 من 3",
+  "daily.completeAll": "أكملت الروتين! 🎉",
+  "daily.xpBonus": "مكافأة إكمال الروتين",
+
   // الضربة الجاية
   "next.title": "برافو!",
   "next.continue": "الضربة الجاية",

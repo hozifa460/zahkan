@@ -39,7 +39,21 @@ export const en: Translations = {
   "task.complete.title": "Nicely done!",
   "task.complete.rate": "How was it?",
 
-  // الضربة الجاية
+  // Daily Habits
+  "daily.title": "Daily Habits",
+  "daily.subtitle": "A 3-task daily routine",
+  "daily.choose": "Choose your routine",
+  "daily.morning": "Morning",
+  "daily.evening": "Evening",
+  "daily.work": "Work",
+  "daily.study": "Study",
+  "daily.task1of3": "Task 1 of 3",
+  "daily.task2of3": "Task 2 of 3",
+  "daily.task3of3": "Task 3 of 3",
+  "daily.completeAll": "Routine complete! 🎉",
+  "daily.xpBonus": "Routine completion bonus",
+
+  // Next
   "next.title": "Nicely done!",
   "next.continue": "Next hit",
   "next.streak": "day streak",
