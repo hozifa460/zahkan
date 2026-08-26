@@ -5,6 +5,7 @@ import { persist, createJSONStorage } from "zustand/middleware";
 import type { CompletedTask, UserStats, Mood } from "./types";
 import { TaskCategory } from "@/lib/tasks";
 import type { Tool } from "@/lib/tasks/tools";
+import { supabase } from "@/lib/supabase";
 import {
   calculateStreak,
   countByCategory,

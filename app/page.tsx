@@ -5,6 +5,7 @@ import { Sparkles, ArrowDown, Flame, Compass, Target, Brain } from "lucide-react
 import { useRouter } from "next/navigation";
 import { useLocale } from "@/hooks/useLocale";
 import { LanguageSelector } from "@/components/LanguageSelector";
+import { AuthButton } from "@/components/AuthButton";
 import { StreakBadge } from "@/components/StreakBadge";
 import { LevelBadge } from "@/components/LevelBadge";
 import { MotivationalQuote } from "@/components/MotivationalQuote";
@@ -53,6 +54,9 @@ export default function Home() {
             </>
           )}
           <LanguageSelector />
+        </div>
+        <div className="flex items-center gap-2 mt-2">
+          <AuthButton />
         </div>
       </header>
 
