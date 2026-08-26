@@ -1,58 +1,24 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import * as THREE from "three";
 
 /**
- * خلفية C: "ساعة رملية زجاجية فضية"
+ * خلفية C: "ساعة رملية زجاجية فضية" — Canvas 2D
  *
- * النسخة الأنيقة (مطابقة للصورة المرجعية):
- * - زجاج شفاف بدون إطار خشبي
- * - رمل فضي لامع (معدني)
+ * نسخة خفيفة جداً (لا Three.js، لا مكتبات 3D):
+ * - زجاج شفاف مرسوم بـ Canvas paths
+ * - رمل فضي لامع مع shimmer
  * - خلفية سوداء أنيقة
- * - إضاءة جانبية سينمائية
- * - انعكاس على الأرض
+ * - فيزياء بسيطة (جاذبية)
+ * - انقلاب كل 30 ثانية
+ * - خيط رفيع للرمل بين الحجرتين
  *
- * الأداء:
- * - 300 حبة رمل (خفيف)
- * - DPR 1.5x, antialias off
- * - 30fps throttle
- * - Lazy-loaded
+ * الحجم: ~8KB (مقابل 520KB لـ Three.js)
+ * يعمل على أي متصفح وجهاز
  */
 
-const SAND_COUNT = 350;
+const SAND_COUNT = 250;
 const FLIP_INTERVAL = 30;
-
-const sandVertex = `
-  attribute float aSize;
-  attribute float aOpacity;
-  varying float vOpacity;
-  void main() {
-    vOpacity = aOpacity;
-    vec4 mvPosition = modelViewMatrix * vec4(position, 1.0);
-    gl_PointSize = aSize * (300.0 / -mvPosition.z);
-    gl_Position = projectionMatrix * mvPosition;
-  }
-`;
-
-// شادر يحاكي الرمل المعدني اللامع (يعتمد على موقع في الفضاء + إضاءة وهمية)
-const sandFragment = `
-  varying float vOpacity;
-  uniform float uTime;
-  void main() {
-    vec2 uv = gl_PointCoord - vec2(0.5);
-    float d = length(uv);
-    if (d > 0.5) discard;
-    float alpha = smoothstep(0.5, 0.0, d) * vOpacity;
-    // تدرج لوني فضي: أبيض لامع → رمادي داكن
-    vec3 light = vec3(0.95, 0.96, 0.98);
-    vec3 dark = vec3(0.4, 0.4, 0.45);
-    // إضاءة عشوائية لكل حبة (لتأثير الـ shimmer)
-    float shimmer = sin(uTime * 3.0 + gl_FragCoord.x * 0.1 + gl_FragCoord.y * 0.1) * 0.5 + 0.5;
-    vec3 col = mix(dark, light, shimmer * 0.6 + 0.4);
-    gl_FragColor = vec4(col, alpha);
-  }
-`;
 
 interface Grain {
   x: number;
@@ -61,211 +27,68 @@ interface Grain {
   vy: number;
   settled: boolean;
   size: number;
-  opacity: number;
+  alpha: number;
 }
 
 export function ThreeBackground() {
-  const containerRef = useRef<HTMLDivElement>(null);
+  const canvasRef = useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {
-    if (typeof window !== "undefined") {
-      if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-        drawStaticScene(containerRef.current);
-        return;
-      }
-    }
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const ctx = canvas.getContext("2d");
+    if (!ctx) return;
 
-    const container = containerRef.current;
-    if (!container) return;
-
-    const scene = new THREE.Scene();
-    // خلفية سوداء أنيقة
-    scene.background = new THREE.Color(0x050505);
-
-    const camera = new THREE.PerspectiveCamera(
-      45,
-      window.innerWidth / window.innerHeight,
-      0.1,
-      100
-    );
-    camera.position.z = 10;
-    camera.position.y = 0;
-    camera.lookAt(0, 0, 0);
-
-    let renderer: THREE.WebGLRenderer;
-    try {
-      renderer = new THREE.WebGLRenderer({
-        antialias: false,
-        alpha: false,
-        powerPreference: "low-power",
-      });
-    } catch (e) {
-      drawStaticScene(container);
-      return;
-    }
-
+    // حجم Canvas مع مراعاة DPR
     let dpr = Math.min(window.devicePixelRatio || 1, 1.5);
-    renderer.setPixelRatio(dpr);
-    renderer.setSize(window.innerWidth, window.innerHeight);
-    container.appendChild(renderer.domElement);
+    let W = window.innerWidth;
+    let H = window.innerHeight;
 
-    // --------- الزجاج الشفاف (يحدّد شكل الساعة) ---------
-    // مثلثان زجاجيان شفافان (علوي وسفلي)
-    const glassMat = new THREE.MeshPhysicalMaterial({
-      color: 0xffffff,
-      metalness: 0,
-      roughness: 0.05,
-      transmission: 0.95, // شفافية عالية
-      thickness: 0.5,
-      transparent: true,
-      opacity: 0.15,
-      side: THREE.DoubleSide,
-      ior: 1.5, // انكسار زجاج حقيقي
-    });
+    const setSize = () => {
+      W = window.innerWidth;
+      H = window.innerHeight;
+      canvas.width = W * dpr;
+      canvas.height = H * dpr;
+      canvas.style.width = W + "px";
+      canvas.style.height = H + "px";
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    };
+    setSize();
 
-    const hourglass = new THREE.Group();
-
-    // المثلث العلوي (مقلوب)
-    const triTop = new THREE.Mesh(
-      new THREE.ConeGeometry(1.1, 3.2, 32, 1, true),
-      glassMat
-    );
-    triTop.position.y = 1.6;
-    hourglass.add(triTop);
-
-    // المثلث السفلي
-    const triBot = new THREE.Mesh(
-      new THREE.ConeGeometry(1.1, 3.2, 32, 1, true),
-      glassMat
-    );
-    triBot.position.y = -1.6;
-    triBot.rotation.z = Math.PI;
-    hourglass.add(triBot);
-
-    // عنق ضيق (مخروط صغير)
-    const neck = new THREE.Mesh(
-      new THREE.CylinderGeometry(0.04, 0.04, 0.15, 16, 1, true),
-      glassMat
-    );
-    hourglass.add(neck);
-
-    scene.add(hourglass);
-
-    // --------- إضاءة سينمائية جانبية ---------
-    const light1 = new THREE.DirectionalLight(0xffffff, 1.2);
-    light1.position.set(3, 1, 5);
-    scene.add(light1);
-
-    const light2 = new THREE.DirectionalLight(0xa0b4d4, 0.6);
-    light2.position.set(-3, -1, 4);
-    scene.add(light2);
-
-    const ambient = new THREE.AmbientLight(0x404040, 0.4);
-    scene.add(ambient);
-
-    // --------- حبيبات الرمل الفضي ---------
-    const positions = new Float32Array(SAND_COUNT * 3);
-    const sizes = new Float32Array(SAND_COUNT);
-    const opacities = new Float32Array(SAND_COUNT);
-
+    // ----------------- الرمل -----------------
     const grains: Grain[] = [];
     for (let i = 0; i < SAND_COUNT; i++) {
       const isTop = i < SAND_COUNT / 2;
-      const grain: Grain = {
-        x: (Math.random() - 0.5) * 1.0,
-        y: isTop ? 0.3 + Math.random() * 2.6 : -0.3 - Math.random() * 2.6,
+      grains.push({
+        x: (Math.random() - 0.5) * 100,
+        y: isTop ? 60 + Math.random() * 220 : -60 - Math.random() * 220,
         vx: 0,
         vy: 0,
         settled: !isTop,
-        size: 0.04 + Math.random() * 0.04,
-        opacity: 0.95,
-      };
-      grains.push(grain);
-      writeGrain(grain, i, positions, sizes, opacities);
+        size: 1.4 + Math.random() * 1.6,
+        alpha: 0.7 + Math.random() * 0.3,
+      });
     }
 
-    function writeGrain(
-      g: Grain,
-      idx: number,
-      pos: Float32Array,
-      s: Float32Array,
-      o: Float32Array
-    ) {
-      pos[idx * 3] = g.x;
-      pos[idx * 3 + 1] = g.y;
-      pos[idx * 3 + 2] = 0;
-      s[idx] = g.size;
-      o[idx] = g.opacity;
-    }
-
-    const sandGeo = new THREE.BufferGeometry();
-    sandGeo.setAttribute("position", new THREE.BufferAttribute(positions, 3));
-    sandGeo.setAttribute("aSize", new THREE.BufferAttribute(sizes, 1));
-    sandGeo.setAttribute("aOpacity", new THREE.BufferAttribute(opacities, 1));
-
-    const sandMat = new THREE.ShaderMaterial({
-      vertexShader: sandVertex,
-      fragmentShader: sandFragment,
-      transparent: true,
-      depthWrite: false,
-      blending: THREE.NormalBlending,
-      uniforms: {
-        uTime: { value: 0 },
-      },
-    });
-
-    const sandPoints = new THREE.Points(sandGeo, sandMat);
-    scene.add(sandPoints);
-
-    // --------- "خيط الرمل" بين الحجرتين (تيار رفيع) ---------
-    // مجموعة صغيرة من الجزيئات المتساقطة بسرعة
-    const streamCount = 12;
-    const streamPos = new Float32Array(streamCount * 3);
-    const streamSizes = new Float32Array(streamCount);
-    const streamOp = new Float32Array(streamCount);
-    for (let i = 0; i < streamCount; i++) {
-      streamPos[i * 3] = (Math.random() - 0.5) * 0.03;
-      streamPos[i * 3 + 1] = -0.5 + (i / streamCount) * 1.0;
-      streamPos[i * 3 + 2] = 0;
-      streamSizes[i] = 0.04;
-      streamOp[i] = 0.9;
-    }
-    const streamGeo = new THREE.BufferGeometry();
-    streamGeo.setAttribute("position", new THREE.BufferAttribute(streamPos, 3));
-    streamGeo.setAttribute("aSize", new THREE.BufferAttribute(streamSizes, 1));
-    streamGeo.setAttribute(
-      "aOpacity",
-      new THREE.BufferAttribute(streamOp, 1)
-    );
-    const streamMat = new THREE.ShaderMaterial({
-      vertexShader: sandVertex,
-      fragmentShader: sandFragment,
-      transparent: true,
-      depthWrite: false,
-      blending: THREE.AdditiveBlending,
-      uniforms: { uTime: { value: 0 } },
-    });
-    const stream = new THREE.Points(streamGeo, streamMat);
-    scene.add(stream);
-
-    // --------- الانقلاب التلقائي ---------
+    // ----------------- الانقلاب -----------------
     let lastFlip = 0;
-    let flipPhase = 0;
+    let flipPhase = 0; // 0 = عادي, 1 = قلب
     let flipProgress = 0;
     const FLIP_DURATION = 2.5;
     const SWAP_AT = 0.5;
+    let hourglassAngle = 0;
 
-    // --------- التفاعل ---------
-    const mouse = { x: 0, y: 0, active: false };
+    // ----------------- التفاعل -----------------
+    const mouse = { x: W / 2, y: H / 2, active: false };
     const onMouseMove = (e: MouseEvent) => {
-      mouse.x = (e.clientX / window.innerWidth) * 2 - 1;
-      mouse.y = -(e.clientY / window.innerHeight) * 2 + 1;
+      mouse.x = e.clientX;
+      mouse.y = e.clientY;
       mouse.active = true;
     };
     const onTouchMove = (e: TouchEvent) => {
       if (e.touches[0]) {
-        mouse.x = (e.touches[0].clientX / window.innerWidth) * 2 - 1;
-        mouse.y = -(e.touches[0].clientY / window.innerHeight) * 2 + 1;
+        mouse.x = e.touches[0].clientX;
+        mouse.y = e.touches[0].clientY;
         mouse.active = true;
       }
     };
@@ -277,146 +100,167 @@ export function ThreeBackground() {
     window.addEventListener("mouseleave", onLeave);
     window.addEventListener("touchend", onTouchEnd);
 
+    // تحجيم
     const onResize = () => {
       dpr = Math.min(window.devicePixelRatio || 1, 1.5);
-      camera.aspect = window.innerWidth / window.innerHeight;
-      camera.updateProjectionMatrix();
-      renderer.setPixelRatio(dpr);
-      renderer.setSize(window.innerWidth, window.innerHeight);
+      setSize();
     };
     window.addEventListener("resize", onResize);
 
-    // --------- الحلقة ---------
-    const clock = new THREE.Clock();
+    // ----------------- الحلقة -----------------
     let raf = 0;
-    let lastTime = performance.now();
+    let start = performance.now();
     let lastFrame = 0;
 
-    const tick = () => {
+    const tick = (now: number) => {
       raf = requestAnimationFrame(tick);
-      const now = performance.now();
-      if (now - lastFrame < 33) return;
+      if (now - lastFrame < 33) return; // 30fps
       lastFrame = now;
-      const dt = Math.min((now - lastTime) / 1000, 0.05);
-      lastTime = now;
-      const t = clock.getElapsedTime();
+      const t = (now - start) / 1000;
 
-      (sandMat.uniforms.uTime.value as number) = t;
-      (streamMat.uniforms.uTime.value as number) = t;
+      // خلفية سوداء
+      ctx.fillStyle = "#050505";
+      ctx.fillRect(0, 0, W, H);
 
-      // انقلاب
+      // ---- انقلاب ----
       if (t - lastFlip > FLIP_INTERVAL) {
         flipPhase = 1;
         flipProgress = 0;
         lastFlip = t;
       }
       if (flipPhase === 1) {
-        flipProgress += dt / FLIP_DURATION;
-        const rot = flipProgress * Math.PI;
-        hourglass.rotation.z = rot;
-        if (flipProgress >= SWAP_AT && flipProgress < SWAP_AT + 0.1) {
-          for (let i = 0; i < grains.length; i++) {
-            grains[i].y = -grains[i].y;
-            grains[i].x = -grains[i].x * 0.3;
-            if (grains[i].y > 0) grains[i].vy = -0.05;
-            else grains[i].vy = 0.05;
-            grains[i].settled = false;
+        flipProgress += 0.016 / FLIP_DURATION;
+        hourglassAngle = flipProgress * Math.PI;
+        if (flipProgress >= SWAP_AT && flipProgress < SWAP_AT + 0.05) {
+          for (const g of grains) {
+            g.y = -g.y;
+            g.x = -g.x * 0.3;
+            g.vy = g.y > 0 ? -2 : 2;
+            g.settled = false;
           }
         }
         if (flipProgress >= 1) {
           flipPhase = 0;
           flipProgress = 0;
-          hourglass.rotation.z = 0;
+          hourglassAngle = 0;
         }
       }
 
-      // فيزياء الرمل
-      const posAttr = sandGeo.attributes.position as THREE.BufferAttribute;
-      const sizeAttr = sandGeo.attributes.aSize as THREE.BufferAttribute;
-      const opacityAttr = sandGeo.attributes
-        .aOpacity as THREE.BufferAttribute;
-      const posArr = posAttr.array as Float32Array;
-      const sizeArr = sizeAttr.array as Float32Array;
-      const opArr = opacityAttr.array as Float32Array;
-
-      for (let i = 0; i < grains.length; i++) {
-        const g = grains[i];
+      // ---- فيزياء الرمل ----
+      for (const g of grains) {
         if (!g.settled) {
-          g.vy -= 0.012 * 60 * dt;
-          g.vy *= 0.995;
+          g.vy -= 0.55;
+          g.vy *= 0.99;
           g.vx *= 0.97;
-          g.vx += (Math.random() - 0.5) * 0.003;
+          g.vx += (Math.random() - 0.5) * 0.15;
           g.x += g.vx;
           g.y += g.vy;
-          // حدود المثلثات
-          const halfWidth = (Math.abs(g.y) / 3.2) * 1.0;
-          if (g.y > 0) {
-            if (g.y > 3) g.y = 3;
-            if (Math.abs(g.x) > halfWidth) {
-              g.x = Math.sign(g.x) * halfWidth;
-              g.vx *= -0.3;
-            }
-          } else {
-            if (g.y < -3) g.y = -3;
-            if (Math.abs(g.x) > halfWidth) {
-              g.x = Math.sign(g.x) * halfWidth;
-              g.vx *= -0.3;
-            }
+          // حدود الساعة
+          const coneY = g.y;
+          const halfW = (Math.abs(coneY) / 240) * 100;
+          if (Math.abs(g.x) > halfW) {
+            g.x = Math.sign(g.x) * halfW;
+            g.vx *= -0.3;
           }
-          if (g.y < -2.8) {
+          if (g.y < -220) {
             g.settled = true;
             g.vx = 0;
             g.vy = 0;
           }
-          if (g.y > 2.8 && flipPhase === 0) {
+          if (g.y > 220 && flipPhase === 0) {
             g.settled = true;
             g.vx = 0;
             g.vy = 0;
           }
         }
-        const wiggleX = g.settled ? Math.sin(t * 0.5 + i) * 0.003 : 0;
-        const wiggleY = g.settled ? Math.cos(t * 0.4 + i * 0.7) * 0.002 : 0;
-        posArr[i * 3] = g.x + wiggleX;
-        posArr[i * 3 + 1] = g.y + wiggleY;
-        sizeArr[i] = g.size;
-        opArr[i] = g.opacity;
       }
 
-      posAttr.needsUpdate = true;
-      sizeAttr.needsUpdate = true;
-      opacityAttr.needsUpdate = true;
+      // ---- حساب موقع الساعة ----
+      const cx = W / 2;
+      const cy = H / 2;
 
-      // تحديث خيط الرمل (تيار ينزل من العنق)
-      const streamPosAttr = streamGeo.attributes
-        .position as THREE.BufferAttribute;
-      const streamPosArr = streamPosAttr.array as Float32Array;
-      for (let i = 0; i < streamCount; i++) {
-        streamPosArr[i * 3 + 1] -= 0.04; // ينزل
-        if (streamPosArr[i * 3 + 1] < -3) {
-          streamPosArr[i * 3 + 1] = -0.05; // يعود للعنق
-        }
-        // ميلان مع الساعة
-        if (flipPhase === 1) {
-          streamPosArr[i * 3 + 1] = -streamPosArr[i * 3 + 1];
-        }
-      }
-      streamPosAttr.needsUpdate = true;
-
-      // تفاعل الماوس: ميلان خفيف
+      // ميلان مع الماوس
+      let tiltX = 0;
+      let tiltY = 0;
       if (mouse.active) {
-        const targetRotY = mouse.x * 0.15;
-        const targetRotX = -mouse.y * 0.08;
-        hourglass.rotation.y += (targetRotY - hourglass.rotation.y) * 0.03;
-        hourglass.rotation.x += (targetRotX - hourglass.rotation.x) * 0.03;
-        sandPoints.rotation.y = hourglass.rotation.y;
-        sandPoints.rotation.x = hourglass.rotation.x;
-        stream.rotation.y = hourglass.rotation.y;
-        stream.rotation.x = hourglass.rotation.x;
+        tiltY = (mouse.x - cx) / W * 0.15;
+        tiltX = -(mouse.y - cy) / H * 0.1;
+      }
+      const finalAngle = hourglassAngle + tiltY;
+
+      // ---- رسم الساعة (مع الدوران) ----
+      ctx.save();
+      ctx.translate(cx, cy);
+      ctx.rotate(finalAngle);
+      // 3D-ish tilt (skew)
+      ctx.transform(1, 0, tiltX, 1, 0, 0);
+
+      // ----- إطار الزجاج (توهج خفيف) -----
+      ctx.shadowColor = "rgba(255, 255, 255, 0.3)";
+      ctx.shadowBlur = 20;
+
+      // المثلث العلوي (مقلوب — ضيق في الأسفل، عريض في الأعلى)
+      ctx.beginPath();
+      ctx.moveTo(0, 0); // قمة العنق
+      ctx.lineTo(-100, -240); // أعلى يسار
+      ctx.lineTo(100, -240); // أعلى يمين
+      ctx.closePath();
+      ctx.strokeStyle = "rgba(255, 255, 255, 0.4)";
+      ctx.lineWidth = 1.5;
+      ctx.stroke();
+
+      // المثلث السفلي
+      ctx.beginPath();
+      ctx.moveTo(0, 0); // قمة العنق
+      ctx.lineTo(-100, 240); // أسفل يسار
+      ctx.lineTo(100, 240); // أسفل يمين
+      ctx.closePath();
+      ctx.stroke();
+
+      // ----- زجاج شفاف (تعبئة خفيفة) -----
+      ctx.shadowBlur = 0;
+      ctx.fillStyle = "rgba(255, 255, 255, 0.04)";
+      ctx.fill();
+
+      // ----- لوحات علوية وسفلية (تجميل) -----
+      ctx.fillStyle = "rgba(60, 60, 70, 0.7)";
+      ctx.fillRect(-105, -245, 210, 6);
+      ctx.fillRect(-105, 239, 210, 6);
+
+      // ----- حبيبات الرمل -----
+      for (const g of grains) {
+        // لون فضي لامع (يتغير مع الوقت لـ shimmer)
+        const shimmer = Math.sin(t * 4 + g.x * 0.05 + g.y * 0.05) * 0.5 + 0.5;
+        const lightness = 180 + shimmer * 60; // 180-240
+        ctx.fillStyle = `rgba(${lightness}, ${lightness}, ${lightness + 8}, ${g.alpha})`;
+        ctx.beginPath();
+        ctx.arc(g.x, g.y, g.size, 0, Math.PI * 2);
+        ctx.fill();
       }
 
-      renderer.render(scene, camera);
+      // ----- خيط الرمل بين الحجرتين (تيار) -----
+      for (let i = 0; i < 8; i++) {
+        const yy = -4 + i * 1.2;
+        if (yy > 4) break;
+        const shimmer = Math.sin(t * 12 + i) * 0.5 + 0.5;
+        ctx.fillStyle = `rgba(220, 220, 230, ${0.6 + shimmer * 0.4})`;
+        ctx.beginPath();
+        ctx.arc((Math.random() - 0.5) * 1.5, yy, 0.8, 0, Math.PI * 2);
+        ctx.fill();
+      }
+
+      ctx.restore();
+
+      // ----- انعكاس خفيف على الأرض -----
+      ctx.save();
+      ctx.globalAlpha = 0.1;
+      ctx.fillStyle = "#ffffff";
+      ctx.beginPath();
+      ctx.ellipse(cx, cy + 250, 80, 6, 0, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.restore();
     };
-    tick();
+    raf = requestAnimationFrame(tick);
 
     return () => {
       cancelAnimationFrame(raf);
@@ -425,31 +269,19 @@ export function ThreeBackground() {
       window.removeEventListener("mouseleave", onLeave);
       window.removeEventListener("touchend", onTouchEnd);
       window.removeEventListener("resize", onResize);
-      glassMat.dispose();
-      sandGeo.dispose();
-      sandMat.dispose();
-      streamGeo.dispose();
-      streamMat.dispose();
-      hourglass.traverse((obj) => {
-        if (obj instanceof THREE.Mesh) obj.geometry.dispose();
-      });
-      renderer.dispose();
-      if (container.contains(renderer.domElement)) {
-        container.removeChild(renderer.domElement);
-      }
     };
   }, []);
 
   return (
     <div
-      ref={containerRef}
       className="fixed inset-0 pointer-events-none"
       style={{ zIndex: 0 }}
-    />
+    >
+      <canvas
+        ref={canvasRef}
+        className="absolute inset-0 w-full h-full"
+        style={{ display: "block" }}
+      />
+    </div>
   );
-}
-
-function drawStaticScene(container: HTMLDivElement | null) {
-  if (!container) return;
-  container.style.background = "#050505";
 }
