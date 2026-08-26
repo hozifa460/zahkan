@@ -4,34 +4,23 @@ import { useEffect, useRef } from "react";
 import * as THREE from "three";
 
 /**
- * خلفية C: "حبوب رمل تتجمع في ساعة رملية"
+ * خلفية D: "خلايا تنقسم" + منظر عضوي (النسخة الخفيفة)
  *
- * الرمزية: الوقت يمر (الملل يتحول لفرصة بناء)
+ * - خلفية متدرجة حيّة (تنفّس)
+ * - خلايا بألوان عضوية
+ * - جزيئات بيئية
+ * - هالات ناعمة
+ * - تفاعل مع الماوس
  *
- * المنظر:
- * - خلفية كهرمانية دافئة (تدرّج غروب)
- * - إطار ساعة رملية (خشب + زجاج)
- * - ~800 حبة رمل تتساقط
- * - تتجمع في الأسفل
- * - كل 30 ثانية: تنقلب تلقائياً
- * - تحذير بصري: "لا تُضيّع وقتك"
+ * بدون meshes ثقيلة (لا ساعة رملية، لا أقماع، لا فيزياء)
+ * محسّن للأداء: يحترم prefers-reduced-motion
  */
 
-const SAND_COUNT = 800;
-const FLIP_INTERVAL = 30; // ثوانٍ بين كل انقلاب
-const GRAVITY = 0.012;
+const CELL_COUNT = 60; // كان 90 — نُقلّل
+const AMBIENT_COUNT = 200; // كان 300
+const HALO_COUNT = 8;
 
-// ألوان الرمل: ذهبي / كهرماني / نحاسي
-const sandColors = [
-  new THREE.Color(0xfbbf24), // ذهبي
-  new THREE.Color(0xf59e0b), // كهرماني
-  new THREE.Color(0xd97706), // نحاسي
-  new THREE.Color(0xea580c), // برتقالي
-];
-
-// ---------- Shaders ----------
-
-const sandVertex = `
+const cellVertex = `
   attribute float aSize;
   attribute float aOpacity;
   attribute vec3 aColor;
@@ -41,387 +30,245 @@ const sandVertex = `
     vOpacity = aOpacity;
     vColor = aColor;
     vec4 mvPosition = modelViewMatrix * vec4(position, 1.0);
-    gl_PointSize = aSize * (300.0 / -mvPosition.z);
+    gl_PointSize = aSize * (260.0 / -mvPosition.z);
     gl_Position = projectionMatrix * mvPosition;
   }
 `;
 
-const sandFragment = `
+const cellFragment = `
   varying float vOpacity;
   varying vec3 vColor;
   void main() {
     vec2 uv = gl_PointCoord - vec2(0.5);
     float d = length(uv);
     if (d > 0.5) discard;
-    float alpha = smoothstep(0.5, 0.0, d) * vOpacity;
-    // إضاءة من المركز للحواف
-    vec3 col = mix(vColor * 0.4, vColor, smoothstep(0.5, 0.0, d));
+    float core = smoothstep(0.5, 0.0, d);
+    float alpha = core * vOpacity;
+    vec3 col = mix(vColor * 0.5, vColor, core);
     gl_FragColor = vec4(col, alpha);
   }
 `;
 
-// ---------- مكوّن ----------
-
-interface Grain {
+interface Cell {
   x: number;
   y: number;
   vx: number;
   vy: number;
-  settled: boolean;
   size: number;
+  targetSize: number;
+  age: number;
+  maxAge: number;
   color: THREE.Color;
   opacity: number;
+  dividing: boolean;
+  divisionTimer: number;
 }
 
 export function ThreeBackground() {
   const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    // احترام تفضيل تقليل الحركة
+    if (typeof window !== "undefined") {
+      const reduceMotion = window.matchMedia(
+        "(prefers-reduced-motion: reduce)"
+      ).matches;
+      if (reduceMotion) {
+        // ارسم مشهد ثابت بدون animation
+        drawStaticScene(containerRef.current);
+        return;
+      }
+    }
+
     const container = containerRef.current;
     if (!container) return;
 
-    // ---------- المشهد ----------
     const scene = new THREE.Scene();
+    const bgColors = [
+      new THREE.Color(0x0a1f1a),
+      new THREE.Color(0x0a1419),
+      new THREE.Color(0x14110a),
+      new THREE.Color(0x0a1414),
+    ];
+    let bgIdx = 0;
+    let bgNextIdx = 1;
+    let bgTransition = 0;
+    const BG_DURATION = 12;
 
-    // خلفية متدرجة كهرمانية (تدرّج عمودي)
     const camera = new THREE.PerspectiveCamera(
-      50,
+      55,
       window.innerWidth / window.innerHeight,
       0.1,
       100
     );
-    camera.position.z = 12;
-    camera.position.y = 0;
-    camera.lookAt(0, 0, 0);
+    camera.position.z = 9;
 
-    const renderer = new THREE.WebGLRenderer({
-      antialias: true,
-      alpha: false,
-      powerPreference: "high-performance",
-    });
-    let dpr = Math.min(window.devicePixelRatio || 1, 2);
+    let renderer: THREE.WebGLRenderer;
+    try {
+      renderer = new THREE.WebGLRenderer({
+        antialias: false, // نُقلّل الحمل
+        alpha: true,
+        powerPreference: "low-power",
+      });
+    } catch (e) {
+      // fallback: CSS background
+      drawStaticScene(container);
+      return;
+    }
+
+    let dpr = Math.min(window.devicePixelRatio || 1, 1.5); // DPR أقل
     renderer.setPixelRatio(dpr);
     renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.setClearColor(bgColors[0], 1);
     container.appendChild(renderer.domElement);
 
-    // ---------- تدرّج الخلفية (شادر) ----------
-    const bgGeo = new THREE.PlaneGeometry(50, 30);
-    const bgMat = new THREE.ShaderMaterial({
-      uniforms: {
-        uTime: { value: 0 },
-      },
-      vertexShader: `
-        varying vec2 vUv;
-        void main() {
-          vUv = uv;
-          gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
-        }
-      `,
-      fragmentShader: `
-        varying vec2 vUv;
-        uniform float uTime;
-        void main() {
-          // تدرّج: من برتقالي دافئ (أعلى) إلى ذهبي (أسفل)
-          vec3 top = vec3(0.45, 0.20, 0.10); // كهرماني غامق
-          vec3 mid = vec3(0.60, 0.30, 0.10); // برتقالي
-          vec3 bot = vec3(0.30, 0.15, 0.05); // بني
-          float t = vUv.y;
-          vec3 col = mix(bot, mid, smoothstep(0.0, 0.5, t));
-          col = mix(col, top, smoothstep(0.5, 1.0, t));
-          // نبض خفيف
-          col += 0.02 * sin(uTime * 0.3);
-          gl_FragColor = vec4(col, 1.0);
-        }
-      `,
-      depthWrite: false,
-    });
-    const bgMesh = new THREE.Mesh(bgGeo, bgMat);
-    bgMesh.position.z = -10;
-    scene.add(bgMesh);
+    const positions = new Float32Array(CELL_COUNT * 3);
+    const sizes = new Float32Array(CELL_COUNT);
+    const opacities = new Float32Array(CELL_COUNT);
+    const colors = new Float32Array(CELL_COUNT * 3);
 
-    // ---------- إطار الساعة الرملية (بسيط) ----------
-    // 4 أعمدة خشبية + 2 مثلث زجاجي
-    const woodMat = new THREE.MeshStandardMaterial({
-      color: 0x3a1f0a,
-      roughness: 0.7,
-      metalness: 0.2,
-    });
-    const glassMat = new THREE.MeshBasicMaterial({
-      color: 0xffffff,
-      transparent: true,
-      opacity: 0.05,
-      side: THREE.DoubleSide,
-    });
+    const palette = [
+      new THREE.Color(0x10b981),
+      new THREE.Color(0x34d399),
+      new THREE.Color(0x60a5fa),
+      new THREE.Color(0xa78bfa),
+      new THREE.Color(0xf59e0b),
+      new THREE.Color(0xfb7185),
+    ];
 
-    // إطار الساعة
-    const frame = new THREE.Group();
-
-    // لوح خشبي علوي
-    const topPlate = new THREE.Mesh(
-      new THREE.BoxGeometry(2.8, 0.15, 0.4),
-      woodMat
-    );
-    topPlate.position.y = 4;
-    frame.add(topPlate);
-
-    // لوح خشبي سفلي
-    const botPlate = new THREE.Mesh(
-      new THREE.BoxGeometry(2.8, 0.15, 0.4),
-      woodMat
-    );
-    botPlate.position.y = -4;
-    frame.add(botPlate);
-
-    // 4 أعمدة
-    for (let i = 0; i < 4; i++) {
-      const col = new THREE.Mesh(
-        new THREE.CylinderGeometry(0.06, 0.06, 8.2, 8),
-        woodMat
-      );
-      col.position.set(i < 2 ? -1.3 : 1.3, 0, i % 2 === 0 ? -0.15 : 0.15);
-      frame.add(col);
+    const cells: Cell[] = [];
+    for (let i = 0; i < CELL_COUNT; i++) {
+      const cell = createCell(palette, true);
+      cells.push(cell);
+      writeCell(cell, i, positions, sizes, opacities, colors);
     }
 
-    // مثلثات زجاجية
-    const triTop = new THREE.Mesh(
-      new THREE.ConeGeometry(1.2, 4, 4, 1, true),
-      glassMat
-    );
-    triTop.position.y = 2;
-    triTop.rotation.y = Math.PI / 4;
-    frame.add(triTop);
-
-    const triBot = new THREE.Mesh(
-      new THREE.ConeGeometry(1.2, 4, 4, 1, true),
-      glassMat
-    );
-    triBot.position.y = -2;
-    triBot.rotation.y = Math.PI / 4;
-    triBot.rotation.z = Math.PI;
-    frame.add(triBot);
-
-    // إضاءة خفيفة
-    const light = new THREE.AmbientLight(0xffffff, 0.4);
-    scene.add(light);
-    const dirLight = new THREE.DirectionalLight(0xffd9a3, 0.8);
-    dirLight.position.set(3, 5, 5);
-    scene.add(dirLight);
-
-    scene.add(frame);
-
-    // ---------- حبيبات الرمل ----------
-    const positions = new Float32Array(SAND_COUNT * 3);
-    const sizes = new Float32Array(SAND_COUNT);
-    const opacities = new Float32Array(SAND_COUNT);
-    const colors = new Float32Array(SAND_COUNT * 3);
-
-    const grains: Grain[] = [];
-    for (let i = 0; i < SAND_COUNT; i++) {
-      // نصف في الأعلى، نصف في الأسفل (في البداية)
-      const isTop = i < SAND_COUNT / 2;
-      const grain: Grain = {
-        x: isTop ? (Math.random() - 0.5) * 1.5 : (Math.random() - 0.5) * 1.5,
-        y: isTop ? 0.5 + Math.random() * 3 : -0.5 - Math.random() * 3,
-        vx: 0,
-        vy: 0,
-        settled: !isTop,
-        size: 0.03 + Math.random() * 0.025,
-        color: sandColors[Math.floor(Math.random() * sandColors.length)],
-        opacity: 0.9,
+    function createCell(palette: THREE.Color[], initial = false): Cell {
+      const color = palette[Math.floor(Math.random() * palette.length)];
+      return {
+        x: (Math.random() - 0.5) * 12,
+        y: (Math.random() - 0.5) * 8,
+        vx: (Math.random() - 0.5) * 0.005,
+        vy: (Math.random() - 0.5) * 0.005,
+        size: initial ? 0.04 + Math.random() * 0.08 : 0.02,
+        targetSize: 0.1 + Math.random() * 0.15,
+        age: initial ? Math.random() : 0,
+        maxAge: 10 + Math.random() * 12,
+        color,
+        opacity: initial ? 0.6 : 0,
+        dividing: false,
+        divisionTimer: 0,
       };
-      grains.push(grain);
-      writeGrain(grain, i, positions, sizes, opacities, colors);
     }
 
-    function writeGrain(
-      g: Grain,
+    function writeCell(
+      cell: Cell,
       idx: number,
       pos: Float32Array,
       s: Float32Array,
       o: Float32Array,
       c: Float32Array
     ) {
-      pos[idx * 3] = g.x;
-      pos[idx * 3 + 1] = g.y;
-      pos[idx * 3 + 2] = 0.1;
-      s[idx] = g.size;
-      o[idx] = g.opacity;
-      c[idx * 3] = g.color.r;
-      c[idx * 3 + 1] = g.color.g;
-      c[idx * 3 + 2] = g.color.b;
+      pos[idx * 3] = cell.x;
+      pos[idx * 3 + 1] = cell.y;
+      pos[idx * 3 + 2] = (Math.random() - 0.5) * 0.5;
+      s[idx] = cell.size;
+      o[idx] = cell.opacity;
+      c[idx * 3] = cell.color.r;
+      c[idx * 3 + 1] = cell.color.g;
+      c[idx * 3 + 2] = cell.color.b;
     }
 
-    const sandGeo = new THREE.BufferGeometry();
-    sandGeo.setAttribute("position", new THREE.BufferAttribute(positions, 3));
-    sandGeo.setAttribute("aSize", new THREE.BufferAttribute(sizes, 1));
-    sandGeo.setAttribute(
-      "aOpacity",
-      new THREE.BufferAttribute(opacities, 1)
-    );
-    sandGeo.setAttribute("aColor", new THREE.BufferAttribute(colors, 3));
+    const geometry = new THREE.BufferGeometry();
+    geometry.setAttribute("position", new THREE.BufferAttribute(positions, 3));
+    geometry.setAttribute("aSize", new THREE.BufferAttribute(sizes, 1));
+    geometry.setAttribute("aOpacity", new THREE.BufferAttribute(opacities, 1));
+    geometry.setAttribute("aColor", new THREE.BufferAttribute(colors, 3));
 
-    const sandMat = new THREE.ShaderMaterial({
-      vertexShader: sandVertex,
-      fragmentShader: sandFragment,
+    const material = new THREE.ShaderMaterial({
+      vertexShader: cellVertex,
+      fragmentShader: cellFragment,
       transparent: true,
       depthWrite: false,
-      blending: THREE.NormalBlending,
+      blending: THREE.AdditiveBlending,
     });
 
-    const sandPoints = new THREE.Points(sandGeo, sandMat);
-    scene.add(sandPoints);
+    const points = new THREE.Points(geometry, material);
+    scene.add(points);
 
-    // ---------- إدارة الانقلاب ----------
-    let lastFlip = 0;
-    let flipPhase = 0; // 0 = تساقط عادي، 1 = قلب
-    let flipProgress = 0;
-    const FLIP_DURATION = 2.5; // ثوانٍ
-    const SWAP_TOP_BOTTOM_AT = 0.5; // لحظة تبادل
+    // ambient particles
+    const ambientPositions = new Float32Array(AMBIENT_COUNT * 3);
+    const ambientSizes = new Float32Array(AMBIENT_COUNT);
+    const ambientOpacities = new Float32Array(AMBIENT_COUNT);
+    const ambientColors = new Float32Array(AMBIENT_COUNT * 3);
 
-    // ---------- الحلقة ----------
-    const clock = new THREE.Clock();
-    let raf = 0;
-    let lastTime = performance.now();
+    for (let i = 0; i < AMBIENT_COUNT; i++) {
+      ambientPositions[i * 3] = (Math.random() - 0.5) * 20;
+      ambientPositions[i * 3 + 1] = (Math.random() - 0.5) * 14;
+      ambientPositions[i * 3 + 2] = (Math.random() - 0.5) * 4;
+      ambientSizes[i] = 0.015 + Math.random() * 0.025;
+      ambientOpacities[i] = 0.3 + Math.random() * 0.4;
+      const base = palette[Math.floor(Math.random() * palette.length)];
+      const c = base.clone().multiplyScalar(0.6);
+      ambientColors[i * 3] = c.r;
+      ambientColors[i * 3 + 1] = c.g;
+      ambientColors[i * 3 + 2] = c.b;
+    }
 
-    const tick = () => {
-      raf = requestAnimationFrame(tick);
-      const now = performance.now();
-      const dt = Math.min((now - lastTime) / 1000, 0.05);
-      lastTime = now;
-      const t = clock.getElapsedTime();
+    const ambientGeo = new THREE.BufferGeometry();
+    ambientGeo.setAttribute(
+      "position",
+      new THREE.BufferAttribute(ambientPositions, 3)
+    );
+    ambientGeo.setAttribute(
+      "aSize",
+      new THREE.BufferAttribute(ambientSizes, 1)
+    );
+    ambientGeo.setAttribute(
+      "aOpacity",
+      new THREE.BufferAttribute(ambientOpacities, 1)
+    );
+    ambientGeo.setAttribute(
+      "aColor",
+      new THREE.BufferAttribute(ambientColors, 3)
+    );
 
-      // شادر الخلفية
-      (bgMat.uniforms.uTime.value as number) = t;
+    const ambientMat = new THREE.ShaderMaterial({
+      vertexShader: cellVertex,
+      fragmentShader: cellFragment,
+      transparent: true,
+      depthWrite: false,
+      blending: THREE.AdditiveBlending,
+    });
 
-      // إدارة الانقلاب
-      if (t - lastFlip > FLIP_INTERVAL) {
-        flipPhase = 1;
-        flipProgress = 0;
-        lastFlip = t;
-      }
+    const ambientPoints = new THREE.Points(ambientGeo, ambientMat);
+    scene.add(ambientPoints);
 
-      if (flipPhase === 1) {
-        flipProgress += dt / FLIP_DURATION;
-        // دوران الإطار
-        const rot = flipProgress * Math.PI;
-        frame.rotation.z = rot;
-        // عند منتصف الانقلاب: تبديل
-        if (flipProgress >= SWAP_TOP_BOTTOM_AT && flipProgress < SWAP_TOP_BOTTOM_AT + 0.1) {
-          // تبديل مواقع كل الحبيبات: عكس Y
-          for (let i = 0; i < grains.length; i++) {
-            grains[i].y = -grains[i].y;
-            grains[i].x = -grains[i].x * 0.3;
-            // الحبيبات في الأعلى تنزل، وفي الأسفل تصعد
-            if (grains[i].y > 0) {
-              grains[i].vy = -0.05;
-            } else {
-              grains[i].vy = 0.05;
-            }
-            grains[i].settled = false;
-          }
-        }
-        if (flipProgress >= 1) {
-          flipPhase = 0;
-          flipProgress = 0;
-          frame.rotation.z = 0;
-        }
-      }
+    // halos
+    const glowTex = makeGlowTexture();
+    const glowGeo = new THREE.PlaneGeometry(2, 2);
+    const halos: THREE.Mesh[] = [];
+    for (let i = 0; i < HALO_COUNT; i++) {
+      const m = new THREE.MeshBasicMaterial({
+        map: glowTex,
+        transparent: true,
+        opacity: 0.12,
+        blending: THREE.AdditiveBlending,
+        depthWrite: false,
+        color: palette[i % palette.length],
+      });
+      const mesh = new THREE.Mesh(glowGeo, m);
+      mesh.scale.setScalar(2 + Math.random() * 3);
+      mesh.position.set(
+        (Math.random() - 0.5) * 14,
+        (Math.random() - 0.5) * 10,
+        -2
+      );
+      scene.add(mesh);
+      halos.push(mesh);
+    }
 
-      // تحديث حبيبات الرمل (فيزياء)
-      const posAttr = sandGeo.attributes.position as THREE.BufferAttribute;
-      const sizeAttr = sandGeo.attributes.aSize as THREE.BufferAttribute;
-      const opacityAttr = sandGeo.attributes
-        .aOpacity as THREE.BufferAttribute;
-      const colorAttr = sandGeo.attributes.aColor as THREE.BufferAttribute;
-      const posArr = posAttr.array as Float32Array;
-      const sizeArr = sizeAttr.array as Float32Array;
-      const opArr = opacityAttr.array as Float32Array;
-      const colArr = colorAttr.array as Float32Array;
-
-      for (let i = 0; i < grains.length; i++) {
-        const g = grains[i];
-
-        if (!g.settled) {
-          // جاذبية
-          g.vy -= GRAVITY * 60 * dt;
-          // احتكاك هواء
-          g.vy *= 0.995;
-          g.vx *= 0.97;
-          g.vx += (Math.random() - 0.5) * 0.003;
-
-          g.x += g.vx;
-          g.y += g.vy;
-
-          // حدود الساعة الرملية (مثلث)
-          // الجزء العلوي: ضيق عند y=0، عريض عند y=4
-          // الجزء السفلي: عريض عند y=0، ضيق عند y=-4
-          const halfWidth = (Math.abs(g.y) / 4) * 1.1;
-
-          if (g.y > 0) {
-            // في الجزء العلوي (مثلث مقلوب)
-            if (g.y > 4) g.y = 4;
-            if (Math.abs(g.x) > halfWidth) {
-              g.x = Math.sign(g.x) * halfWidth;
-              g.vx *= -0.3;
-            }
-          } else {
-            // في الجزء السفلي (مثلث)
-            if (g.y < -4) g.y = -4;
-            if (Math.abs(g.x) > halfWidth) {
-              g.x = Math.sign(g.x) * halfWidth;
-              g.vx *= -0.3;
-            }
-          }
-
-          // ثبات في القاع
-          if (g.y < -3.8) {
-            g.settled = true;
-            g.vx = 0;
-            g.vy = 0;
-          }
-          // ثبات في الأعلى
-          if (g.y > 3.8 && flipPhase === 0) {
-            g.settled = true;
-            g.vx = 0;
-            g.vy = 0;
-          }
-        }
-
-        // اهتزاز طفيف حتى لو ثبت
-        const wiggleX = g.settled ? Math.sin(t * 0.5 + i) * 0.005 : 0;
-        const wiggleY = g.settled ? Math.cos(t * 0.4 + i * 0.7) * 0.003 : 0;
-
-        posArr[i * 3] = g.x + wiggleX;
-        posArr[i * 3 + 1] = g.y + wiggleY;
-        sizeArr[i] = g.size;
-        opArr[i] = g.opacity;
-        colArr[i * 3] = g.color.r;
-        colArr[i * 3 + 1] = g.color.g;
-        colArr[i * 3 + 2] = g.color.b;
-      }
-
-      posAttr.needsUpdate = true;
-      sizeAttr.needsUpdate = true;
-      opacityAttr.needsUpdate = true;
-      colorAttr.needsUpdate = true;
-
-      // تحريك الإطار مع الماوس
-      if (mouse.active) {
-        const targetRotY = mouse.x * 0.2;
-        const targetRotX = -mouse.y * 0.1;
-        frame.rotation.y += (targetRotY - frame.rotation.y) * 0.03;
-        frame.rotation.x += (targetRotX - frame.rotation.x) * 0.03;
-        sandPoints.rotation.y = frame.rotation.y;
-        sandPoints.rotation.x = frame.rotation.x;
-      }
-
-      renderer.render(scene, camera);
-    };
-    tick();
-
-    // ---------- التفاعل ----------
     const mouse = { x: 0, y: 0, world: new THREE.Vector3(), active: false };
-
     const onMouseMove = (e: MouseEvent) => {
       const x = (e.clientX / window.innerWidth) * 2 - 1;
       const y = -(e.clientY / window.innerHeight) * 2 + 1;
@@ -443,15 +290,145 @@ export function ThreeBackground() {
     window.addEventListener("mouseleave", onLeave);
     window.addEventListener("touchend", onTouchEnd);
 
-    // تحجيم
     const onResize = () => {
-      dpr = Math.min(window.devicePixelRatio || 1, 2);
+      dpr = Math.min(window.devicePixelRatio || 1, 1.5);
       camera.aspect = window.innerWidth / window.innerHeight;
       camera.updateProjectionMatrix();
       renderer.setPixelRatio(dpr);
       renderer.setSize(window.innerWidth, window.innerHeight);
     };
     window.addEventListener("resize", onResize);
+
+    const clock = new THREE.Clock();
+    let raf = 0;
+    let lastTime = performance.now();
+    let lastFrame = 0;
+
+    const tick = () => {
+      raf = requestAnimationFrame(tick);
+      // throttle to 30fps for perf
+      const now = performance.now();
+      if (now - lastFrame < 33) return;
+      lastFrame = now;
+      const dt = Math.min((now - lastTime) / 1000, 0.05);
+      lastTime = now;
+      const t = clock.getElapsedTime();
+
+      bgTransition += (dt * 1000) / (BG_DURATION * 1000);
+      if (bgTransition >= 1) {
+        bgTransition = 0;
+        bgIdx = bgNextIdx;
+        bgNextIdx = (bgNextIdx + 1) % bgColors.length;
+      }
+      const bgEased = 1 - Math.pow(1 - bgTransition, 2);
+      const currentBg = bgColors[bgIdx]
+        .clone()
+        .lerp(bgColors[bgNextIdx], bgEased);
+      renderer.setClearColor(currentBg, 1);
+
+      const posAttr = geometry.attributes.position as THREE.BufferAttribute;
+      const sizeAttr = geometry.attributes.aSize as THREE.BufferAttribute;
+      const opacityAttr = geometry.attributes
+        .aOpacity as THREE.BufferAttribute;
+      const colorAttr = geometry.attributes.aColor as THREE.BufferAttribute;
+      const posArr = posAttr.array as Float32Array;
+      const sizeArr = sizeAttr.array as Float32Array;
+      const opArr = opacityAttr.array as Float32Array;
+      const colArr = colorAttr.array as Float32Array;
+
+      for (let i = 0; i < cells.length; i++) {
+        const cell = cells[i];
+        cell.x += cell.vx + Math.sin(t * 0.5 + i) * 0.002;
+        cell.y += cell.vy + Math.cos(t * 0.4 + i * 0.7) * 0.002;
+        if (Math.abs(cell.x) > 7) cell.vx *= -1;
+        if (Math.abs(cell.y) > 5) cell.vy *= -1;
+        if (mouse.active) {
+          const dx = mouse.world.x - cell.x;
+          const dy = mouse.world.y - cell.y;
+          const d = Math.sqrt(dx * dx + dy * dy);
+          if (d < 2 && d > 0.01) {
+            const force = 0.005 * (1 - d / 2);
+            cell.vx += (dx / d) * force;
+            cell.vy += (dy / d) * force;
+          }
+        }
+        cell.vx *= 0.98;
+        cell.vy *= 0.98;
+
+        cell.age += dt;
+        const lifeRatio = cell.age / cell.maxAge;
+
+        if (lifeRatio < 0.1) {
+          cell.opacity = lifeRatio / 0.1;
+          cell.size = cell.targetSize * (lifeRatio / 0.1);
+        } else if (lifeRatio < 0.4) {
+          cell.opacity = 0.85;
+          cell.size = cell.targetSize * (0.8 + 0.2 * Math.sin(t + i));
+        } else if (lifeRatio < 0.7) {
+          if (!cell.dividing) {
+            cell.dividing = true;
+            cell.divisionTimer = 0;
+          }
+          cell.divisionTimer += dt;
+          const pulse = Math.sin(cell.divisionTimer * 3) * 0.5 + 0.5;
+          cell.size = cell.targetSize * (1 + pulse * 0.3);
+        } else {
+          cell.opacity = (1 - lifeRatio) / 0.3;
+        }
+
+        if (cell.divisionTimer > 1.5 && cell.dividing) {
+          cell.dividing = false;
+          cell.divisionTimer = 0;
+          if (cells.length < CELL_COUNT + 10) {
+            const newCell = createCell(palette);
+            newCell.x = cell.x + (Math.random() - 0.5) * 0.5;
+            newCell.y = cell.y + (Math.random() - 0.5) * 0.5;
+            cells.push(newCell);
+          }
+        }
+
+        if (lifeRatio >= 1) {
+          const newCell = createCell(palette);
+          newCell.x = cell.x;
+          newCell.y = cell.y;
+          cells[i] = newCell;
+          continue;
+        }
+
+        posArr[i * 3] = cell.x;
+        posArr[i * 3 + 1] = cell.y;
+        sizeArr[i] = cell.size;
+        opArr[i] = cell.opacity;
+        colArr[i * 3] = cell.color.r;
+        colArr[i * 3 + 1] = cell.color.g;
+        colArr[i * 3 + 2] = cell.color.b;
+      }
+
+      posAttr.needsUpdate = true;
+      sizeAttr.needsUpdate = true;
+      opacityAttr.needsUpdate = true;
+      colorAttr.needsUpdate = true;
+
+      for (let i = 0; i < halos.length; i++) {
+        const h = halos[i];
+        h.position.x += Math.sin(t * 0.1 + i) * 0.002;
+        h.position.y += Math.cos(t * 0.12 + i) * 0.002;
+        (h.material as THREE.MeshBasicMaterial).opacity =
+          0.08 + Math.sin(t * 0.5 + i) * 0.04;
+      }
+
+      if (mouse.active) {
+        const targetRotY = mouse.x * 0.1;
+        const targetRotX = -mouse.y * 0.08;
+        points.rotation.y += (targetRotY - points.rotation.y) * 0.03;
+        points.rotation.x += (targetRotX - points.rotation.x) * 0.03;
+        ambientPoints.rotation.y = points.rotation.y;
+        ambientPoints.rotation.x = points.rotation.x;
+      }
+
+      renderer.render(scene, camera);
+    };
+    tick();
 
     return () => {
       cancelAnimationFrame(raf);
@@ -460,17 +437,13 @@ export function ThreeBackground() {
       window.removeEventListener("mouseleave", onLeave);
       window.removeEventListener("touchend", onTouchEnd);
       window.removeEventListener("resize", onResize);
-      bgGeo.dispose();
-      bgMat.dispose();
-      woodMat.dispose();
-      glassMat.dispose();
-      sandGeo.dispose();
-      sandMat.dispose();
-      frame.traverse((obj) => {
-        if (obj instanceof THREE.Mesh) {
-          obj.geometry.dispose();
-        }
-      });
+      geometry.dispose();
+      material.dispose();
+      ambientGeo.dispose();
+      ambientMat.dispose();
+      glowGeo.dispose();
+      glowTex.dispose();
+      halos.forEach((h) => (h.material as THREE.MeshBasicMaterial).dispose());
       renderer.dispose();
       if (container.contains(renderer.domElement)) {
         container.removeChild(renderer.domElement);
@@ -485,4 +458,32 @@ export function ThreeBackground() {
       style={{ zIndex: 0 }}
     />
   );
+}
+
+function makeGlowTexture(): THREE.CanvasTexture {
+  const size = 128;
+  const c = document.createElement("canvas");
+  c.width = c.height = size;
+  const cx = c.getContext("2d")!;
+  const g = cx.createRadialGradient(
+    size / 2,
+    size / 2,
+    0,
+    size / 2,
+    size / 2,
+    size / 2
+  );
+  g.addColorStop(0, "rgba(255,255,255,0.7)");
+  g.addColorStop(0.3, "rgba(255,255,255,0.2)");
+  g.addColorStop(1, "rgba(255,255,255,0)");
+  cx.fillStyle = g;
+  cx.fillRect(0, 0, size, size);
+  return new THREE.CanvasTexture(c);
+}
+
+function drawStaticScene(container: HTMLDivElement | null) {
+  if (!container) return;
+  // fallback: gradient CSS only
+  container.style.background =
+    "linear-gradient(135deg, #0a1f1a 0%, #0a1419 50%, #14110a 100%)";
 }
