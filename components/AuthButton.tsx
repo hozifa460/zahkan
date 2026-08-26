@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { LogIn, LogOut, Cloud, CloudOff, Loader2 } from "lucide-react";
+import { LogIn, LogOut, Cloud, CloudOff, Loader2, X } from "lucide-react";
 import { useAuth, signInWithGoogle, signOut, signInWithEmail, signUpWithEmail } from "@/lib/auth";
 import { loadUserDataFromCloud } from "@/lib/sync";
 import { useLocale } from "@/hooks/useLocale";
@@ -18,6 +18,19 @@ export function AuthButton() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const [submitting, setSubmitting] = useState(false);
+
+  // قفل scroll الصفحة عند فتح النافذة
+  useEffect(() => {
+    if (showModal) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [showModal]);
 
   // عند تغيّر المستخدم: نُحمّل بياناته من السحابة
   useEffect(() => {
@@ -49,7 +62,8 @@ export function AuthButton() {
         )}
         {!syncing && (
           <Cloud className="w-3.5 h-3.5 text-green-500" />
-        )}        <div className="hidden sm:flex items-center gap-2 px-3 py-1.5 rounded-full bg-card/60 border border-border">
+        )}
+        <div className="hidden sm:flex items-center gap-2 px-3 py-1.5 rounded-full bg-card/60 border border-border">
           {user.user_metadata?.avatar_url ? (
             // eslint-disable-next-line @next/next/no-img-element
             <img src={user.user_metadata.avatar_url} alt="" className="w-5 h-5 rounded-full" />
@@ -95,17 +109,30 @@ export function AuthButton() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-background/80 backdrop-blur-sm"
-            onClick={() => setShowModal(false)}
+            onClick={() => !submitting && setShowModal(false)}
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="auth-title"
           >
             <motion.div
               initial={{ scale: 0.9, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.9, opacity: 0 }}
               onClick={(e) => e.stopPropagation()}
-              className="w-full max-w-md p-6 rounded-3xl bg-card border border-border space-y-4"
+              className="relative w-full max-w-md p-6 rounded-3xl bg-card border border-border space-y-4"
             >
+              {/* زر الإغلاق X */}
+              <button
+                onClick={() => !submitting && setShowModal(false)}
+                disabled={submitting}
+                className="absolute top-3 left-3 p-1.5 rounded-full hover:bg-background/50 text-muted-foreground hover:text-foreground transition-colors disabled:opacity-30"
+                aria-label="إغلاق"
+              >
+                <X className="w-4 h-4" />
+              </button>
+
               <div className="text-center space-y-1">
-                <h2 className="text-xl font-semibold">
+                <h2 id="auth-title" className="text-xl font-semibold">
                   {mode === "signin" ? "تسجيل الدخول" : "إنشاء حساب"}
                 </h2>
                 <p className="text-xs text-muted-foreground">
@@ -117,17 +144,27 @@ export function AuthButton() {
               <button
                 onClick={async () => {
                   setError("");
+                  setSubmitting(true);
                   const { error } = await signInWithGoogle();
-                  if (error) setError(error.message);
+                  if (error) {
+                    setError(error.message);
+                    setSubmitting(false);
+                  }
+                  // لو نجح، سيتم التحويل تلقائياً
                 }}
-                className="w-full p-3 rounded-2xl bg-white text-gray-700 hover:bg-gray-50 transition-colors flex items-center justify-center gap-2 font-medium border border-gray-200"
+                disabled={submitting}
+                className="w-full p-3 rounded-2xl bg-white text-gray-700 hover:bg-gray-50 transition-colors flex items-center justify-center gap-2 font-medium border border-gray-200 disabled:opacity-50"
               >
-                <svg className="w-5 h-5" viewBox="0 0 24 24">
-                  <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
-                  <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
-                  <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
-                  <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
-                </svg>
+                {submitting ? (
+                  <Loader2 className="w-5 h-5 animate-spin" />
+                ) : (
+                  <svg className="w-5 h-5" viewBox="0 0 24 24">
+                    <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+                    <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+                    <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
+                    <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
+                  </svg>
+                )}
                 المتابعة بـ Google
               </button>
 
@@ -142,14 +179,21 @@ export function AuthButton() {
                 onSubmit={async (e) => {
                   e.preventDefault();
                   setError("");
-                  const fn = mode === "signin" ? signInWithEmail : signUpWithEmail;
-                  const { error } = await fn(email, password);
-                  if (error) setError(error.message);
-                  else if (mode === "signup") {
-                    setError("");
-                    alert("تم! تحقق من بريدك لتأكيد الحساب.");
-                  } else {
-                    setShowModal(false);
+                  setSubmitting(true);
+                  try {
+                    const fn = mode === "signin" ? signInWithEmail : signUpWithEmail;
+                    const { error } = await fn(email, password);
+                    if (error) {
+                      setError(error.message);
+                    } else if (mode === "signup") {
+                      setError("");
+                      alert("تم! تحقق من بريدك لتأكيد الحساب.");
+                      setShowModal(false);
+                    } else {
+                      setShowModal(false);
+                    }
+                  } finally {
+                    setSubmitting(false);
                   }
                 }}
                 className="space-y-2"
@@ -178,8 +222,10 @@ export function AuthButton() {
                 )}
                 <button
                   type="submit"
-                  className="w-full p-3 rounded-2xl bg-primary text-primary-foreground hover:bg-primary/90 transition-colors font-medium"
+                  disabled={submitting}
+                  className="w-full p-3 rounded-2xl bg-primary text-primary-foreground hover:bg-primary/90 transition-colors font-medium disabled:opacity-50 flex items-center justify-center gap-2"
                 >
+                  {submitting && <Loader2 className="w-4 h-4 animate-spin" />}
                   {mode === "signin" ? "دخول" : "إنشاء حساب"}
                 </button>
               </form>
@@ -194,8 +240,9 @@ export function AuthButton() {
                 </button>
               </div>
 
+              {/* Escape hint */}
               <p className="text-[10px] text-muted-foreground/60 text-center leading-relaxed">
-                بتسجيل الدخول، بياناتك (المهام، الإحصائيات، الإنجازات) تُحفظ سحابياً وتتزامن بين أجهزتك.
+                اضغط <kbd className="px-1 py-0.5 rounded bg-background/50">Esc</kbd> أو خارج النافذة للإغلاق
               </p>
             </motion.div>
           </motion.div>
