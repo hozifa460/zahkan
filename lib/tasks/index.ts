@@ -6,6 +6,7 @@ import { learningTasks } from "./learning";
 import { buildingTasks } from "./building";
 import { mindfulnessTasks } from "./mindfulness";
 import { discoveryTasks } from "./discovery";
+import { HABIT_TASKS } from "./habits";
 import { CATEGORIES } from "./categories";
 import type { Locale } from "@/lib/i18n/types";
 import { LOCALES } from "@/lib/i18n/types";
@@ -22,6 +23,7 @@ export const ALL_TASKS: Task[] = [
   ...buildingTasks,
   ...mindfulnessTasks,
   ...discoveryTasks,
+  ...HABIT_TASKS,
 ];
 
 /** خريطة للوصول السريع */
