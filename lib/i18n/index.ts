@@ -24,12 +24,15 @@ export const translations: Record<Locale, Translations> = {
  * 3. الإنجليزية (en) كآخر حل
  */
 export function t(locale: Locale, key: TranslationKey): string {
+  // تأكد locale صالح
+  const safeLocale: Locale = locale && translations[locale] ? locale : "ar-eg";
+
   // جرّب اللهجة المحددة أولاً
-  const direct = translations[locale]?.[key];
+  const direct = translations[safeLocale]?.[key];
   if (direct) return direct;
 
   // fallback إلى الفصحى إن كانت اللهجة عربية
-  if (locale.startsWith("ar-") && locale !== "ar") {
+  if (safeLocale.startsWith("ar-") && safeLocale !== "ar") {
     const msa = translations.ar[key];
     if (msa) return msa;
   }

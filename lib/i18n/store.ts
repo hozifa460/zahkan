@@ -16,7 +16,7 @@ const STORAGE_KEY = "zawhan-locale";
 export const useLocaleStore = create<LocaleState>()(
   persist(
     (set) => ({
-      // الافتراضي قبل init
+      // الافتراضي قبل init — يجب أن يكون Locale صالح دائماً
       locale: "ar-eg",
       dir: "rtl",
 
@@ -32,8 +32,25 @@ export const useLocaleStore = create<LocaleState>()(
     }),
     {
       name: STORAGE_KEY,
-      storage: createJSONStorage(() => localStorage),
+      // استخدم storage آمن: لو localStorage غير موجود (SSR) ارجع null store
+      storage: createJSONStorage(() => {
+        if (typeof window === "undefined") {
+          return {
+            getItem: () => null,
+            setItem: () => {},
+            removeItem: () => {},
+          };
+        }
+        return localStorage;
+      }),
       partialize: (state) => ({ locale: state.locale, dir: state.dir }),
+      // عند الـ hydration من localStorage، تأكد أن القيمة صالحة
+      onRehydrateStorage: () => (state) => {
+        if (state && (!state.locale || !LOCALE_INFO[state.locale])) {
+          state.locale = "ar-eg";
+          state.dir = "rtl";
+        }
+      },
     }
   )
 );
