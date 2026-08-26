@@ -2,7 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Inter, IBM_Plex_Sans_Arabic } from "next/font/google";
 import "./globals.css";
 import { LocaleBootstrap } from "@/components/LocaleBootstrap";
-import { ThreeBackground } from "@/components/ThreeBackground";
+import { ThreeBackground } from "@/components/ThreeBackgroundLazy";
 
 const inter = Inter({
   variable: "--font-inter",
