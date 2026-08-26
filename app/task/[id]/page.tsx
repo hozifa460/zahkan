@@ -71,7 +71,7 @@ export default function TaskPage() {
   return (
     <div className="flex flex-col flex-1 min-h-screen">
       {/* Background */}
-      <div className="fixed inset-0 -z-10 bg-gradient-to-b from-background via-background to-card/20" />
+      <div className="fixed inset-0 -z-10 bg-background/30" />
 
       {/* Header */}
       <header className="absolute top-4 inset-x-4 flex items-center justify-between z-10">

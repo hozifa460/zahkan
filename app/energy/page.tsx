@@ -148,7 +148,7 @@ export default function EnergyPage() {
 
   return (
     <div className="flex flex-col flex-1 min-h-screen">
-      <div className="fixed inset-0 -z-10 bg-gradient-to-b from-background via-background to-card/20" />
+      <div className="fixed inset-0 -z-10 bg-background/30" />
 
       <header className="absolute top-4 inset-x-4 flex items-center justify-between z-10">
         <button

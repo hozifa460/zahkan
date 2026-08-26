@@ -129,14 +129,14 @@ export function ThreeBackground() {
       >
         <ParticleField />
       </Canvas>
-      {/* طبقة تعتيم لقراءة النص */}
-      <div className="absolute inset-0 bg-background/75" />
+      {/* طبقة تعتيم خفيفة لقراءة النص (الخلفية 3D تبان من خلالها) */}
+      <div className="absolute inset-0 bg-background/35" />
       {/* توهج ذهبي خفيف أسفل الشاشة */}
       <div
-        className="absolute inset-x-0 bottom-0 h-1/3 opacity-40"
+        className="absolute inset-x-0 bottom-0 h-1/3 opacity-50"
         style={{
           background:
-            "radial-gradient(ellipse at bottom, rgba(245,158,11,0.15), transparent 70%)",
+            "radial-gradient(ellipse at bottom, rgba(245,158,11,0.18), transparent 70%)",
         }}
       />
     </div>
