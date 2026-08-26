@@ -22,7 +22,7 @@ export default function Home() {
 
   return (
     <div className="flex flex-col flex-1 min-h-screen">
-      <div className="fixed inset-0 -z-10 bg-background/30" />
+      <div className="fixed inset-0 -z-10 bg-gradient-to-b from-background via-background to-card/20" />
 
       <header className="absolute top-4 inset-x-4 flex flex-col items-end gap-2 z-10">
         <div className="flex items-center gap-2 text-muted-foreground text-sm">

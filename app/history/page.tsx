@@ -52,7 +52,7 @@ export default function HistoryPage() {
 
   return (
     <div className="flex flex-col flex-1 min-h-screen">
-      <div className="fixed inset-0 -z-10 bg-background/30" />
+      <div className="fixed inset-0 -z-10 bg-gradient-to-b from-background via-background to-card/20" />
 
       <header className="sticky top-0 z-10 bg-background/80 backdrop-blur-lg border-b border-border">
         <div className="flex items-center justify-between px-4 py-3">
