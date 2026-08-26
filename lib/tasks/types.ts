@@ -12,7 +12,13 @@ export type TaskCategory =
   | "learning"      // تعلّم
   | "building"      // بناء
   | "mindfulness"   // صفاء
-  | "discovery";    // اكتشاف
+  | "discovery"      // اكتشاف
+  | "habit-body"    // عادات: صحة الجسد
+  | "habit-mind"    // عادات: صحة الذهن
+  | "habit-sleep"   // عادات: النوم
+  | "habit-silah"   // عادات: صلة الرحم
+  | "habit-productivity" // عادات: إنتاجية
+  | "habit-deen";   // عادات: إيمان
 
 export type TaskDuration = 2 | 10 | 30 | 60;
 export type TaskEnergy = "low" | "medium" | "high";
