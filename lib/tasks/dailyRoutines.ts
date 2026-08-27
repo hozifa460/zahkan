@@ -2,28 +2,42 @@ import type { TaskCategory } from "./types";
 
 /**
  * روتين يومي = 3 مهام متتالية تكوّن عادة.
- * عند إكمالها كلها → إنجاز + XP مكافأة.
+ * فقط صباحي + مسائي.
  */
 
-export type RoutineId = "morning" | "evening" | "work" | "study";
+export type RoutineId = "morning" | "evening";
 
 export interface DailyRoutine {
   id: RoutineId;
   icon: string;
   color: string;
+  greeting: string;
   tasks: Array<{
     title: string;
     category: TaskCategory;
-    duration: 2 | 5 | 10 | 30; // دقائق
+    duration: 2 | 5 | 10 | 30;
     description: string;
   }>;
+}
+
+/**
+ * يحدد الروتين حسب ساعة المتصفح.
+ * - 5:00 — 16:59 → صباحي
+ * - 17:00 — 4:59 → مسائي
+ */
+export function getCurrentRoutineId(): RoutineId {
+  if (typeof window === "undefined") return "morning";
+  const hour = new Date().getHours();
+  if (hour >= 5 && hour < 17) return "morning";
+  return "evening";
 }
 
 export const DAILY_ROUTINES: DailyRoutine[] = [
   {
     id: "morning",
     icon: "🌅",
-    color: "#f59e0b", // كهرماني
+    color: "#f59e0b",
+    greeting: "صباح الخير",
     tasks: [
       {
         title: "اقرأ صفحة من القرآن",
@@ -48,7 +62,8 @@ export const DAILY_ROUTINES: DailyRoutine[] = [
   {
     id: "evening",
     icon: "🌙",
-    color: "#6366f1", // نيلي
+    color: "#6366f1",
+    greeting: "مساء الخير",
     tasks: [
       {
         title: "اقرأ أذكار المساء",
@@ -67,56 +82,6 @@ export const DAILY_ROUTINES: DailyRoutine[] = [
         category: "habit-sleep",
         duration: 2,
         description: "أطفئ الشاشات واضبط المنبّه",
-      },
-    ],
-  },
-  {
-    id: "work",
-    icon: "💼",
-    color: "#10b981", // أخضر
-    tasks: [
-      {
-        title: "رتّب مكتبك/مساحتك",
-        category: "habit-productivity",
-        duration: 5,
-        description: "ترتيب سريع: أوراق، أدوات، شاشة",
-      },
-      {
-        title: "حدّد 3 مهام لليوم",
-        category: "habit-mind",
-        duration: 5,
-        description: "اكتب أهم 3 مهام يجب إنجازها اليوم",
-      },
-      {
-        title: "ابدأ أصعب مهمة فوراً",
-        category: "habit-productivity",
-        duration: 10,
-        description: "ابدأ المهمة الأصعب قبل ما يفوتك الوقت",
-      },
-    ],
-  },
-  {
-    id: "study",
-    icon: "📚",
-    color: "#ec4899", // وردي
-    tasks: [
-      {
-        title: "راجع ملاحظات الأمس",
-        category: "habit-mind",
-        duration: 5,
-        description: "افتح دفتر الأمس وراجع بسرعة",
-      },
-      {
-        title: "اقرأ صفحة من كتابك",
-        category: "habit-mind",
-        duration: 10,
-        description: "اقرأ بتركيز — صفحة واحدة بتدبّر",
-      },
-      {
-        title: "لخّص ما فهمت بسطرين",
-        category: "habit-productivity",
-        duration: 5,
-        description: "اكتب خلاصة ما تعلمته بكلماتك",
       },
     ],
   },
