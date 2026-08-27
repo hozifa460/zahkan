@@ -5,14 +5,13 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import { Check, ArrowRight, ArrowLeft, Sparkles, Calendar } from "lucide-react";
 import { DAILY_ROUTINES, type RoutineId } from "@/lib/tasks/dailyRoutines";
+import { markCompleted } from "@/lib/stats/dailyCompletion";
 import { useStats } from "@/hooks/useStats";
 import { useLocale } from "@/hooks/useLocale";
 
-const ROUTINE_KEYS: Record<RoutineId, string> = {
-  morning: "صباحي",
-  evening: "مسائي",
-  work: "عمل",
-  study: "دراسة",
+const ROUTINE_LABELS_AR: Record<RoutineId, string> = {
+  morning: "الصباح",
+  evening: "المساء",
 };
 
 function DailyInner() {
@@ -35,13 +34,13 @@ function DailyInner() {
       setCompletedTasks((prev) => [...prev, currentTask.title]);
     }
     if (isLastTask) {
-      // مكافأة 50 XP لإكمال الروتين
+      // مكافأة: سجّل إكمال الروتين + XP
+      markCompleted(routine.id);
       const routineId2 = `routine-${routine.id}-${Date.now()}`;
-      // stats.completeTask موجودة في useStats
       if (typeof (stats as any).completeTask === "function") {
         (stats as any).completeTask({
           id: routineId2,
-          title: `روتين ${ROUTINE_KEYS[routine.id]}`,
+          title: `روتين ${ROUTINE_LABELS_AR[routine.id]}`,
           category: "habit-mind",
           duration: routine.tasks.reduce((s, t) => s + t.duration, 0),
         });
@@ -76,7 +75,7 @@ function DailyInner() {
           {t("daily.completeAll")}
         </h1>
         <p className="text-muted-foreground mb-2">
-          أكملت روتين "{ROUTINE_KEYS[routineId]}" بنجاح
+          أكملت روتين "{ROUTINE_LABELS_AR[routineId]}" بنجاح
         </p>
         <p className="text-sm text-primary mb-8">+50 XP مكافأة 🎁</p>
         <button
@@ -103,10 +102,10 @@ function DailyInner() {
           <ArrowRight className="w-5 h-5" />
         </button>
         <div className="text-center">
-          <div className="text-sm text-muted-foreground flex items-center gap-1">
-            <Calendar className="w-3 h-3" />
-            {ROUTINE_KEYS[routineId]}
-          </div>
+            <div className="text-sm text-muted-foreground flex items-center gap-1">
+              <Calendar className="w-3 h-3" />
+              {ROUTINE_LABELS_AR[routineId]}
+            </div>
           <div className="text-xs text-muted-foreground/60">
             مهمة {currentIndex + 1} من {routine.tasks.length}
           </div>
