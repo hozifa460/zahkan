@@ -26,12 +26,12 @@ export default function Home() {
     <div className="flex flex-col flex-1 min-h-screen">
       <div className="fixed inset-0 -z-10 bg-gradient-to-b from-background via-background to-card/20" />
 
-      <header className="absolute top-4 inset-x-4 flex flex-col items-end gap-2 z-10">
-        <div className="flex items-center gap-2 text-muted-foreground text-sm">
+      <header className="absolute top-4 inset-x-4 flex flex-col items-end gap-2 z-10 pointer-events-none">
+        <div className="flex items-center gap-2 text-muted-foreground text-sm pointer-events-auto">
           <Sparkles className="w-4 h-4 text-primary" />
           <span>{t("app.name")}</span>
         </div>
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2 pointer-events-auto">
           {stats.completedTasks.length > 0 && (
             <>
               <button
@@ -54,7 +54,7 @@ export default function Home() {
           )}
           <LanguageSelector />
         </div>
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2 pointer-events-auto">
           <AuthButton />
         </div>
       </header>
