@@ -47,11 +47,11 @@ export async function signOut() {
 
 /** تسجيل دخول بـ Google */
 export async function signInWithGoogle() {
+  const redirectUrl = typeof window !== "undefined" ? window.location.origin : "https://zahkan.pages.dev";
   return supabase.auth.signInWithOAuth({
     provider: "google",
     options: {
-      // رابط التطبيق بعد تسجيل الدخول (يجب أن يكون في Supabase redirect URLs)
-      redirectTo: "https://zahkan.pages.dev",
+      redirectTo: redirectUrl,
     },
   });
 }

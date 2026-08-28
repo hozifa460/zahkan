@@ -12,5 +12,18 @@ export function useTasks(filter: TaskFilter = {}): Task[] {
 
 /** Hook لجلب مهمة واحدة */
 export function useTask(id: string | null): Task | undefined {
-  return useMemo(() => (id ? getTaskById(id) : undefined), [id]);
+  return useMemo(() => {
+    if (!id) return undefined;
+    const direct = getTaskById(id);
+    if (direct) return direct;
+
+    // فحص المهام المخصصة والديناميكية (مثل مهام التحديات المخزنة في الجلسة)
+    if (typeof window !== "undefined") {
+      try {
+        const custom = JSON.parse(sessionStorage.getItem("customTasks") || "{}");
+        if (custom && custom[id]) return custom[id] as Task;
+      } catch {}
+    }
+    return undefined;
+  }, [id]);
 }

@@ -7,12 +7,18 @@ import { buildingTasks } from "./building";
 import { mindfulnessTasks } from "./mindfulness";
 import { discoveryTasks } from "./discovery";
 import { HABIT_TASKS } from "./habits";
+import { COUPLE_TASKS } from "./couple";
+import { KIDS_TASKS } from "./kids";
+import { SEASONAL_TASKS } from "./seasonal";
 import { CATEGORIES } from "./categories";
 import type { Locale } from "@/lib/i18n/types";
 import { LOCALES } from "@/lib/i18n/types";
 
 export * from "./types";
 export { CATEGORIES, getCategory } from "./categories";
+
+// تجميع كل المهام بما فيها الموسمية والزوجية والأطفال
+const allSeasonalList: Task[] = Object.values(SEASONAL_TASKS).flat();
 
 /** كل المهام مجمّعة */
 export const ALL_TASKS: Task[] = [
@@ -24,6 +30,9 @@ export const ALL_TASKS: Task[] = [
   ...mindfulnessTasks,
   ...discoveryTasks,
   ...HABIT_TASKS,
+  ...COUPLE_TASKS,
+  ...KIDS_TASKS,
+  ...allSeasonalList,
 ];
 
 /** خريطة للوصول السريع */

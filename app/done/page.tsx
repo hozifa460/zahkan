@@ -50,6 +50,16 @@ export default function DonePage() {
       baseXp: completedTask.xp,
     });
 
+    // تسجيل تقدم التحدي لو كانت المهمة جزءاً من تحدي 30 يوم
+    const chId = sessionStorage.getItem("currentChallengeId") || sessionStorage.getItem("challengeId");
+    const chDay = sessionStorage.getItem("challengeDay");
+    if (chId && chDay) {
+      stats.completeChallengeDay(chId, Number(chDay));
+      sessionStorage.removeItem("currentChallengeId");
+      sessionStorage.removeItem("challengeId");
+      sessionStorage.removeItem("challengeDay");
+    }
+
     setNewAchievements(result.newAchievements);
     setShowRating(false);
 
@@ -74,12 +84,24 @@ export default function DonePage() {
     const next = stats.recommend({ duration });
     setNextTask(next);
 
-    // شغّل صوت إنجاز (لو مفعّل)
-    if (stats.soundEnabled) {
+    // شغّل نغمة إنجاز جميلة بدون أي ملفات خارجية مفقودة
+    if (stats.soundEnabled && typeof window !== "undefined") {
       try {
-        const audio = new Audio("/sounds/done.mp3");
-        audio.volume = 0.3;
-        audio.play().catch(() => {});
+        const AudioCtx = window.AudioContext || (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext;
+        if (AudioCtx) {
+          const ctx = new AudioCtx();
+          const osc = ctx.createOscillator();
+          const gain = ctx.createGain();
+          osc.connect(gain);
+          gain.connect(ctx.destination);
+          osc.type = "sine";
+          osc.frequency.setValueAtTime(587.33, ctx.currentTime);
+          osc.frequency.exponentialRampToValueAtTime(880, ctx.currentTime + 0.15);
+          gain.gain.setValueAtTime(0.15, ctx.currentTime);
+          gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.4);
+          osc.start();
+          osc.stop(ctx.currentTime + 0.4);
+        }
       } catch {}
     }
   }, [completedTask, rating]);

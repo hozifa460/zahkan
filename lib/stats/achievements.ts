@@ -114,7 +114,9 @@ export function checkAchievements(stats: {
 }): Achievement[] {
   const total = stats.completedTasks.length;
   const byCat = countByCategory(stats.completedTasks);
-  const allCategoriesTried = CATEGORIES.every((c) => (byCat[c.id] || 0) > 0);
+  const CORE_CATEGORIES = ["mental", "physical", "creative", "learning", "building", "mindfulness", "discovery"];
+  const coreTriedCount = CORE_CATEGORIES.filter((c) => (byCat[c] || 0) > 0).length;
+  const allCategoriesTried = coreTriedCount >= 7;
   const highRated = stats.completedTasks.filter((t) => t.rating === 5).length;
 
   return [
@@ -187,7 +189,7 @@ export function checkAchievements(stats: {
       description: "جرّب كل الفئات السبع",
       icon: "🌈",
       unlocked: allCategoriesTried,
-      progress: Math.min(100, (Object.values(byCat).filter((c) => c > 0).length / 7) * 100),
+      progress: Math.min(100, (coreTriedCount / 7) * 100),
       target: 7,
     },
     {

@@ -1,0 +1,23 @@
+{
+  "critical": [],
+  "high": [
+    {
+      "category": "Security",
+      "file": "app\\layout.tsx",
+      "line": 62,
+      "message": "Direct use of dangerouslySetInnerHTML detected.",
+      "recommendation": "Sanitize with DOMPurify or avoid raw HTML injection."
+    }
+  ],
+  "medium": [
+    {
+      "category": "SSR/Hydration",
+      "file": "app\\layout.tsx",
+      "line": 65,
+      "message": "Direct window/localStorage reference in client component without SSR guard.",
+      "recommendation": "Wrap in useEffect or typeof window !== \"undefined\" check."
+    }
+  ],
+  "low": [],
+  "info": []
+}

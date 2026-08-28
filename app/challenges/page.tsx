@@ -157,6 +157,7 @@ function ChallengeDetail({ challenge, onBack }: { challenge: Challenge30Day; onB
     sessionStorage.setItem("customTasks", JSON.stringify(existing));
 
     sessionStorage.setItem("currentTaskId", taskId);
+    sessionStorage.setItem("currentChallengeId", challenge.id);
     sessionStorage.setItem("challengeId", challenge.id);
     sessionStorage.setItem("challengeDay", String(day));
     router.push(`/task/${taskId}`);

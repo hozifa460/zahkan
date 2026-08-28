@@ -187,7 +187,15 @@ export default function HistoryPage() {
                                 </span>
                               </div>
                               <div className="text-sm font-medium" dir={dir === "rtl" ? "rtl" : "ltr"}>
-                                {taskData?.title[locale]}
+                                {taskData?.title?.[locale] || (
+                                  task.taskId.startsWith("routine-")
+                                    ? (task.taskId.includes("morning") ? "روتين الصباح" : "روتين المساء")
+                                    : task.taskId.startsWith("reverse-")
+                                    ? "عكس عادة سيئة"
+                                    : task.taskId.includes("-day-")
+                                    ? `تحدي اليوم ${task.taskId.split("-day-")[1]}`
+                                    : taskData?.title?.ar || "مهمة مُنجزة"
+                                )}
                               </div>
                               <div className="flex items-center justify-between mt-1">
                                 <div className="flex items-center gap-0.5">

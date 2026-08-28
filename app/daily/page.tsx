@@ -36,15 +36,15 @@ function DailyInner() {
     if (isLastTask) {
       // مكافأة: سجّل إكمال الروتين + XP
       markCompleted(routine.id);
-      const routineId2 = `routine-${routine.id}-${Date.now()}`;
-      if (typeof (stats as any).completeTask === "function") {
-        (stats as any).completeTask({
-          id: routineId2,
-          title: `روتين ${ROUTINE_LABELS_AR[routine.id]}`,
-          category: "habit-mind",
-          duration: routine.tasks.reduce((s, t) => s + t.duration, 0),
-        });
-      }
+      const totalDur = routine.tasks.reduce((s, t) => s + t.duration, 0);
+      const validDuration = ([2, 10, 30, 60].includes(totalDur) ? totalDur : 10) as 2 | 10 | 30 | 60;
+      stats.completeTask({
+        taskId: `routine-${routine.id}`,
+        category: "habit-mind",
+        duration: validDuration,
+        energy: "medium",
+        baseXp: 50,
+      });
       setShowComplete(true);
     } else {
       setCurrentIndex((i) => i + 1);

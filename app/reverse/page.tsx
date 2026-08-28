@@ -57,14 +57,14 @@ function ReverseInner() {
         <p className="text-sm text-primary mb-8">{activeTask.duration} دقيقة</p>
         <button
           onClick={() => {
-            if (typeof (stats as any).completeTask === "function") {
-              (stats as any).completeTask({
-                id: `reverse-${selectedHabit}-${selectedAlt}-${Date.now()}`,
-                title: "عكس عادة سيئة",
-                category: "habit-mind",
-                duration: activeTask.duration,
-              });
-            }
+            const validDuration = ([2, 10, 30, 60].includes(activeTask.duration) ? activeTask.duration : 10) as 2 | 10 | 30 | 60;
+            stats.completeTask({
+              taskId: `reverse-${selectedHabit}-${selectedAlt}`,
+              category: "habit-mind",
+              duration: validDuration,
+              energy: "low",
+              baseXp: 30,
+            });
             setActiveTask(null);
             setDone(true);
           }}

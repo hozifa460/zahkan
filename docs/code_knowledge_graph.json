@@ -1,0 +1,6294 @@
+{
+  "meta": {
+    "projectName": "Zawhan",
+    "totalFiles": 82,
+    "totalSymbols": 191,
+    "totalDependencies": 275,
+    "totalRoutes": 14
+  },
+  "routes": [
+    {
+      "route": "/challenges",
+      "file": "app/challenges/page.tsx",
+      "isClient": true
+    },
+    {
+      "route": "/daily",
+      "file": "app/daily/page.tsx",
+      "isClient": true
+    },
+    {
+      "route": "/dev",
+      "file": "app/dev/page.tsx",
+      "isClient": true
+    },
+    {
+      "route": "/discover",
+      "file": "app/discover/page.tsx",
+      "isClient": true
+    },
+    {
+      "route": "/done",
+      "file": "app/done/page.tsx",
+      "isClient": true
+    },
+    {
+      "route": "/energy",
+      "file": "app/energy/page.tsx",
+      "isClient": true
+    },
+    {
+      "route": "/favorites",
+      "file": "app/favorites/page.tsx",
+      "isClient": true
+    },
+    {
+      "route": "/history",
+      "file": "app/history/page.tsx",
+      "isClient": true
+    },
+    {
+      "route": "/",
+      "file": "app/page.tsx",
+      "isClient": true
+    },
+    {
+      "route": "/quiz",
+      "file": "app/quiz/page.tsx",
+      "isClient": true
+    },
+    {
+      "route": "/reverse",
+      "file": "app/reverse/page.tsx",
+      "isClient": true
+    },
+    {
+      "route": "/stats",
+      "file": "app/stats/page.tsx",
+      "isClient": true
+    },
+    {
+      "route": "/task/[id]",
+      "file": "app/task/[id]/page.tsx",
+      "isClient": true
+    },
+    {
+      "route": "/time",
+      "file": "app/time/page.tsx",
+      "isClient": true
+    }
+  ],
+  "files": {
+    "app/challenges/page.tsx": {
+      "path": "app/challenges/page.tsx",
+      "type": "app_route_page",
+      "loc": 287,
+      "sizeBytes": 11596,
+      "imports": [
+        {
+          "source": "react",
+          "symbols": [
+            "useState"
+          ]
+        },
+        {
+          "source": "next/navigation",
+          "symbols": [
+            "useRouter"
+          ]
+        },
+        {
+          "source": "framer-motion",
+          "symbols": [
+            "motion",
+            "AnimatePresence"
+          ]
+        },
+        {
+          "source": "lucide-react",
+          "symbols": [
+            "ArrowRight",
+            "ArrowLeft",
+            "Target",
+            "Check",
+            "X",
+            "Trophy"
+          ]
+        },
+        {
+          "source": "@/hooks/useLocale",
+          "symbols": [
+            "useLocale"
+          ]
+        },
+        {
+          "source": "@/components/LanguageSelector",
+          "symbols": [
+            "LanguageSelector"
+          ]
+        },
+        {
+          "source": "@/hooks/useStats",
+          "symbols": [
+            "useStats"
+          ]
+        },
+        {
+          "source": "@/lib/stats/challenges",
+          "symbols": [
+            "getAllChallenges",
+            "type Challenge30Day"
+          ]
+        },
+        {
+          "source": "@/hooks/useTasks",
+          "symbols": [
+            "useTask"
+          ]
+        },
+        {
+          "source": "@/lib/tasks",
+          "symbols": [
+            "CATEGORIES"
+          ]
+        },
+        {
+          "source": "clsx",
+          "symbols": [
+            "clsx"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "ChallengesPage",
+          "isDefault": true
+        }
+      ],
+      "functions": [
+        {
+          "name": "ChallengesPage",
+          "args": ""
+        },
+        {
+          "name": "ChallengeDetail",
+          "args": "{ challenge, onBack }: { challenge: Challenge30Day; onBack: ("
+        }
+      ],
+      "isClientComponent": true
+    },
+    "app/daily/page.tsx": {
+      "path": "app/daily/page.tsx",
+      "type": "app_route_page",
+      "loc": 183,
+      "sizeBytes": 6628,
+      "imports": [
+        {
+          "source": "react",
+          "symbols": [
+            "useState",
+            "useEffect",
+            "Suspense"
+          ]
+        },
+        {
+          "source": "next/navigation",
+          "symbols": [
+            "useRouter",
+            "useSearchParams"
+          ]
+        },
+        {
+          "source": "framer-motion",
+          "symbols": [
+            "motion",
+            "AnimatePresence"
+          ]
+        },
+        {
+          "source": "lucide-react",
+          "symbols": [
+            "Check",
+            "ArrowRight",
+            "ArrowLeft",
+            "Sparkles",
+            "Calendar"
+          ]
+        },
+        {
+          "source": "@/lib/tasks/dailyRoutines",
+          "symbols": [
+            "DAILY_ROUTINES",
+            "type RoutineId"
+          ]
+        },
+        {
+          "source": "@/lib/stats/dailyCompletion",
+          "symbols": [
+            "markCompleted"
+          ]
+        },
+        {
+          "source": "@/hooks/useStats",
+          "symbols": [
+            "useStats"
+          ]
+        },
+        {
+          "source": "@/hooks/useLocale",
+          "symbols": [
+            "useLocale"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "DailyPage",
+          "isDefault": true
+        }
+      ],
+      "functions": [
+        {
+          "name": "DailyInner",
+          "args": ""
+        },
+        {
+          "name": "DailyPage",
+          "args": ""
+        }
+      ],
+      "isClientComponent": true
+    },
+    "app/dev/page.tsx": {
+      "path": "app/dev/page.tsx",
+      "type": "app_route_page",
+      "loc": 182,
+      "sizeBytes": 7071,
+      "imports": [
+        {
+          "source": "react",
+          "symbols": [
+            "useState"
+          ]
+        },
+        {
+          "source": "@/lib/tasks",
+          "symbols": [
+            "ALL_TASKS",
+            "getStats",
+            "validateTasks"
+          ]
+        },
+        {
+          "source": "@/hooks/useLocale",
+          "symbols": [
+            "useLocale"
+          ]
+        },
+        {
+          "source": "@/lib/tasks/categories",
+          "symbols": [
+            "CATEGORIES"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "DevPage",
+          "isDefault": true
+        }
+      ],
+      "functions": [
+        {
+          "name": "DevPage",
+          "args": ""
+        }
+      ],
+      "isClientComponent": true
+    },
+    "app/discover/page.tsx": {
+      "path": "app/discover/page.tsx",
+      "type": "app_route_page",
+      "loc": 312,
+      "sizeBytes": 14350,
+      "imports": [
+        {
+          "source": "react",
+          "symbols": [
+            "useState",
+            "useEffect",
+            "useMemo"
+          ]
+        },
+        {
+          "source": "next/navigation",
+          "symbols": [
+            "useRouter"
+          ]
+        },
+        {
+          "source": "framer-motion",
+          "symbols": [
+            "motion",
+            "AnimatePresence"
+          ]
+        },
+        {
+          "source": "lucide-react",
+          "symbols": [
+            "ArrowRight",
+            "ArrowLeft",
+            "Calendar",
+            "Users",
+            "Baby",
+            "BookOpen",
+            "Cloud"
+          ]
+        },
+        {
+          "source": "@/hooks/useLocale",
+          "symbols": [
+            "useLocale"
+          ]
+        },
+        {
+          "source": "@/components/LanguageSelector",
+          "symbols": [
+            "LanguageSelector"
+          ]
+        },
+        {
+          "source": "@/lib/tasks/seasonal",
+          "symbols": [
+            "getCurrentSeason",
+            "getCurrentSeasonalTasks",
+            "SEASONS"
+          ]
+        },
+        {
+          "source": "@/lib/tasks/couple",
+          "symbols": [
+            "COUPLE_TASKS"
+          ]
+        },
+        {
+          "source": "@/lib/tasks/kids",
+          "symbols": [
+            "KIDS_TASKS"
+          ]
+        },
+        {
+          "source": "@/lib/tasks/historical",
+          "symbols": [
+            "fetchTodayEvents",
+            "type HistoricalEvent",
+            "eventToTask"
+          ]
+        },
+        {
+          "source": "@/lib/tasks/weather",
+          "symbols": [
+            "fetchWeather",
+            "getWeatherCondition",
+            "getWeatherLabel",
+            "getWeatherEmoji",
+            "getWeatherTip"
+          ]
+        },
+        {
+          "source": "@/lib/tasks",
+          "symbols": [
+            "getTaskById"
+          ]
+        },
+        {
+          "source": "@/lib/tasks",
+          "symbols": [
+            "CATEGORIES"
+          ]
+        },
+        {
+          "source": "clsx",
+          "symbols": [
+            "clsx"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "DiscoverPage",
+          "isDefault": true
+        }
+      ],
+      "functions": [
+        {
+          "name": "DiscoverPage",
+          "args": ""
+        }
+      ],
+      "isClientComponent": true
+    },
+    "app/done/page.tsx": {
+      "path": "app/done/page.tsx",
+      "type": "app_route_page",
+      "loc": 291,
+      "sizeBytes": 12025,
+      "imports": [
+        {
+          "source": "react",
+          "symbols": [
+            "useEffect",
+            "useState"
+          ]
+        },
+        {
+          "source": "next/navigation",
+          "symbols": [
+            "useRouter"
+          ]
+        },
+        {
+          "source": "framer-motion",
+          "symbols": [
+            "motion",
+            "AnimatePresence"
+          ]
+        },
+        {
+          "source": "lucide-react",
+          "symbols": [
+            "Flame",
+            "Sparkles",
+            "ArrowLeft",
+            "ArrowRight",
+            "Trophy"
+          ]
+        },
+        {
+          "source": "@/hooks/useLocale",
+          "symbols": [
+            "useLocale"
+          ]
+        },
+        {
+          "source": "@/components/LanguageSelector",
+          "symbols": [
+            "LanguageSelector"
+          ]
+        },
+        {
+          "source": "@/components/Rating",
+          "symbols": [
+            "Rating"
+          ]
+        },
+        {
+          "source": "@/hooks/useStats",
+          "symbols": [
+            "useStats"
+          ]
+        },
+        {
+          "source": "@/components/Confetti",
+          "symbols": [
+            "celebrate",
+            "miniCelebrate",
+            "sideCelebrate"
+          ]
+        },
+        {
+          "source": "@/lib/tasks",
+          "symbols": [
+            "CATEGORIES",
+            "filterTasks",
+            "getTaskById"
+          ]
+        },
+        {
+          "source": "@/hooks/useTasks",
+          "symbols": [
+            "useTask"
+          ]
+        },
+        {
+          "source": "clsx",
+          "symbols": [
+            "clsx"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "DonePage",
+          "isDefault": true
+        }
+      ],
+      "functions": [
+        {
+          "name": "DonePage",
+          "args": ""
+        }
+      ],
+      "isClientComponent": true
+    },
+    "app/energy/page.tsx": {
+      "path": "app/energy/page.tsx",
+      "type": "app_route_page",
+      "loc": 341,
+      "sizeBytes": 14225,
+      "imports": [
+        {
+          "source": "next/navigation",
+          "symbols": [
+            "useRouter"
+          ]
+        },
+        {
+          "source": "framer-motion",
+          "symbols": [
+            "motion",
+            "AnimatePresence"
+          ]
+        },
+        {
+          "source": "lucide-react",
+          "symbols": [
+            "ArrowRight",
+            "ArrowLeft",
+            "Sparkles",
+            "Filter"
+          ]
+        },
+        {
+          "source": "react",
+          "symbols": [
+            "useState",
+            "useMemo"
+          ]
+        },
+        {
+          "source": "@/hooks/useLocale",
+          "symbols": [
+            "useLocale"
+          ]
+        },
+        {
+          "source": "@/components/LanguageSelector",
+          "symbols": [
+            "LanguageSelector"
+          ]
+        },
+        {
+          "source": "@/components/MoodSelector",
+          "symbols": [
+            "MoodSelector"
+          ]
+        },
+        {
+          "source": "@/hooks/useStats",
+          "symbols": [
+            "useStats"
+          ]
+        },
+        {
+          "source": "@/lib/tasks",
+          "symbols": [
+            "CATEGORIES",
+            "ALL_TASKS",
+            "type TaskCategory",
+            "type TaskDuration",
+            "type TaskEnergy"
+          ]
+        },
+        {
+          "source": "@/components/ToolSelector",
+          "symbols": [
+            "ToolSelector"
+          ]
+        },
+        {
+          "source": "clsx",
+          "symbols": [
+            "clsx"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "EnergyPage",
+          "isDefault": true
+        }
+      ],
+      "functions": [
+        {
+          "name": "EnergyPage",
+          "args": ""
+        }
+      ],
+      "isClientComponent": true
+    },
+    "app/favorites/page.tsx": {
+      "path": "app/favorites/page.tsx",
+      "type": "app_route_page",
+      "loc": 190,
+      "sizeBytes": 7437,
+      "imports": [
+        {
+          "source": "next/navigation",
+          "symbols": [
+            "useRouter"
+          ]
+        },
+        {
+          "source": "framer-motion",
+          "symbols": [
+            "motion"
+          ]
+        },
+        {
+          "source": "lucide-react",
+          "symbols": [
+            "ArrowRight",
+            "ArrowLeft",
+            "Star",
+            "Heart",
+            "Repeat"
+          ]
+        },
+        {
+          "source": "@/hooks/useLocale",
+          "symbols": [
+            "useLocale"
+          ]
+        },
+        {
+          "source": "@/components/LanguageSelector",
+          "symbols": [
+            "LanguageSelector"
+          ]
+        },
+        {
+          "source": "@/hooks/useStats",
+          "symbols": [
+            "useStats"
+          ]
+        },
+        {
+          "source": "@/hooks/useTasks",
+          "symbols": [
+            "useTask"
+          ]
+        },
+        {
+          "source": "@/lib/tasks",
+          "symbols": [
+            "CATEGORIES",
+            "getTaskById"
+          ]
+        },
+        {
+          "source": "clsx",
+          "symbols": [
+            "clsx"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "FavoritesPage",
+          "isDefault": true
+        }
+      ],
+      "functions": [
+        {
+          "name": "FavoriteTaskCard",
+          "args": "{ taskId, rating, onClick }: { taskId: string; rating: number; onClick: ("
+        },
+        {
+          "name": "RepeatedTaskCard",
+          "args": "{ taskId, count }: { taskId: string; count: number }"
+        },
+        {
+          "name": "FavoritesPage",
+          "args": ""
+        }
+      ],
+      "isClientComponent": true
+    },
+    "app/history/page.tsx": {
+      "path": "app/history/page.tsx",
+      "type": "app_route_page",
+      "loc": 230,
+      "sizeBytes": 10322,
+      "imports": [
+        {
+          "source": "react",
+          "symbols": [
+            "useState",
+            "useMemo"
+          ]
+        },
+        {
+          "source": "next/navigation",
+          "symbols": [
+            "useRouter"
+          ]
+        },
+        {
+          "source": "framer-motion",
+          "symbols": [
+            "motion"
+          ]
+        },
+        {
+          "source": "lucide-react",
+          "symbols": [
+            "ArrowRight",
+            "ArrowLeft",
+            "History",
+            "Clock",
+            "Star"
+          ]
+        },
+        {
+          "source": "@/hooks/useLocale",
+          "symbols": [
+            "useLocale"
+          ]
+        },
+        {
+          "source": "@/components/LanguageSelector",
+          "symbols": [
+            "LanguageSelector"
+          ]
+        },
+        {
+          "source": "@/hooks/useStats",
+          "symbols": [
+            "useStats"
+          ]
+        },
+        {
+          "source": "@/lib/tasks",
+          "symbols": [
+            "CATEGORIES",
+            "getTaskById"
+          ]
+        },
+        {
+          "source": "@/lib/stats/analytics",
+          "symbols": [
+            "filterHistory",
+            "type HistoryFilter",
+            "formatDuration"
+          ]
+        },
+        {
+          "source": "clsx",
+          "symbols": [
+            "clsx"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "HistoryPage",
+          "isDefault": true
+        }
+      ],
+      "functions": [
+        {
+          "name": "HistoryPage",
+          "args": ""
+        }
+      ],
+      "isClientComponent": true
+    },
+    "app/layout.tsx": {
+      "path": "app/layout.tsx",
+      "type": "layout",
+      "loc": 75,
+      "sizeBytes": 2181,
+      "imports": [
+        {
+          "source": "next/font/google",
+          "symbols": [
+            "Inter",
+            "IBM_Plex_Sans_Arabic"
+          ]
+        },
+        {
+          "source": "./globals.css",
+          "symbols": []
+        },
+        {
+          "source": "@/components/LocaleBootstrap",
+          "symbols": [
+            "LocaleBootstrap"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "metadata",
+          "isDefault": false
+        },
+        {
+          "name": "viewport",
+          "isDefault": false
+        },
+        {
+          "name": "RootLayout",
+          "isDefault": true
+        }
+      ],
+      "functions": [
+        {
+          "name": "RootLayout",
+          "args": "{ children }: { children: React.ReactNode }"
+        }
+      ],
+      "isClientComponent": false
+    },
+    "app/page.tsx": {
+      "path": "app/page.tsx",
+      "type": "app_route_page",
+      "loc": 211,
+      "sizeBytes": 8638,
+      "imports": [
+        {
+          "source": "react",
+          "symbols": [
+            "useEffect",
+            "useState"
+          ]
+        },
+        {
+          "source": "framer-motion",
+          "symbols": [
+            "motion",
+            "AnimatePresence"
+          ]
+        },
+        {
+          "source": "lucide-react",
+          "symbols": [
+            "Sparkles",
+            "ArrowDown",
+            "Flame",
+            "Compass",
+            "Target",
+            "Brain",
+            "LogIn",
+            "LogOut",
+            "Cloud",
+            "CloudOff",
+            "Loader2",
+            "X"
+          ]
+        },
+        {
+          "source": "next/navigation",
+          "symbols": [
+            "useRouter"
+          ]
+        },
+        {
+          "source": "@/hooks/useLocale",
+          "symbols": [
+            "useLocale"
+          ]
+        },
+        {
+          "source": "@/components/LanguageSelector",
+          "symbols": [
+            "LanguageSelector"
+          ]
+        },
+        {
+          "source": "@/components/AuthButton",
+          "symbols": [
+            "AuthButton"
+          ]
+        },
+        {
+          "source": "@/components/StreakBadge",
+          "symbols": [
+            "StreakBadge"
+          ]
+        },
+        {
+          "source": "@/components/LevelBadge",
+          "symbols": [
+            "LevelBadge"
+          ]
+        },
+        {
+          "source": "@/components/MotivationalQuote",
+          "symbols": [
+            "MotivationalQuote"
+          ]
+        },
+        {
+          "source": "@/components/CoachBubble",
+          "symbols": [
+            "CoachBubble"
+          ]
+        },
+        {
+          "source": "@/components/DailyHabitsButton",
+          "symbols": [
+            "DailyHabitsButton"
+          ]
+        },
+        {
+          "source": "@/components/ReverseHabitButton",
+          "symbols": [
+            "ReverseHabitButton"
+          ]
+        },
+        {
+          "source": "@/hooks/useStats",
+          "symbols": [
+            "useStats"
+          ]
+        },
+        {
+          "source": "@/lib/auth",
+          "symbols": [
+            "useAuth"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "Home",
+          "isDefault": true
+        }
+      ],
+      "functions": [
+        {
+          "name": "Home",
+          "args": ""
+        }
+      ],
+      "isClientComponent": true
+    },
+    "app/quiz/page.tsx": {
+      "path": "app/quiz/page.tsx",
+      "type": "app_route_page",
+      "loc": 183,
+      "sizeBytes": 7141,
+      "imports": [
+        {
+          "source": "react",
+          "symbols": [
+            "useState"
+          ]
+        },
+        {
+          "source": "next/navigation",
+          "symbols": [
+            "useRouter"
+          ]
+        },
+        {
+          "source": "framer-motion",
+          "symbols": [
+            "motion",
+            "AnimatePresence"
+          ]
+        },
+        {
+          "source": "lucide-react",
+          "symbols": [
+            "ArrowRight",
+            "ArrowLeft",
+            "Sparkles",
+            "RefreshCw"
+          ]
+        },
+        {
+          "source": "@/hooks/useLocale",
+          "symbols": [
+            "useLocale"
+          ]
+        },
+        {
+          "source": "@/components/LanguageSelector",
+          "symbols": [
+            "LanguageSelector"
+          ]
+        },
+        {
+          "source": "@/hooks/useStats",
+          "symbols": [
+            "useStats"
+          ]
+        },
+        {
+          "source": "@/lib/stats/quiz",
+          "symbols": [
+            "QUIZ_QUESTIONS",
+            "calculateBoredType",
+            "getBoredTypeById",
+            "type BoredType"
+          ]
+        },
+        {
+          "source": "clsx",
+          "symbols": [
+            "clsx"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "QuizPage",
+          "isDefault": true
+        }
+      ],
+      "functions": [
+        {
+          "name": "QuizPage",
+          "args": ""
+        }
+      ],
+      "isClientComponent": true
+    },
+    "app/reverse/page.tsx": {
+      "path": "app/reverse/page.tsx",
+      "type": "app_route_page",
+      "loc": 265,
+      "sizeBytes": 11453,
+      "imports": [
+        {
+          "source": "react",
+          "symbols": [
+            "useState",
+            "useEffect",
+            "Suspense"
+          ]
+        },
+        {
+          "source": "next/navigation",
+          "symbols": [
+            "useRouter",
+            "useSearchParams"
+          ]
+        },
+        {
+          "source": "framer-motion",
+          "symbols": [
+            "motion",
+            "AnimatePresence"
+          ]
+        },
+        {
+          "source": "lucide-react",
+          "symbols": [
+            "ArrowRight",
+            "Repeat",
+            "Check",
+            "ArrowLeft",
+            "Sparkles"
+          ]
+        },
+        {
+          "source": "@/lib/tasks/reverseHabits",
+          "symbols": [
+            "REVERSE_HABITS",
+            "alternativeToTask",
+            "type BadHabitId"
+          ]
+        },
+        {
+          "source": "@/hooks/useStats",
+          "symbols": [
+            "useStats"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "ReversePage",
+          "isDefault": true
+        }
+      ],
+      "functions": [
+        {
+          "name": "ReverseInner",
+          "args": ""
+        },
+        {
+          "name": "ReversePage",
+          "args": ""
+        }
+      ],
+      "isClientComponent": true
+    },
+    "app/stats/page.tsx": {
+      "path": "app/stats/page.tsx",
+      "type": "app_route_page",
+      "loc": 288,
+      "sizeBytes": 12192,
+      "imports": [
+        {
+          "source": "next/navigation",
+          "symbols": [
+            "useRouter"
+          ]
+        },
+        {
+          "source": "framer-motion",
+          "symbols": [
+            "motion"
+          ]
+        },
+        {
+          "source": "lucide-react",
+          "symbols": [
+            "ArrowRight",
+            "ArrowLeft",
+            "Trash2",
+            "Trophy",
+            "Target",
+            "Clock",
+            "Flame",
+            "History"
+          ]
+        },
+        {
+          "source": "@/hooks/useLocale",
+          "symbols": [
+            "useLocale"
+          ]
+        },
+        {
+          "source": "@/components/LanguageSelector",
+          "symbols": [
+            "LanguageSelector"
+          ]
+        },
+        {
+          "source": "@/components/StreakBadge",
+          "symbols": [
+            "StreakBadge"
+          ]
+        },
+        {
+          "source": "@/components/LevelBadge",
+          "symbols": [
+            "LevelBadge"
+          ]
+        },
+        {
+          "source": "@/components/Heatmap",
+          "symbols": [
+            "Heatmap"
+          ]
+        },
+        {
+          "source": "@/components/WeeklyComparison",
+          "symbols": [
+            "WeeklyComparison"
+          ]
+        },
+        {
+          "source": "@/hooks/useStats",
+          "symbols": [
+            "useStats"
+          ]
+        },
+        {
+          "source": "@/lib/tasks",
+          "symbols": [
+            "CATEGORIES"
+          ]
+        },
+        {
+          "source": "@/lib/stats/analytics",
+          "symbols": [
+            "getMostProductiveHours",
+            "getMostProductiveDays",
+            "getDayName",
+            "formatDuration"
+          ]
+        },
+        {
+          "source": "clsx",
+          "symbols": [
+            "clsx"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "StatsPage",
+          "isDefault": true
+        }
+      ],
+      "functions": [
+        {
+          "name": "StatsPage",
+          "args": ""
+        },
+        {
+          "name": "StatBox",
+          "args": "{ icon, label, value, color }: { icon: React.ReactNode; label: string; value: string; color: string }"
+        }
+      ],
+      "isClientComponent": true
+    },
+    "app/task/[id]/layout.tsx": {
+      "path": "app/task/[id]/layout.tsx",
+      "type": "layout",
+      "loc": 11,
+      "sizeBytes": 406,
+      "imports": [
+        {
+          "source": "@/lib/tasks",
+          "symbols": [
+            "ALL_TASKS"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "generateStaticParams",
+          "isDefault": false
+        },
+        {
+          "name": "TaskLayout",
+          "isDefault": true
+        }
+      ],
+      "functions": [
+        {
+          "name": "generateStaticParams",
+          "args": ""
+        },
+        {
+          "name": "TaskLayout",
+          "args": "{ children }: { children: React.ReactNode }"
+        }
+      ],
+      "isClientComponent": false
+    },
+    "app/task/[id]/page.tsx": {
+      "path": "app/task/[id]/page.tsx",
+      "type": "app_route_page",
+      "loc": 247,
+      "sizeBytes": 8723,
+      "imports": [
+        {
+          "source": "next/navigation",
+          "symbols": [
+            "useParams",
+            "useRouter"
+          ]
+        },
+        {
+          "source": "framer-motion",
+          "symbols": [
+            "motion"
+          ]
+        },
+        {
+          "source": "react",
+          "symbols": [
+            "useEffect",
+            "useState"
+          ]
+        },
+        {
+          "source": "lucide-react",
+          "symbols": [
+            "ArrowRight",
+            "ArrowLeft",
+            "Check",
+            "Sparkles",
+            "Clock",
+            "AlertCircle"
+          ]
+        },
+        {
+          "source": "@/hooks/useLocale",
+          "symbols": [
+            "useLocale"
+          ]
+        },
+        {
+          "source": "@/components/LanguageSelector",
+          "symbols": [
+            "LanguageSelector"
+          ]
+        },
+        {
+          "source": "@/components/Timer",
+          "symbols": [
+            "Timer"
+          ]
+        },
+        {
+          "source": "@/hooks/useTasks",
+          "symbols": [
+            "useTask"
+          ]
+        },
+        {
+          "source": "@/lib/tasks",
+          "symbols": [
+            "CATEGORIES"
+          ]
+        },
+        {
+          "source": "clsx",
+          "symbols": [
+            "clsx"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "TaskPage",
+          "isDefault": true
+        }
+      ],
+      "functions": [
+        {
+          "name": "TaskPage",
+          "args": ""
+        }
+      ],
+      "isClientComponent": true
+    },
+    "app/time/page.tsx": {
+      "path": "app/time/page.tsx",
+      "type": "app_route_page",
+      "loc": 155,
+      "sizeBytes": 6471,
+      "imports": [
+        {
+          "source": "next/navigation",
+          "symbols": [
+            "useRouter"
+          ]
+        },
+        {
+          "source": "framer-motion",
+          "symbols": [
+            "motion"
+          ]
+        },
+        {
+          "source": "lucide-react",
+          "symbols": [
+            "Clock",
+            "ArrowRight",
+            "ArrowLeft",
+            "Sparkles"
+          ]
+        },
+        {
+          "source": "@/hooks/useLocale",
+          "symbols": [
+            "useLocale"
+          ]
+        },
+        {
+          "source": "@/components/LanguageSelector",
+          "symbols": [
+            "LanguageSelector"
+          ]
+        },
+        {
+          "source": "clsx",
+          "symbols": [
+            "clsx"
+          ]
+        },
+        {
+          "source": "@/lib/stats/doubleTasks",
+          "symbols": [
+            "getRandomChallenge"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "TimePage",
+          "isDefault": true
+        }
+      ],
+      "functions": [
+        {
+          "name": "TimePage",
+          "args": ""
+        }
+      ],
+      "isClientComponent": true
+    },
+    "components/AuthButton.tsx": {
+      "path": "components/AuthButton.tsx",
+      "type": "ui_component",
+      "loc": 253,
+      "sizeBytes": 10688,
+      "imports": [
+        {
+          "source": "react",
+          "symbols": [
+            "useState",
+            "useEffect"
+          ]
+        },
+        {
+          "source": "framer-motion",
+          "symbols": [
+            "motion",
+            "AnimatePresence"
+          ]
+        },
+        {
+          "source": "lucide-react",
+          "symbols": [
+            "LogIn",
+            "LogOut",
+            "Cloud",
+            "CloudOff",
+            "Loader2",
+            "X"
+          ]
+        },
+        {
+          "source": "@/lib/auth",
+          "symbols": [
+            "useAuth",
+            "signInWithGoogle",
+            "signOut",
+            "signInWithEmail",
+            "signUpWithEmail"
+          ]
+        },
+        {
+          "source": "@/lib/sync",
+          "symbols": [
+            "loadUserDataFromCloud"
+          ]
+        },
+        {
+          "source": "@/hooks/useLocale",
+          "symbols": [
+            "useLocale"
+          ]
+        },
+        {
+          "source": "@/lib/supabase",
+          "symbols": [
+            "isSupabaseConfigured"
+          ]
+        },
+        {
+          "source": "clsx",
+          "symbols": [
+            "clsx"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "AuthButton",
+          "isDefault": false
+        }
+      ],
+      "functions": [
+        {
+          "name": "AuthButton",
+          "args": ""
+        }
+      ],
+      "isClientComponent": true
+    },
+    "components/CoachBubble.tsx": {
+      "path": "components/CoachBubble.tsx",
+      "type": "ui_component",
+      "loc": 99,
+      "sizeBytes": 3345,
+      "imports": [
+        {
+          "source": "react",
+          "symbols": [
+            "useEffect",
+            "useState"
+          ]
+        },
+        {
+          "source": "framer-motion",
+          "symbols": [
+            "motion",
+            "AnimatePresence"
+          ]
+        },
+        {
+          "source": "@/hooks/useLocale",
+          "symbols": [
+            "useLocale"
+          ]
+        },
+        {
+          "source": "@/hooks/useStats",
+          "symbols": [
+            "useStats"
+          ]
+        },
+        {
+          "source": "@/lib/stats/coach",
+          "symbols": [
+            "getCoachMessage",
+            "type CoachMessage"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "CoachBubble",
+          "isDefault": false
+        }
+      ],
+      "functions": [
+        {
+          "name": "CoachBubble",
+          "args": ""
+        }
+      ],
+      "isClientComponent": true
+    },
+    "components/Confetti.ts": {
+      "path": "components/Confetti.ts",
+      "type": "ui_component",
+      "loc": 83,
+      "sizeBytes": 1567,
+      "imports": [
+        {
+          "source": "canvas-confetti",
+          "symbols": [
+            "confetti"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "celebrate",
+          "isDefault": false
+        },
+        {
+          "name": "miniCelebrate",
+          "isDefault": false
+        },
+        {
+          "name": "sideCelebrate",
+          "isDefault": false
+        }
+      ],
+      "functions": [
+        {
+          "name": "celebrate",
+          "args": ""
+        },
+        {
+          "name": "fire",
+          "args": "particleRatio: number, opts: confetti.Options"
+        },
+        {
+          "name": "miniCelebrate",
+          "args": ""
+        },
+        {
+          "name": "sideCelebrate",
+          "args": ""
+        },
+        {
+          "name": "frame",
+          "args": ""
+        }
+      ],
+      "isClientComponent": true
+    },
+    "components/DailyHabitsButton.tsx": {
+      "path": "components/DailyHabitsButton.tsx",
+      "type": "ui_component",
+      "loc": 77,
+      "sizeBytes": 2603,
+      "imports": [
+        {
+          "source": "react",
+          "symbols": [
+            "useState",
+            "useEffect"
+          ]
+        },
+        {
+          "source": "framer-motion",
+          "symbols": [
+            "motion",
+            "AnimatePresence"
+          ]
+        },
+        {
+          "source": "lucide-react",
+          "symbols": [
+            "Sun",
+            "Moon",
+            "Check"
+          ]
+        },
+        {
+          "source": "next/navigation",
+          "symbols": [
+            "useRouter"
+          ]
+        },
+        {
+          "source": "@/lib/tasks/dailyRoutines",
+          "symbols": [
+            "getCurrentRoutineId",
+            "DAILY_ROUTINES",
+            "type RoutineId"
+          ]
+        },
+        {
+          "source": "@/lib/stats/dailyCompletion",
+          "symbols": [
+            "isCompleted"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "DailyHabitsButton",
+          "isDefault": false
+        }
+      ],
+      "functions": [
+        {
+          "name": "DailyHabitsButton",
+          "args": ""
+        }
+      ],
+      "isClientComponent": true
+    },
+    "components/Heatmap.tsx": {
+      "path": "components/Heatmap.tsx",
+      "type": "ui_component",
+      "loc": 90,
+      "sizeBytes": 3469,
+      "imports": [
+        {
+          "source": "react",
+          "symbols": [
+            "useMemo"
+          ]
+        },
+        {
+          "source": "framer-motion",
+          "symbols": [
+            "motion"
+          ]
+        },
+        {
+          "source": "@/lib/stats/analytics",
+          "symbols": [
+            "buildHeatmap"
+          ]
+        },
+        {
+          "source": "@/lib/stats/analytics",
+          "symbols": [
+            "getDayName"
+          ]
+        },
+        {
+          "source": "@/hooks/useStats",
+          "symbols": [
+            "useStats"
+          ]
+        },
+        {
+          "source": "clsx",
+          "symbols": [
+            "clsx"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "Heatmap",
+          "isDefault": false
+        }
+      ],
+      "functions": [
+        {
+          "name": "Heatmap",
+          "args": ""
+        }
+      ],
+      "isClientComponent": true
+    },
+    "components/LanguageSelector.tsx": {
+      "path": "components/LanguageSelector.tsx",
+      "type": "ui_component",
+      "loc": 90,
+      "sizeBytes": 3295,
+      "imports": [
+        {
+          "source": "react",
+          "symbols": [
+            "useState",
+            "useRef",
+            "useEffect"
+          ]
+        },
+        {
+          "source": "framer-motion",
+          "symbols": [
+            "motion",
+            "AnimatePresence"
+          ]
+        },
+        {
+          "source": "lucide-react",
+          "symbols": [
+            "Globe",
+            "Check",
+            "ChevronDown"
+          ]
+        },
+        {
+          "source": "@/hooks/useLocale",
+          "symbols": [
+            "useLocale"
+          ]
+        },
+        {
+          "source": "@/lib/i18n",
+          "symbols": [
+            "LOCALE_INFO",
+            "LOCALES",
+            "t"
+          ]
+        },
+        {
+          "source": "clsx",
+          "symbols": [
+            "clsx"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "LanguageSelector",
+          "isDefault": false
+        }
+      ],
+      "functions": [
+        {
+          "name": "LanguageSelector",
+          "args": "{ compact = false }: { compact?: boolean }"
+        },
+        {
+          "name": "onClick",
+          "args": "e: MouseEvent"
+        }
+      ],
+      "isClientComponent": true
+    },
+    "components/LevelBadge.tsx": {
+      "path": "components/LevelBadge.tsx",
+      "type": "ui_component",
+      "loc": 62,
+      "sizeBytes": 1881,
+      "imports": [
+        {
+          "source": "framer-motion",
+          "symbols": [
+            "motion"
+          ]
+        },
+        {
+          "source": "lucide-react",
+          "symbols": [
+            "Sparkles"
+          ]
+        },
+        {
+          "source": "clsx",
+          "symbols": [
+            "clsx"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "LevelBadge",
+          "isDefault": false
+        }
+      ],
+      "functions": [
+        {
+          "name": "LevelBadge",
+          "args": "{ level, totalXp, progress, size = \"md\" }: LevelBadgeProps"
+        }
+      ],
+      "isClientComponent": true
+    },
+    "components/LocaleBootstrap.tsx": {
+      "path": "components/LocaleBootstrap.tsx",
+      "type": "ui_component",
+      "loc": 62,
+      "sizeBytes": 2032,
+      "imports": [
+        {
+          "source": "react",
+          "symbols": [
+            "useEffect",
+            "useState"
+          ]
+        },
+        {
+          "source": "@/lib/i18n/store",
+          "symbols": [
+            "useLocaleStore"
+          ]
+        },
+        {
+          "source": "@/lib/i18n",
+          "symbols": [
+            "LOCALE_INFO"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "LocaleBootstrap",
+          "isDefault": false
+        }
+      ],
+      "functions": [
+        {
+          "name": "getInitialLocale",
+          "args": ""
+        },
+        {
+          "name": "LocaleBootstrap",
+          "args": ""
+        }
+      ],
+      "isClientComponent": true
+    },
+    "components/MoodSelector.tsx": {
+      "path": "components/MoodSelector.tsx",
+      "type": "ui_component",
+      "loc": 51,
+      "sizeBytes": 1444,
+      "imports": [
+        {
+          "source": "framer-motion",
+          "symbols": [
+            "motion"
+          ]
+        },
+        {
+          "source": "@/lib/stats/context",
+          "symbols": [
+            "MOOD_EMOJI",
+            "getMoodLabel"
+          ]
+        },
+        {
+          "source": "clsx",
+          "symbols": [
+            "clsx"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "MoodSelector",
+          "isDefault": false
+        }
+      ],
+      "functions": [
+        {
+          "name": "MoodSelector",
+          "args": "{ value, onChange, locale = \"ar\" }: MoodSelectorProps"
+        }
+      ],
+      "isClientComponent": true
+    },
+    "components/MotivationalQuote.tsx": {
+      "path": "components/MotivationalQuote.tsx",
+      "type": "ui_component",
+      "loc": 58,
+      "sizeBytes": 1750,
+      "imports": [
+        {
+          "source": "react",
+          "symbols": [
+            "useEffect",
+            "useState"
+          ]
+        },
+        {
+          "source": "framer-motion",
+          "symbols": [
+            "motion",
+            "AnimatePresence"
+          ]
+        },
+        {
+          "source": "@/lib/i18n/quotes",
+          "symbols": [
+            "getTodayQuote",
+            "QUOTES"
+          ]
+        },
+        {
+          "source": "@/hooks/useLocale",
+          "symbols": [
+            "useLocale"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "MotivationalQuote",
+          "isDefault": false
+        }
+      ],
+      "functions": [
+        {
+          "name": "MotivationalQuote",
+          "args": "{ randomize = false, className = \"\" }: QuoteProps"
+        }
+      ],
+      "isClientComponent": true
+    },
+    "components/Rating.tsx": {
+      "path": "components/Rating.tsx",
+      "type": "ui_component",
+      "loc": 98,
+      "sizeBytes": 2663,
+      "imports": [
+        {
+          "source": "react",
+          "symbols": [
+            "useState"
+          ]
+        },
+        {
+          "source": "framer-motion",
+          "symbols": [
+            "motion"
+          ]
+        },
+        {
+          "source": "lucide-react",
+          "symbols": [
+            "Star"
+          ]
+        },
+        {
+          "source": "clsx",
+          "symbols": [
+            "clsx"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "Rating",
+          "isDefault": false
+        }
+      ],
+      "functions": [
+        {
+          "name": "Rating",
+          "args": "{\n  value,\n  onChange,\n  size = \"md\",\n  readonly = false,\n  showLabels = false,\n}: RatingProps"
+        }
+      ],
+      "isClientComponent": true
+    },
+    "components/ReverseHabitButton.tsx": {
+      "path": "components/ReverseHabitButton.tsx",
+      "type": "ui_component",
+      "loc": 19,
+      "sizeBytes": 634,
+      "imports": [
+        {
+          "source": "next/link",
+          "symbols": [
+            "Link"
+          ]
+        },
+        {
+          "source": "lucide-react",
+          "symbols": [
+            "Repeat"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "ReverseHabitButton",
+          "isDefault": false
+        }
+      ],
+      "functions": [
+        {
+          "name": "ReverseHabitButton",
+          "args": ""
+        }
+      ],
+      "isClientComponent": true
+    },
+    "components/StreakBadge.tsx": {
+      "path": "components/StreakBadge.tsx",
+      "type": "ui_component",
+      "loc": 45,
+      "sizeBytes": 1356,
+      "imports": [
+        {
+          "source": "framer-motion",
+          "symbols": [
+            "motion"
+          ]
+        },
+        {
+          "source": "lucide-react",
+          "symbols": [
+            "Flame"
+          ]
+        },
+        {
+          "source": "clsx",
+          "symbols": [
+            "clsx"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "StreakBadge",
+          "isDefault": false
+        }
+      ],
+      "functions": [
+        {
+          "name": "StreakBadge",
+          "args": "{ streak, size = \"md\", showLabel = true }: StreakBadgeProps"
+        }
+      ],
+      "isClientComponent": true
+    },
+    "components/Timer.tsx": {
+      "path": "components/Timer.tsx",
+      "type": "ui_component",
+      "loc": 212,
+      "sizeBytes": 6995,
+      "imports": [
+        {
+          "source": "react",
+          "symbols": [
+            "useEffect",
+            "useState",
+            "useRef"
+          ]
+        },
+        {
+          "source": "framer-motion",
+          "symbols": [
+            "motion",
+            "AnimatePresence"
+          ]
+        },
+        {
+          "source": "lucide-react",
+          "symbols": [
+            "Play",
+            "Pause",
+            "RotateCcw",
+            "Check",
+            "Clock"
+          ]
+        },
+        {
+          "source": "clsx",
+          "symbols": [
+            "clsx"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "Timer",
+          "isDefault": false
+        }
+      ],
+      "functions": [
+        {
+          "name": "Timer",
+          "args": "{ durationMinutes, onComplete, onStop, color = \"#10b981\", size = 240, autoStart = false, canComplete = false }: TimerProps"
+        }
+      ],
+      "isClientComponent": true
+    },
+    "components/ToolSelector.tsx": {
+      "path": "components/ToolSelector.tsx",
+      "type": "ui_component",
+      "loc": 61,
+      "sizeBytes": 1849,
+      "imports": [
+        {
+          "source": "framer-motion",
+          "symbols": [
+            "motion"
+          ]
+        },
+        {
+          "source": "@/lib/tasks/tools",
+          "symbols": [
+            "TOOLS",
+            "type Tool"
+          ]
+        },
+        {
+          "source": "clsx",
+          "symbols": [
+            "clsx"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "ToolSelector",
+          "isDefault": false
+        }
+      ],
+      "functions": [
+        {
+          "name": "ToolSelector",
+          "args": "{ selected, onChange }: ToolSelectorProps"
+        }
+      ],
+      "isClientComponent": true
+    },
+    "components/WeeklyComparison.tsx": {
+      "path": "components/WeeklyComparison.tsx",
+      "type": "ui_component",
+      "loc": 138,
+      "sizeBytes": 5660,
+      "imports": [
+        {
+          "source": "react",
+          "symbols": [
+            "useMemo"
+          ]
+        },
+        {
+          "source": "framer-motion",
+          "symbols": [
+            "motion"
+          ]
+        },
+        {
+          "source": "lucide-react",
+          "symbols": [
+            "TrendingUp",
+            "TrendingDown",
+            "Minus",
+            "Calendar"
+          ]
+        },
+        {
+          "source": "@/lib/stats/analytics",
+          "symbols": [
+            "compareWeeks",
+            "formatDuration"
+          ]
+        },
+        {
+          "source": "@/lib/tasks",
+          "symbols": [
+            "CATEGORIES"
+          ]
+        },
+        {
+          "source": "@/hooks/useStats",
+          "symbols": [
+            "useStats"
+          ]
+        },
+        {
+          "source": "clsx",
+          "symbols": [
+            "clsx"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "WeeklyComparison",
+          "isDefault": false
+        }
+      ],
+      "functions": [
+        {
+          "name": "WeeklyComparison",
+          "args": ""
+        }
+      ],
+      "isClientComponent": true
+    },
+    "hooks/useLocale.ts": {
+      "path": "hooks/useLocale.ts",
+      "type": "custom_hook",
+      "loc": 23,
+      "sizeBytes": 582,
+      "imports": [
+        {
+          "source": "react",
+          "symbols": [
+            "useEffect"
+          ]
+        },
+        {
+          "source": "@/lib/i18n/store",
+          "symbols": [
+            "useLocaleStore"
+          ]
+        },
+        {
+          "source": "@/lib/i18n",
+          "symbols": [
+            "t"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "useLocale",
+          "isDefault": false
+        }
+      ],
+      "functions": [
+        {
+          "name": "useLocale",
+          "args": ""
+        }
+      ],
+      "isClientComponent": true
+    },
+    "hooks/useStats.ts": {
+      "path": "hooks/useStats.ts",
+      "type": "custom_hook",
+      "loc": 126,
+      "sizeBytes": 4001,
+      "imports": [
+        {
+          "source": "@/lib/stats/store",
+          "symbols": [
+            "useStatsStore"
+          ]
+        },
+        {
+          "source": "react",
+          "symbols": [
+            "useMemo"
+          ]
+        },
+        {
+          "source": "@/lib/stats/levels",
+          "symbols": [
+            "getLevelByXp",
+            "getLevelProgress",
+            "getNextLevel"
+          ]
+        },
+        {
+          "source": "@/lib/stats/achievements",
+          "symbols": [
+            "checkAchievements",
+            "countByCategory",
+            "moodStats"
+          ]
+        },
+        {
+          "source": "@/lib/stats/recommender",
+          "symbols": [
+            "recommendTask"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "useStats",
+          "isDefault": false
+        }
+      ],
+      "functions": [
+        {
+          "name": "useStats",
+          "args": ""
+        }
+      ],
+      "isClientComponent": true
+    },
+    "hooks/useTasks.ts": {
+      "path": "hooks/useTasks.ts",
+      "type": "custom_hook",
+      "loc": 29,
+      "sizeBytes": 979,
+      "imports": [
+        {
+          "source": "react",
+          "symbols": [
+            "useMemo"
+          ]
+        },
+        {
+          "source": "@/lib/tasks",
+          "symbols": [
+            "filterTasks",
+            "getTaskById"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "useTasks",
+          "isDefault": false
+        },
+        {
+          "name": "useTask",
+          "isDefault": false
+        }
+      ],
+      "functions": [
+        {
+          "name": "useTasks",
+          "args": "filter: TaskFilter = {}"
+        },
+        {
+          "name": "useTask",
+          "args": "id: string | null"
+        }
+      ],
+      "isClientComponent": true
+    },
+    "lib/auth.ts": {
+      "path": "lib/auth.ts",
+      "type": "domain_lib",
+      "loc": 67,
+      "sizeBytes": 1898,
+      "imports": [
+        {
+          "source": "react",
+          "symbols": [
+            "useEffect",
+            "useState"
+          ]
+        },
+        {
+          "source": "@/lib/supabase",
+          "symbols": [
+            "supabase",
+            "isSupabaseConfigured"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "useAuth",
+          "isDefault": false
+        }
+      ],
+      "functions": [
+        {
+          "name": "useAuth",
+          "args": ""
+        },
+        {
+          "name": "signOut",
+          "args": ""
+        },
+        {
+          "name": "signInWithGoogle",
+          "args": ""
+        },
+        {
+          "name": "signInWithEmail",
+          "args": "email: string, password: string"
+        },
+        {
+          "name": "signUpWithEmail",
+          "args": "email: string, password: string"
+        }
+      ],
+      "isClientComponent": true
+    },
+    "lib/i18n/ar-eg.ts": {
+      "path": "lib/i18n/ar-eg.ts",
+      "type": "domain_lib",
+      "loc": 78,
+      "sizeBytes": 2664,
+      "imports": [],
+      "exports": [
+        {
+          "name": "arEg",
+          "isDefault": false
+        }
+      ],
+      "functions": [],
+      "isClientComponent": false
+    },
+    "lib/i18n/ar-levant.ts": {
+      "path": "lib/i18n/ar-levant.ts",
+      "type": "domain_lib",
+      "loc": 78,
+      "sizeBytes": 2641,
+      "imports": [],
+      "exports": [
+        {
+          "name": "arLevant",
+          "isDefault": false
+        }
+      ],
+      "functions": [],
+      "isClientComponent": false
+    },
+    "lib/i18n/ar-maghreb.ts": {
+      "path": "lib/i18n/ar-maghreb.ts",
+      "type": "domain_lib",
+      "loc": 78,
+      "sizeBytes": 2695,
+      "imports": [],
+      "exports": [
+        {
+          "name": "arMaghreb",
+          "isDefault": false
+        }
+      ],
+      "functions": [],
+      "isClientComponent": false
+    },
+    "lib/i18n/ar-sa.ts": {
+      "path": "lib/i18n/ar-sa.ts",
+      "type": "domain_lib",
+      "loc": 78,
+      "sizeBytes": 2667,
+      "imports": [],
+      "exports": [
+        {
+          "name": "arSa",
+          "isDefault": false
+        }
+      ],
+      "functions": [],
+      "isClientComponent": false
+    },
+    "lib/i18n/ar.ts": {
+      "path": "lib/i18n/ar.ts",
+      "type": "domain_lib",
+      "loc": 78,
+      "sizeBytes": 2647,
+      "imports": [],
+      "exports": [
+        {
+          "name": "ar",
+          "isDefault": false
+        }
+      ],
+      "functions": [],
+      "isClientComponent": false
+    },
+    "lib/i18n/en.ts": {
+      "path": "lib/i18n/en.ts",
+      "type": "domain_lib",
+      "loc": 78,
+      "sizeBytes": 2227,
+      "imports": [],
+      "exports": [
+        {
+          "name": "en",
+          "isDefault": false
+        }
+      ],
+      "functions": [],
+      "isClientComponent": false
+    },
+    "lib/i18n/index.ts": {
+      "path": "lib/i18n/index.ts",
+      "type": "domain_lib",
+      "loc": 64,
+      "sizeBytes": 2378,
+      "imports": [
+        {
+          "source": "./en",
+          "symbols": [
+            "en"
+          ]
+        },
+        {
+          "source": "./ar",
+          "symbols": [
+            "ar"
+          ]
+        },
+        {
+          "source": "./ar-eg",
+          "symbols": [
+            "arEg"
+          ]
+        },
+        {
+          "source": "./ar-sa",
+          "symbols": [
+            "arSa"
+          ]
+        },
+        {
+          "source": "./ar-levant",
+          "symbols": [
+            "arLevant"
+          ]
+        },
+        {
+          "source": "./ar-maghreb",
+          "symbols": [
+            "arMaghreb"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "translations",
+          "isDefault": false
+        },
+        {
+          "name": "t",
+          "isDefault": false
+        },
+        {
+          "name": "detectBrowserLocale",
+          "isDefault": false
+        }
+      ],
+      "functions": [
+        {
+          "name": "t",
+          "args": "locale: Locale, key: TranslationKey"
+        },
+        {
+          "name": "detectBrowserLocale",
+          "args": ""
+        }
+      ],
+      "isClientComponent": false
+    },
+    "lib/i18n/quotes.ts": {
+      "path": "lib/i18n/quotes.ts",
+      "type": "domain_lib",
+      "loc": 369,
+      "sizeBytes": 13452,
+      "imports": [],
+      "exports": [
+        {
+          "name": "MotivationalQuote",
+          "isDefault": false
+        },
+        {
+          "name": "QUOTES",
+          "isDefault": false
+        },
+        {
+          "name": "getRandomQuote",
+          "isDefault": false
+        },
+        {
+          "name": "getTodayQuote",
+          "isDefault": false
+        }
+      ],
+      "functions": [
+        {
+          "name": "getRandomQuote",
+          "args": "seed?: number"
+        },
+        {
+          "name": "getTodayQuote",
+          "args": ""
+        }
+      ],
+      "isClientComponent": false
+    },
+    "lib/i18n/store.ts": {
+      "path": "lib/i18n/store.ts",
+      "type": "zustand_store",
+      "loc": 56,
+      "sizeBytes": 1626,
+      "imports": [
+        {
+          "source": "zustand",
+          "symbols": [
+            "create"
+          ]
+        },
+        {
+          "source": "zustand/middleware",
+          "symbols": [
+            "persist",
+            "createJSONStorage"
+          ]
+        },
+        {
+          "source": "./index",
+          "symbols": [
+            "LOCALE_INFO"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "useLocaleStore",
+          "isDefault": false
+        }
+      ],
+      "functions": [],
+      "isClientComponent": true
+    },
+    "lib/i18n/types.ts": {
+      "path": "lib/i18n/types.ts",
+      "type": "domain_lib",
+      "loc": 100,
+      "sizeBytes": 2741,
+      "imports": [],
+      "exports": [
+        {
+          "name": "Locale",
+          "isDefault": false
+        },
+        {
+          "name": "LOCALES",
+          "isDefault": false
+        },
+        {
+          "name": "LocaleInfo",
+          "isDefault": false
+        },
+        {
+          "name": "LOCALE_INFO",
+          "isDefault": false
+        },
+        {
+          "name": "TranslationKey",
+          "isDefault": false
+        },
+        {
+          "name": "Translations",
+          "isDefault": false
+        }
+      ],
+      "functions": [],
+      "isClientComponent": false
+    },
+    "lib/stats/achievements.ts": {
+      "path": "lib/stats/achievements.ts",
+      "type": "domain_lib",
+      "loc": 214,
+      "sizeBytes": 6499,
+      "imports": [
+        {
+          "source": "./levels",
+          "symbols": [
+            "getLevelByXp"
+          ]
+        },
+        {
+          "source": "@/lib/tasks",
+          "symbols": [
+            "CATEGORIES"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "formatDate",
+          "isDefault": false
+        },
+        {
+          "name": "calculateStreak",
+          "isDefault": false
+        },
+        {
+          "name": "countByCategory",
+          "isDefault": false
+        },
+        {
+          "name": "moodStats",
+          "isDefault": false
+        },
+        {
+          "name": "calculateCategoryWeights",
+          "isDefault": false
+        },
+        {
+          "name": "checkAchievements",
+          "isDefault": false
+        }
+      ],
+      "functions": [
+        {
+          "name": "formatDate",
+          "args": "date: Date | number"
+        },
+        {
+          "name": "calculateStreak",
+          "args": "completed: CompletedTask[]"
+        },
+        {
+          "name": "countByCategory",
+          "args": "completed: CompletedTask[]"
+        },
+        {
+          "name": "moodStats",
+          "args": "completed: CompletedTask[]"
+        },
+        {
+          "name": "calculateCategoryWeights",
+          "args": "completed: CompletedTask[]"
+        },
+        {
+          "name": "checkAchievements",
+          "args": "stats: {\n  completedTasks: CompletedTask[];\n  currentStreak: number;\n  longestStreak: number;\n  totalXp: number;\n}"
+        }
+      ],
+      "isClientComponent": false
+    },
+    "lib/stats/analytics.ts": {
+      "path": "lib/stats/analytics.ts",
+      "type": "domain_lib",
+      "loc": 256,
+      "sizeBytes": 7515,
+      "imports": [],
+      "exports": [
+        {
+          "name": "DayOfWeek",
+          "isDefault": false
+        },
+        {
+          "name": "DailyStats",
+          "isDefault": false
+        },
+        {
+          "name": "WeeklyComparison",
+          "isDefault": false
+        },
+        {
+          "name": "groupByDay",
+          "isDefault": false
+        },
+        {
+          "name": "HeatmapCell",
+          "isDefault": false
+        },
+        {
+          "name": "buildHeatmap",
+          "isDefault": false
+        },
+        {
+          "name": "compareWeeks",
+          "isDefault": false
+        },
+        {
+          "name": "getMostProductiveHours",
+          "isDefault": false
+        },
+        {
+          "name": "getMostProductiveDays",
+          "isDefault": false
+        },
+        {
+          "name": "getDayName",
+          "isDefault": false
+        },
+        {
+          "name": "HistoryFilter",
+          "isDefault": false
+        },
+        {
+          "name": "filterHistory",
+          "isDefault": false
+        },
+        {
+          "name": "formatDuration",
+          "isDefault": false
+        }
+      ],
+      "functions": [
+        {
+          "name": "groupByDay",
+          "args": "tasks: CompletedTask[], daysBack = 30"
+        },
+        {
+          "name": "buildHeatmap",
+          "args": "tasks: CompletedTask[]"
+        },
+        {
+          "name": "compareWeeks",
+          "args": "tasks: CompletedTask[]"
+        },
+        {
+          "name": "summarize",
+          "args": "arr: CompletedTask[]"
+        },
+        {
+          "name": "getMostProductiveHours",
+          "args": "tasks: CompletedTask[]"
+        },
+        {
+          "name": "getMostProductiveDays",
+          "args": "tasks: CompletedTask[]"
+        },
+        {
+          "name": "getDayName",
+          "args": "day: DayOfWeek, short = false"
+        },
+        {
+          "name": "filterHistory",
+          "args": "tasks: CompletedTask[], filter: HistoryFilter"
+        },
+        {
+          "name": "formatDuration",
+          "args": "minutes: number"
+        }
+      ],
+      "isClientComponent": false
+    },
+    "lib/stats/challenges.ts": {
+      "path": "lib/stats/challenges.ts",
+      "type": "domain_lib",
+      "loc": 195,
+      "sizeBytes": 12539,
+      "imports": [
+        {
+          "source": "@/lib/tasks",
+          "symbols": [
+            "t",
+            "tSteps"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "Challenge30Day",
+          "isDefault": false
+        },
+        {
+          "name": "ChallengeDay",
+          "isDefault": false
+        },
+        {
+          "name": "CHALLENGES_30",
+          "isDefault": false
+        },
+        {
+          "name": "getChallengeById",
+          "isDefault": false
+        },
+        {
+          "name": "getChallengeDayTask",
+          "isDefault": false
+        },
+        {
+          "name": "getAllChallenges",
+          "isDefault": false
+        }
+      ],
+      "functions": [
+        {
+          "name": "getChallengeById",
+          "args": "id: string"
+        },
+        {
+          "name": "getChallengeDayTask",
+          "args": "challengeId: string, day: number"
+        },
+        {
+          "name": "getAllChallenges",
+          "args": ""
+        }
+      ],
+      "isClientComponent": false
+    },
+    "lib/stats/coach.ts": {
+      "path": "lib/stats/coach.ts",
+      "type": "domain_lib",
+      "loc": 251,
+      "sizeBytes": 9826,
+      "imports": [],
+      "exports": [
+        {
+          "name": "CoachMood",
+          "isDefault": false
+        },
+        {
+          "name": "CoachMessage",
+          "isDefault": false
+        },
+        {
+          "name": "COACH_MESSAGES",
+          "isDefault": false
+        },
+        {
+          "name": "getCoachMessage",
+          "isDefault": false
+        }
+      ],
+      "functions": [
+        {
+          "name": "getCoachMessage",
+          "args": "context: CoachMessage[\"context\"], locale: Locale = \"ar-eg\", vars: Record<string, string | number> = {}"
+        }
+      ],
+      "isClientComponent": false
+    },
+    "lib/stats/context.ts": {
+      "path": "lib/stats/context.ts",
+      "type": "domain_lib",
+      "loc": 97,
+      "sizeBytes": 2661,
+      "imports": [],
+      "exports": [
+        {
+          "name": "getTimeOfDay",
+          "isDefault": false
+        },
+        {
+          "name": "getTimeOfDayLabel",
+          "isDefault": false
+        },
+        {
+          "name": "suggestEnergyForTime",
+          "isDefault": false
+        },
+        {
+          "name": "MOOD_CATEGORIES",
+          "isDefault": false
+        },
+        {
+          "name": "getMoodLabel",
+          "isDefault": false
+        },
+        {
+          "name": "MOOD_EMOJI",
+          "isDefault": false
+        }
+      ],
+      "functions": [
+        {
+          "name": "getTimeOfDay",
+          "args": "date: Date = new Date("
+        },
+        {
+          "name": "getTimeOfDayLabel",
+          "args": "time: TimeOfDay, locale: string = \"ar\""
+        },
+        {
+          "name": "suggestEnergyForTime",
+          "args": "time: TimeOfDay"
+        },
+        {
+          "name": "getMoodLabel",
+          "args": "mood: Mood, locale: string = \"ar\""
+        }
+      ],
+      "isClientComponent": false
+    },
+    "lib/stats/dailyCompletion.ts": {
+      "path": "lib/stats/dailyCompletion.ts",
+      "type": "domain_lib",
+      "loc": 73,
+      "sizeBytes": 2314,
+      "imports": [],
+      "exports": [
+        {
+          "name": "isCompleted",
+          "isDefault": false
+        },
+        {
+          "name": "markCompleted",
+          "isDefault": false
+        },
+        {
+          "name": "clearAll",
+          "isDefault": false
+        }
+      ],
+      "functions": [
+        {
+          "name": "todayKey",
+          "args": ""
+        },
+        {
+          "name": "read",
+          "args": ""
+        },
+        {
+          "name": "write",
+          "args": "state: CompletionState"
+        },
+        {
+          "name": "isCompleted",
+          "args": "routineId: RoutineId"
+        },
+        {
+          "name": "markCompleted",
+          "args": "routineId: RoutineId"
+        },
+        {
+          "name": "clearAll",
+          "args": ""
+        }
+      ],
+      "isClientComponent": false
+    },
+    "lib/stats/doubleTasks.ts": {
+      "path": "lib/stats/doubleTasks.ts",
+      "type": "domain_lib",
+      "loc": 408,
+      "sizeBytes": 15173,
+      "imports": [
+        {
+          "source": "@/lib/tasks",
+          "symbols": [
+            "t",
+            "tSteps"
+          ]
+        },
+        {
+          "source": "@/lib/tasks",
+          "symbols": [
+            "CATEGORIES"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "DoubleTaskChallenge",
+          "isDefault": false
+        },
+        {
+          "name": "DOUBLE_TASKS",
+          "isDefault": false
+        },
+        {
+          "name": "getRandomChallenge",
+          "isDefault": false
+        },
+        {
+          "name": "getChallengeById",
+          "isDefault": false
+        },
+        {
+          "name": "getChallengeColor",
+          "isDefault": false
+        }
+      ],
+      "functions": [
+        {
+          "name": "getRandomChallenge",
+          "args": ""
+        },
+        {
+          "name": "getChallengeById",
+          "args": "id: string"
+        },
+        {
+          "name": "getChallengeColor",
+          "args": "categories: [TaskCategory, TaskCategory]"
+        }
+      ],
+      "isClientComponent": false
+    },
+    "lib/stats/energyLevels.ts": {
+      "path": "lib/stats/energyLevels.ts",
+      "type": "domain_lib",
+      "loc": 96,
+      "sizeBytes": 2747,
+      "imports": [],
+      "exports": [
+        {
+          "name": "EnergyLevel",
+          "isDefault": false
+        },
+        {
+          "name": "EnergyLevelInfo",
+          "isDefault": false
+        },
+        {
+          "name": "ENERGY_LEVELS",
+          "isDefault": false
+        },
+        {
+          "name": "getEnergyLevelById",
+          "isDefault": false
+        },
+        {
+          "name": "suggestEnergyByTime",
+          "isDefault": false
+        }
+      ],
+      "functions": [
+        {
+          "name": "getEnergyLevelById",
+          "args": "id: EnergyLevel"
+        },
+        {
+          "name": "suggestEnergyByTime",
+          "args": "hour: number"
+        }
+      ],
+      "isClientComponent": false
+    },
+    "lib/stats/levels.ts": {
+      "path": "lib/stats/levels.ts",
+      "type": "domain_lib",
+      "loc": 73,
+      "sizeBytes": 1728,
+      "imports": [],
+      "exports": [
+        {
+          "name": "LEVELS",
+          "isDefault": false
+        },
+        {
+          "name": "getLevelByXp",
+          "isDefault": false
+        },
+        {
+          "name": "getNextLevel",
+          "isDefault": false
+        },
+        {
+          "name": "getLevelProgress",
+          "isDefault": false
+        }
+      ],
+      "functions": [
+        {
+          "name": "getLevelByXp",
+          "args": "xp: number"
+        },
+        {
+          "name": "getNextLevel",
+          "args": "currentLevel: Level"
+        },
+        {
+          "name": "getLevelProgress",
+          "args": "xp: number"
+        }
+      ],
+      "isClientComponent": false
+    },
+    "lib/stats/quiz.ts": {
+      "path": "lib/stats/quiz.ts",
+      "type": "domain_lib",
+      "loc": 358,
+      "sizeBytes": 13456,
+      "imports": [],
+      "exports": [
+        {
+          "name": "BoredType",
+          "isDefault": false
+        },
+        {
+          "name": "BoredTypeInfo",
+          "isDefault": false
+        },
+        {
+          "name": "BORED_TYPES",
+          "isDefault": false
+        },
+        {
+          "name": "QuizQuestion",
+          "isDefault": false
+        },
+        {
+          "name": "QuizOption",
+          "isDefault": false
+        },
+        {
+          "name": "QUIZ_QUESTIONS",
+          "isDefault": false
+        },
+        {
+          "name": "getBoredTypeById",
+          "isDefault": false
+        },
+        {
+          "name": "calculateBoredType",
+          "isDefault": false
+        }
+      ],
+      "functions": [
+        {
+          "name": "getBoredTypeById",
+          "args": "id: BoredType"
+        },
+        {
+          "name": "calculateBoredType",
+          "args": "answers: Record<string, BoredType>"
+        }
+      ],
+      "isClientComponent": false
+    },
+    "lib/stats/recommender.ts": {
+      "path": "lib/stats/recommender.ts",
+      "type": "domain_lib",
+      "loc": 197,
+      "sizeBytes": 6419,
+      "imports": [
+        {
+          "source": "@/lib/tasks",
+          "symbols": [
+            "ALL_TASKS",
+            "filterTasks"
+          ]
+        },
+        {
+          "source": "./context",
+          "symbols": [
+            "MOOD_CATEGORIES",
+            "suggestEnergyForTime"
+          ]
+        },
+        {
+          "source": "@/lib/tasks/tools",
+          "symbols": [
+            "TASK_TOOLS"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "RecommendationInput",
+          "isDefault": false
+        },
+        {
+          "name": "RecommendationResult",
+          "isDefault": false
+        },
+        {
+          "name": "recommendTask",
+          "isDefault": false
+        },
+        {
+          "name": "recommendTaskWithMeta",
+          "isDefault": false
+        },
+        {
+          "name": "simpleRecommend",
+          "isDefault": false
+        }
+      ],
+      "functions": [
+        {
+          "name": "recommendTask",
+          "args": "input: RecommendationInput"
+        },
+        {
+          "name": "pickReverseTask",
+          "args": "candidates: Task[],\n  categoryWeights: Record<string, number>,\n  completedTasks: CompletedTask[]"
+        },
+        {
+          "name": "recommendTaskWithMeta",
+          "args": "input: RecommendationInput"
+        },
+        {
+          "name": "simpleRecommend",
+          "args": "duration?: TaskDuration,\n  energy?: TaskEnergy"
+        }
+      ],
+      "isClientComponent": false
+    },
+    "lib/stats/store.ts": {
+      "path": "lib/stats/store.ts",
+      "type": "zustand_store",
+      "loc": 219,
+      "sizeBytes": 6632,
+      "imports": [
+        {
+          "source": "zustand",
+          "symbols": [
+            "create"
+          ]
+        },
+        {
+          "source": "zustand/middleware",
+          "symbols": [
+            "persist",
+            "createJSONStorage"
+          ]
+        },
+        {
+          "source": "@/lib/tasks",
+          "symbols": [
+            "TaskCategory"
+          ]
+        },
+        {
+          "source": "@/lib/supabase",
+          "symbols": [
+            "supabase"
+          ]
+        },
+        {
+          "source": "./achievements",
+          "symbols": [
+            "calculateStreak",
+            "countByCategory",
+            "calculateCategoryWeights",
+            "checkAchievements"
+          ]
+        },
+        {
+          "source": "./context",
+          "symbols": [
+            "getTimeOfDay"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "useStatsStore",
+          "isDefault": false
+        }
+      ],
+      "functions": [],
+      "isClientComponent": true
+    },
+    "lib/stats/types.ts": {
+      "path": "lib/stats/types.ts",
+      "type": "domain_lib",
+      "loc": 76,
+      "sizeBytes": 2022,
+      "imports": [],
+      "exports": [
+        {
+          "name": "Mood",
+          "isDefault": false
+        },
+        {
+          "name": "TimeOfDay",
+          "isDefault": false
+        },
+        {
+          "name": "CompletedTask",
+          "isDefault": false
+        },
+        {
+          "name": "Level",
+          "isDefault": false
+        },
+        {
+          "name": "Achievement",
+          "isDefault": false
+        },
+        {
+          "name": "UserStats",
+          "isDefault": false
+        }
+      ],
+      "functions": [],
+      "isClientComponent": false
+    },
+    "lib/supabase.ts": {
+      "path": "lib/supabase.ts",
+      "type": "domain_lib",
+      "loc": 35,
+      "sizeBytes": 1273,
+      "imports": [
+        {
+          "source": "@supabase/supabase-js",
+          "symbols": [
+            "createClient"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "supabase",
+          "isDefault": false
+        },
+        {
+          "name": "isSupabaseConfigured",
+          "isDefault": false
+        }
+      ],
+      "functions": [],
+      "isClientComponent": false
+    },
+    "lib/sync.ts": {
+      "path": "lib/sync.ts",
+      "type": "domain_lib",
+      "loc": 111,
+      "sizeBytes": 3723,
+      "imports": [
+        {
+          "source": "@/lib/supabase",
+          "symbols": [
+            "supabase"
+          ]
+        },
+        {
+          "source": "@/lib/stats/store",
+          "symbols": [
+            "useStatsStore"
+          ]
+        }
+      ],
+      "exports": [],
+      "functions": [
+        {
+          "name": "loadUserDataFromCloud",
+          "args": ""
+        },
+        {
+          "name": "saveUserDataToCloud",
+          "args": ""
+        },
+        {
+          "name": "syncToCloudOnSignOut",
+          "args": ""
+        }
+      ],
+      "isClientComponent": false
+    },
+    "lib/tasks/building.ts": {
+      "path": "lib/tasks/building.ts",
+      "type": "domain_lib",
+      "loc": 581,
+      "sizeBytes": 22862,
+      "imports": [
+        {
+          "source": "./types",
+          "symbols": [
+            "t",
+            "tSteps"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "buildingTasks",
+          "isDefault": false
+        }
+      ],
+      "functions": [],
+      "isClientComponent": false
+    },
+    "lib/tasks/categories.ts": {
+      "path": "lib/tasks/categories.ts",
+      "type": "domain_lib",
+      "loc": 192,
+      "sizeBytes": 6294,
+      "imports": [
+        {
+          "source": "./types",
+          "symbols": [
+            "t"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "CATEGORIES",
+          "isDefault": false
+        },
+        {
+          "name": "getCategory",
+          "isDefault": false
+        }
+      ],
+      "functions": [
+        {
+          "name": "getCategory",
+          "args": "id: string"
+        }
+      ],
+      "isClientComponent": false
+    },
+    "lib/tasks/couple.ts": {
+      "path": "lib/tasks/couple.ts",
+      "type": "domain_lib",
+      "loc": 247,
+      "sizeBytes": 8527,
+      "imports": [
+        {
+          "source": "./types",
+          "symbols": [
+            "t",
+            "tSteps"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "COUPLE_TASKS",
+          "isDefault": false
+        }
+      ],
+      "functions": [],
+      "isClientComponent": false
+    },
+    "lib/tasks/creative.ts": {
+      "path": "lib/tasks/creative.ts",
+      "type": "domain_lib",
+      "loc": 575,
+      "sizeBytes": 21497,
+      "imports": [
+        {
+          "source": "./types",
+          "symbols": [
+            "t",
+            "tSteps"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "creativeTasks",
+          "isDefault": false
+        }
+      ],
+      "functions": [],
+      "isClientComponent": false
+    },
+    "lib/tasks/dailyRoutines.ts": {
+      "path": "lib/tasks/dailyRoutines.ts",
+      "type": "domain_lib",
+      "loc": 88,
+      "sizeBytes": 2323,
+      "imports": [],
+      "exports": [
+        {
+          "name": "RoutineId",
+          "isDefault": false
+        },
+        {
+          "name": "DailyRoutine",
+          "isDefault": false
+        },
+        {
+          "name": "getCurrentRoutineId",
+          "isDefault": false
+        },
+        {
+          "name": "DAILY_ROUTINES",
+          "isDefault": false
+        }
+      ],
+      "functions": [
+        {
+          "name": "getCurrentRoutineId",
+          "args": ""
+        }
+      ],
+      "isClientComponent": false
+    },
+    "lib/tasks/discovery.ts": {
+      "path": "lib/tasks/discovery.ts",
+      "type": "domain_lib",
+      "loc": 490,
+      "sizeBytes": 19680,
+      "imports": [
+        {
+          "source": "./types",
+          "symbols": [
+            "t",
+            "tSteps"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "discoveryTasks",
+          "isDefault": false
+        }
+      ],
+      "functions": [],
+      "isClientComponent": false
+    },
+    "lib/tasks/habitCategories.ts": {
+      "path": "lib/tasks/habitCategories.ts",
+      "type": "domain_lib",
+      "loc": 155,
+      "sizeBytes": 4357,
+      "imports": [
+        {
+          "source": "./types",
+          "symbols": [
+            "t"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "CategoryConfig",
+          "isDefault": false
+        },
+        {
+          "name": "HABIT_CATEGORIES",
+          "isDefault": false
+        },
+        {
+          "name": "getHabitCategoryById",
+          "isDefault": false
+        }
+      ],
+      "functions": [
+        {
+          "name": "getHabitCategoryById",
+          "args": "id: string"
+        }
+      ],
+      "isClientComponent": false
+    },
+    "lib/tasks/habits.ts": {
+      "path": "lib/tasks/habits.ts",
+      "type": "domain_lib",
+      "loc": 1050,
+      "sizeBytes": 55331,
+      "imports": [
+        {
+          "source": "./types",
+          "symbols": [
+            "t",
+            "tSteps"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "HABIT_TASKS",
+          "isDefault": false
+        }
+      ],
+      "functions": [],
+      "isClientComponent": false
+    },
+    "lib/tasks/historical.ts": {
+      "path": "lib/tasks/historical.ts",
+      "type": "domain_lib",
+      "loc": 172,
+      "sizeBytes": 5018,
+      "imports": [],
+      "exports": [
+        {
+          "name": "HistoricalEvent",
+          "isDefault": false
+        },
+        {
+          "name": "eventToTask",
+          "isDefault": false
+        }
+      ],
+      "functions": [
+        {
+          "name": "tryTranslate",
+          "args": "text: string"
+        },
+        {
+          "name": "fetchTodayEvents",
+          "args": "date: Date = new Date("
+        },
+        {
+          "name": "getFallbackEvents",
+          "args": "date: Date"
+        },
+        {
+          "name": "eventToTask",
+          "args": "event: HistoricalEvent"
+        }
+      ],
+      "isClientComponent": false
+    },
+    "lib/tasks/index.ts": {
+      "path": "lib/tasks/index.ts",
+      "type": "domain_lib",
+      "loc": 148,
+      "sizeBytes": 4172,
+      "imports": [
+        {
+          "source": "./mental",
+          "symbols": [
+            "mentalTasks"
+          ]
+        },
+        {
+          "source": "./physical",
+          "symbols": [
+            "physicalTasks"
+          ]
+        },
+        {
+          "source": "./creative",
+          "symbols": [
+            "creativeTasks"
+          ]
+        },
+        {
+          "source": "./learning",
+          "symbols": [
+            "learningTasks"
+          ]
+        },
+        {
+          "source": "./building",
+          "symbols": [
+            "buildingTasks"
+          ]
+        },
+        {
+          "source": "./mindfulness",
+          "symbols": [
+            "mindfulnessTasks"
+          ]
+        },
+        {
+          "source": "./discovery",
+          "symbols": [
+            "discoveryTasks"
+          ]
+        },
+        {
+          "source": "./habits",
+          "symbols": [
+            "HABIT_TASKS"
+          ]
+        },
+        {
+          "source": "./couple",
+          "symbols": [
+            "COUPLE_TASKS"
+          ]
+        },
+        {
+          "source": "./kids",
+          "symbols": [
+            "KIDS_TASKS"
+          ]
+        },
+        {
+          "source": "./seasonal",
+          "symbols": [
+            "SEASONAL_TASKS"
+          ]
+        },
+        {
+          "source": "./categories",
+          "symbols": [
+            "CATEGORIES"
+          ]
+        },
+        {
+          "source": "@/lib/i18n/types",
+          "symbols": [
+            "LOCALES"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "ALL_TASKS",
+          "isDefault": false
+        },
+        {
+          "name": "getTaskById",
+          "isDefault": false
+        },
+        {
+          "name": "TaskFilter",
+          "isDefault": false
+        },
+        {
+          "name": "filterTasks",
+          "isDefault": false
+        },
+        {
+          "name": "ValidationIssue",
+          "isDefault": false
+        },
+        {
+          "name": "validateTasks",
+          "isDefault": false
+        },
+        {
+          "name": "getStats",
+          "isDefault": false
+        }
+      ],
+      "functions": [
+        {
+          "name": "getTaskById",
+          "args": "id: string"
+        },
+        {
+          "name": "filterTasks",
+          "args": "filter: TaskFilter"
+        },
+        {
+          "name": "validateTasks",
+          "args": ""
+        },
+        {
+          "name": "getStats",
+          "args": ""
+        }
+      ],
+      "isClientComponent": false
+    },
+    "lib/tasks/kids.ts": {
+      "path": "lib/tasks/kids.ts",
+      "type": "domain_lib",
+      "loc": 405,
+      "sizeBytes": 12799,
+      "imports": [
+        {
+          "source": "./types",
+          "symbols": [
+            "t",
+            "tSteps"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "KIDS_TASKS",
+          "isDefault": false
+        }
+      ],
+      "functions": [],
+      "isClientComponent": false
+    },
+    "lib/tasks/learning.ts": {
+      "path": "lib/tasks/learning.ts",
+      "type": "domain_lib",
+      "loc": 563,
+      "sizeBytes": 22898,
+      "imports": [
+        {
+          "source": "./types",
+          "symbols": [
+            "t",
+            "tSteps"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "learningTasks",
+          "isDefault": false
+        }
+      ],
+      "functions": [],
+      "isClientComponent": false
+    },
+    "lib/tasks/mental.ts": {
+      "path": "lib/tasks/mental.ts",
+      "type": "domain_lib",
+      "loc": 666,
+      "sizeBytes": 26064,
+      "imports": [
+        {
+          "source": "./types",
+          "symbols": [
+            "t",
+            "tSteps"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "mentalTasks",
+          "isDefault": false
+        }
+      ],
+      "functions": [],
+      "isClientComponent": false
+    },
+    "lib/tasks/mindfulness.ts": {
+      "path": "lib/tasks/mindfulness.ts",
+      "type": "domain_lib",
+      "loc": 587,
+      "sizeBytes": 21554,
+      "imports": [
+        {
+          "source": "./types",
+          "symbols": [
+            "t",
+            "tSteps"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "mindfulnessTasks",
+          "isDefault": false
+        }
+      ],
+      "functions": [],
+      "isClientComponent": false
+    },
+    "lib/tasks/physical.ts": {
+      "path": "lib/tasks/physical.ts",
+      "type": "domain_lib",
+      "loc": 648,
+      "sizeBytes": 24160,
+      "imports": [
+        {
+          "source": "./types",
+          "symbols": [
+            "t",
+            "tSteps"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "physicalTasks",
+          "isDefault": false
+        }
+      ],
+      "functions": [],
+      "isClientComponent": false
+    },
+    "lib/tasks/reverseHabits.ts": {
+      "path": "lib/tasks/reverseHabits.ts",
+      "type": "domain_lib",
+      "loc": 172,
+      "sizeBytes": 5293,
+      "imports": [],
+      "exports": [
+        {
+          "name": "BadHabitId",
+          "isDefault": false
+        },
+        {
+          "name": "ReverseHabit",
+          "isDefault": false
+        },
+        {
+          "name": "REVERSE_HABITS",
+          "isDefault": false
+        },
+        {
+          "name": "alternativeToTask",
+          "isDefault": false
+        }
+      ],
+      "functions": [
+        {
+          "name": "alternativeToTask",
+          "args": "badHabitId: BadHabitId, altIndex: number"
+        }
+      ],
+      "isClientComponent": false
+    },
+    "lib/tasks/seasonal.ts": {
+      "path": "lib/tasks/seasonal.ts",
+      "type": "domain_lib",
+      "loc": 831,
+      "sizeBytes": 29083,
+      "imports": [
+        {
+          "source": "./types",
+          "symbols": [
+            "t",
+            "tSteps"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "Season",
+          "isDefault": false
+        },
+        {
+          "name": "SeasonInfo",
+          "isDefault": false
+        },
+        {
+          "name": "SEASONS",
+          "isDefault": false
+        },
+        {
+          "name": "getCurrentSeason",
+          "isDefault": false
+        },
+        {
+          "name": "SEASONAL_TASKS",
+          "isDefault": false
+        },
+        {
+          "name": "getCurrentSeasonalTasks",
+          "isDefault": false
+        },
+        {
+          "name": "getAllSeasonalTasks",
+          "isDefault": false
+        }
+      ],
+      "functions": [
+        {
+          "name": "getCurrentSeason",
+          "args": "date: Date = new Date("
+        },
+        {
+          "name": "getCurrentSeasonalTasks",
+          "args": "date: Date = new Date("
+        },
+        {
+          "name": "getAllSeasonalTasks",
+          "args": ""
+        }
+      ],
+      "isClientComponent": false
+    },
+    "lib/tasks/tools.ts": {
+      "path": "lib/tasks/tools.ts",
+      "type": "domain_lib",
+      "loc": 147,
+      "sizeBytes": 3832,
+      "imports": [],
+      "exports": [
+        {
+          "name": "Tool",
+          "isDefault": false
+        },
+        {
+          "name": "ToolInfo",
+          "isDefault": false
+        },
+        {
+          "name": "TOOLS",
+          "isDefault": false
+        },
+        {
+          "name": "TASK_TOOLS",
+          "isDefault": false
+        },
+        {
+          "name": "filterTasksByTools",
+          "isDefault": false
+        },
+        {
+          "name": "getTaskRequiredTools",
+          "isDefault": false
+        }
+      ],
+      "functions": [
+        {
+          "name": "filterTasksByTools",
+          "args": "tasks: Task[], availableTools: Tool[]"
+        },
+        {
+          "name": "getTaskRequiredTools",
+          "args": "taskId: string"
+        }
+      ],
+      "isClientComponent": false
+    },
+    "lib/tasks/types.ts": {
+      "path": "lib/tasks/types.ts",
+      "type": "domain_lib",
+      "loc": 84,
+      "sizeBytes": 2392,
+      "imports": [],
+      "exports": [
+        {
+          "name": "LocalizedText",
+          "isDefault": false
+        },
+        {
+          "name": "TaskCategory",
+          "isDefault": false
+        },
+        {
+          "name": "TaskDuration",
+          "isDefault": false
+        },
+        {
+          "name": "TaskEnergy",
+          "isDefault": false
+        },
+        {
+          "name": "Task",
+          "isDefault": false
+        },
+        {
+          "name": "CategoryInfo",
+          "isDefault": false
+        },
+        {
+          "name": "t",
+          "isDefault": false
+        },
+        {
+          "name": "tSteps",
+          "isDefault": false
+        }
+      ],
+      "functions": [
+        {
+          "name": "t",
+          "args": "en: string,\n  ar: string,\n  arEg: string,\n  arSa: string,\n  arLevant: string,\n  arMaghreb: string"
+        },
+        {
+          "name": "tSteps",
+          "args": "en: string[],\n  ar: string[],\n  arEg: string[],\n  arSa: string[],\n  arLevant: string[],\n  arMaghreb: string[]"
+        }
+      ],
+      "isClientComponent": false
+    },
+    "lib/tasks/weather.ts": {
+      "path": "lib/tasks/weather.ts",
+      "type": "domain_lib",
+      "loc": 137,
+      "sizeBytes": 4673,
+      "imports": [],
+      "exports": [
+        {
+          "name": "WeatherData",
+          "isDefault": false
+        },
+        {
+          "name": "WeatherCondition",
+          "isDefault": false
+        },
+        {
+          "name": "getWeatherCondition",
+          "isDefault": false
+        },
+        {
+          "name": "getWeatherLabel",
+          "isDefault": false
+        },
+        {
+          "name": "getWeatherEmoji",
+          "isDefault": false
+        },
+        {
+          "name": "getWeatherTip",
+          "isDefault": false
+        }
+      ],
+      "functions": [
+        {
+          "name": "tempToCategory",
+          "args": "temp: number, condition: WeatherCondition"
+        },
+        {
+          "name": "fetchWeather",
+          "args": "lat: number = 30.0444, lon: number = 31.2357"
+        },
+        {
+          "name": "getWeatherCondition",
+          "args": "weather: WeatherData"
+        },
+        {
+          "name": "getWeatherLabel",
+          "args": "condition: WeatherCondition, locale: \"ar\" | \"en\" = \"ar\""
+        },
+        {
+          "name": "getWeatherEmoji",
+          "args": "condition: WeatherCondition"
+        },
+        {
+          "name": "getWeatherTip",
+          "args": "condition: WeatherCondition, locale: \"ar\" | \"en\" = \"ar\""
+        }
+      ],
+      "isClientComponent": false
+    },
+    "supabase/setup.sql": {
+      "path": "supabase/setup.sql",
+      "type": "database_schema",
+      "loc": 71,
+      "sizeBytes": 2554,
+      "imports": [],
+      "exports": [],
+      "functions": [],
+      "isClientComponent": false
+    }
+  },
+  "symbols": {
+    "ChallengesPage": {
+      "file": "app/challenges/page.tsx",
+      "name": "ChallengesPage",
+      "isDefault": true
+    },
+    "DailyPage": {
+      "file": "app/daily/page.tsx",
+      "name": "DailyPage",
+      "isDefault": true
+    },
+    "DevPage": {
+      "file": "app/dev/page.tsx",
+      "name": "DevPage",
+      "isDefault": true
+    },
+    "DiscoverPage": {
+      "file": "app/discover/page.tsx",
+      "name": "DiscoverPage",
+      "isDefault": true
+    },
+    "DonePage": {
+      "file": "app/done/page.tsx",
+      "name": "DonePage",
+      "isDefault": true
+    },
+    "EnergyPage": {
+      "file": "app/energy/page.tsx",
+      "name": "EnergyPage",
+      "isDefault": true
+    },
+    "FavoritesPage": {
+      "file": "app/favorites/page.tsx",
+      "name": "FavoritesPage",
+      "isDefault": true
+    },
+    "HistoryPage": {
+      "file": "app/history/page.tsx",
+      "name": "HistoryPage",
+      "isDefault": true
+    },
+    "metadata": {
+      "file": "app/layout.tsx",
+      "name": "metadata",
+      "isDefault": false
+    },
+    "viewport": {
+      "file": "app/layout.tsx",
+      "name": "viewport",
+      "isDefault": false
+    },
+    "RootLayout": {
+      "file": "app/layout.tsx",
+      "name": "RootLayout",
+      "isDefault": true
+    },
+    "Home": {
+      "file": "app/page.tsx",
+      "name": "Home",
+      "isDefault": true
+    },
+    "QuizPage": {
+      "file": "app/quiz/page.tsx",
+      "name": "QuizPage",
+      "isDefault": true
+    },
+    "ReversePage": {
+      "file": "app/reverse/page.tsx",
+      "name": "ReversePage",
+      "isDefault": true
+    },
+    "StatsPage": {
+      "file": "app/stats/page.tsx",
+      "name": "StatsPage",
+      "isDefault": true
+    },
+    "generateStaticParams": {
+      "file": "app/task/[id]/layout.tsx",
+      "name": "generateStaticParams",
+      "isDefault": false
+    },
+    "TaskLayout": {
+      "file": "app/task/[id]/layout.tsx",
+      "name": "TaskLayout",
+      "isDefault": true
+    },
+    "TaskPage": {
+      "file": "app/task/[id]/page.tsx",
+      "name": "TaskPage",
+      "isDefault": true
+    },
+    "TimePage": {
+      "file": "app/time/page.tsx",
+      "name": "TimePage",
+      "isDefault": true
+    },
+    "AuthButton": {
+      "file": "components/AuthButton.tsx",
+      "name": "AuthButton",
+      "isDefault": false
+    },
+    "CoachBubble": {
+      "file": "components/CoachBubble.tsx",
+      "name": "CoachBubble",
+      "isDefault": false
+    },
+    "celebrate": {
+      "file": "components/Confetti.ts",
+      "name": "celebrate",
+      "isDefault": false
+    },
+    "miniCelebrate": {
+      "file": "components/Confetti.ts",
+      "name": "miniCelebrate",
+      "isDefault": false
+    },
+    "sideCelebrate": {
+      "file": "components/Confetti.ts",
+      "name": "sideCelebrate",
+      "isDefault": false
+    },
+    "DailyHabitsButton": {
+      "file": "components/DailyHabitsButton.tsx",
+      "name": "DailyHabitsButton",
+      "isDefault": false
+    },
+    "Heatmap": {
+      "file": "components/Heatmap.tsx",
+      "name": "Heatmap",
+      "isDefault": false
+    },
+    "LanguageSelector": {
+      "file": "components/LanguageSelector.tsx",
+      "name": "LanguageSelector",
+      "isDefault": false
+    },
+    "LevelBadge": {
+      "file": "components/LevelBadge.tsx",
+      "name": "LevelBadge",
+      "isDefault": false
+    },
+    "LocaleBootstrap": {
+      "file": "components/LocaleBootstrap.tsx",
+      "name": "LocaleBootstrap",
+      "isDefault": false
+    },
+    "MoodSelector": {
+      "file": "components/MoodSelector.tsx",
+      "name": "MoodSelector",
+      "isDefault": false
+    },
+    "MotivationalQuote": {
+      "file": "lib/i18n/quotes.ts",
+      "name": "MotivationalQuote",
+      "isDefault": false
+    },
+    "Rating": {
+      "file": "components/Rating.tsx",
+      "name": "Rating",
+      "isDefault": false
+    },
+    "ReverseHabitButton": {
+      "file": "components/ReverseHabitButton.tsx",
+      "name": "ReverseHabitButton",
+      "isDefault": false
+    },
+    "StreakBadge": {
+      "file": "components/StreakBadge.tsx",
+      "name": "StreakBadge",
+      "isDefault": false
+    },
+    "Timer": {
+      "file": "components/Timer.tsx",
+      "name": "Timer",
+      "isDefault": false
+    },
+    "ToolSelector": {
+      "file": "components/ToolSelector.tsx",
+      "name": "ToolSelector",
+      "isDefault": false
+    },
+    "WeeklyComparison": {
+      "file": "lib/stats/analytics.ts",
+      "name": "WeeklyComparison",
+      "isDefault": false
+    },
+    "useLocale": {
+      "file": "hooks/useLocale.ts",
+      "name": "useLocale",
+      "isDefault": false
+    },
+    "useStats": {
+      "file": "hooks/useStats.ts",
+      "name": "useStats",
+      "isDefault": false
+    },
+    "useTasks": {
+      "file": "hooks/useTasks.ts",
+      "name": "useTasks",
+      "isDefault": false
+    },
+    "useTask": {
+      "file": "hooks/useTasks.ts",
+      "name": "useTask",
+      "isDefault": false
+    },
+    "useAuth": {
+      "file": "lib/auth.ts",
+      "name": "useAuth",
+      "isDefault": false
+    },
+    "arEg": {
+      "file": "lib/i18n/ar-eg.ts",
+      "name": "arEg",
+      "isDefault": false
+    },
+    "arLevant": {
+      "file": "lib/i18n/ar-levant.ts",
+      "name": "arLevant",
+      "isDefault": false
+    },
+    "arMaghreb": {
+      "file": "lib/i18n/ar-maghreb.ts",
+      "name": "arMaghreb",
+      "isDefault": false
+    },
+    "arSa": {
+      "file": "lib/i18n/ar-sa.ts",
+      "name": "arSa",
+      "isDefault": false
+    },
+    "ar": {
+      "file": "lib/i18n/ar.ts",
+      "name": "ar",
+      "isDefault": false
+    },
+    "en": {
+      "file": "lib/i18n/en.ts",
+      "name": "en",
+      "isDefault": false
+    },
+    "translations": {
+      "file": "lib/i18n/index.ts",
+      "name": "translations",
+      "isDefault": false
+    },
+    "t": {
+      "file": "lib/tasks/types.ts",
+      "name": "t",
+      "isDefault": false
+    },
+    "detectBrowserLocale": {
+      "file": "lib/i18n/index.ts",
+      "name": "detectBrowserLocale",
+      "isDefault": false
+    },
+    "QUOTES": {
+      "file": "lib/i18n/quotes.ts",
+      "name": "QUOTES",
+      "isDefault": false
+    },
+    "getRandomQuote": {
+      "file": "lib/i18n/quotes.ts",
+      "name": "getRandomQuote",
+      "isDefault": false
+    },
+    "getTodayQuote": {
+      "file": "lib/i18n/quotes.ts",
+      "name": "getTodayQuote",
+      "isDefault": false
+    },
+    "useLocaleStore": {
+      "file": "lib/i18n/store.ts",
+      "name": "useLocaleStore",
+      "isDefault": false
+    },
+    "Locale": {
+      "file": "lib/i18n/types.ts",
+      "name": "Locale",
+      "isDefault": false
+    },
+    "LOCALES": {
+      "file": "lib/i18n/types.ts",
+      "name": "LOCALES",
+      "isDefault": false
+    },
+    "LocaleInfo": {
+      "file": "lib/i18n/types.ts",
+      "name": "LocaleInfo",
+      "isDefault": false
+    },
+    "LOCALE_INFO": {
+      "file": "lib/i18n/types.ts",
+      "name": "LOCALE_INFO",
+      "isDefault": false
+    },
+    "TranslationKey": {
+      "file": "lib/i18n/types.ts",
+      "name": "TranslationKey",
+      "isDefault": false
+    },
+    "Translations": {
+      "file": "lib/i18n/types.ts",
+      "name": "Translations",
+      "isDefault": false
+    },
+    "formatDate": {
+      "file": "lib/stats/achievements.ts",
+      "name": "formatDate",
+      "isDefault": false
+    },
+    "calculateStreak": {
+      "file": "lib/stats/achievements.ts",
+      "name": "calculateStreak",
+      "isDefault": false
+    },
+    "countByCategory": {
+      "file": "lib/stats/achievements.ts",
+      "name": "countByCategory",
+      "isDefault": false
+    },
+    "moodStats": {
+      "file": "lib/stats/achievements.ts",
+      "name": "moodStats",
+      "isDefault": false
+    },
+    "calculateCategoryWeights": {
+      "file": "lib/stats/achievements.ts",
+      "name": "calculateCategoryWeights",
+      "isDefault": false
+    },
+    "checkAchievements": {
+      "file": "lib/stats/achievements.ts",
+      "name": "checkAchievements",
+      "isDefault": false
+    },
+    "DayOfWeek": {
+      "file": "lib/stats/analytics.ts",
+      "name": "DayOfWeek",
+      "isDefault": false
+    },
+    "DailyStats": {
+      "file": "lib/stats/analytics.ts",
+      "name": "DailyStats",
+      "isDefault": false
+    },
+    "groupByDay": {
+      "file": "lib/stats/analytics.ts",
+      "name": "groupByDay",
+      "isDefault": false
+    },
+    "HeatmapCell": {
+      "file": "lib/stats/analytics.ts",
+      "name": "HeatmapCell",
+      "isDefault": false
+    },
+    "buildHeatmap": {
+      "file": "lib/stats/analytics.ts",
+      "name": "buildHeatmap",
+      "isDefault": false
+    },
+    "compareWeeks": {
+      "file": "lib/stats/analytics.ts",
+      "name": "compareWeeks",
+      "isDefault": false
+    },
+    "getMostProductiveHours": {
+      "file": "lib/stats/analytics.ts",
+      "name": "getMostProductiveHours",
+      "isDefault": false
+    },
+    "getMostProductiveDays": {
+      "file": "lib/stats/analytics.ts",
+      "name": "getMostProductiveDays",
+      "isDefault": false
+    },
+    "getDayName": {
+      "file": "lib/stats/analytics.ts",
+      "name": "getDayName",
+      "isDefault": false
+    },
+    "HistoryFilter": {
+      "file": "lib/stats/analytics.ts",
+      "name": "HistoryFilter",
+      "isDefault": false
+    },
+    "filterHistory": {
+      "file": "lib/stats/analytics.ts",
+      "name": "filterHistory",
+      "isDefault": false
+    },
+    "formatDuration": {
+      "file": "lib/stats/analytics.ts",
+      "name": "formatDuration",
+      "isDefault": false
+    },
+    "Challenge30Day": {
+      "file": "lib/stats/challenges.ts",
+      "name": "Challenge30Day",
+      "isDefault": false
+    },
+    "ChallengeDay": {
+      "file": "lib/stats/challenges.ts",
+      "name": "ChallengeDay",
+      "isDefault": false
+    },
+    "CHALLENGES_30": {
+      "file": "lib/stats/challenges.ts",
+      "name": "CHALLENGES_30",
+      "isDefault": false
+    },
+    "getChallengeById": {
+      "file": "lib/stats/doubleTasks.ts",
+      "name": "getChallengeById",
+      "isDefault": false
+    },
+    "getChallengeDayTask": {
+      "file": "lib/stats/challenges.ts",
+      "name": "getChallengeDayTask",
+      "isDefault": false
+    },
+    "getAllChallenges": {
+      "file": "lib/stats/challenges.ts",
+      "name": "getAllChallenges",
+      "isDefault": false
+    },
+    "CoachMood": {
+      "file": "lib/stats/coach.ts",
+      "name": "CoachMood",
+      "isDefault": false
+    },
+    "CoachMessage": {
+      "file": "lib/stats/coach.ts",
+      "name": "CoachMessage",
+      "isDefault": false
+    },
+    "COACH_MESSAGES": {
+      "file": "lib/stats/coach.ts",
+      "name": "COACH_MESSAGES",
+      "isDefault": false
+    },
+    "getCoachMessage": {
+      "file": "lib/stats/coach.ts",
+      "name": "getCoachMessage",
+      "isDefault": false
+    },
+    "getTimeOfDay": {
+      "file": "lib/stats/context.ts",
+      "name": "getTimeOfDay",
+      "isDefault": false
+    },
+    "getTimeOfDayLabel": {
+      "file": "lib/stats/context.ts",
+      "name": "getTimeOfDayLabel",
+      "isDefault": false
+    },
+    "suggestEnergyForTime": {
+      "file": "lib/stats/context.ts",
+      "name": "suggestEnergyForTime",
+      "isDefault": false
+    },
+    "MOOD_CATEGORIES": {
+      "file": "lib/stats/context.ts",
+      "name": "MOOD_CATEGORIES",
+      "isDefault": false
+    },
+    "getMoodLabel": {
+      "file": "lib/stats/context.ts",
+      "name": "getMoodLabel",
+      "isDefault": false
+    },
+    "MOOD_EMOJI": {
+      "file": "lib/stats/context.ts",
+      "name": "MOOD_EMOJI",
+      "isDefault": false
+    },
+    "isCompleted": {
+      "file": "lib/stats/dailyCompletion.ts",
+      "name": "isCompleted",
+      "isDefault": false
+    },
+    "markCompleted": {
+      "file": "lib/stats/dailyCompletion.ts",
+      "name": "markCompleted",
+      "isDefault": false
+    },
+    "clearAll": {
+      "file": "lib/stats/dailyCompletion.ts",
+      "name": "clearAll",
+      "isDefault": false
+    },
+    "DoubleTaskChallenge": {
+      "file": "lib/stats/doubleTasks.ts",
+      "name": "DoubleTaskChallenge",
+      "isDefault": false
+    },
+    "DOUBLE_TASKS": {
+      "file": "lib/stats/doubleTasks.ts",
+      "name": "DOUBLE_TASKS",
+      "isDefault": false
+    },
+    "getRandomChallenge": {
+      "file": "lib/stats/doubleTasks.ts",
+      "name": "getRandomChallenge",
+      "isDefault": false
+    },
+    "getChallengeColor": {
+      "file": "lib/stats/doubleTasks.ts",
+      "name": "getChallengeColor",
+      "isDefault": false
+    },
+    "EnergyLevel": {
+      "file": "lib/stats/energyLevels.ts",
+      "name": "EnergyLevel",
+      "isDefault": false
+    },
+    "EnergyLevelInfo": {
+      "file": "lib/stats/energyLevels.ts",
+      "name": "EnergyLevelInfo",
+      "isDefault": false
+    },
+    "ENERGY_LEVELS": {
+      "file": "lib/stats/energyLevels.ts",
+      "name": "ENERGY_LEVELS",
+      "isDefault": false
+    },
+    "getEnergyLevelById": {
+      "file": "lib/stats/energyLevels.ts",
+      "name": "getEnergyLevelById",
+      "isDefault": false
+    },
+    "suggestEnergyByTime": {
+      "file": "lib/stats/energyLevels.ts",
+      "name": "suggestEnergyByTime",
+      "isDefault": false
+    },
+    "LEVELS": {
+      "file": "lib/stats/levels.ts",
+      "name": "LEVELS",
+      "isDefault": false
+    },
+    "getLevelByXp": {
+      "file": "lib/stats/levels.ts",
+      "name": "getLevelByXp",
+      "isDefault": false
+    },
+    "getNextLevel": {
+      "file": "lib/stats/levels.ts",
+      "name": "getNextLevel",
+      "isDefault": false
+    },
+    "getLevelProgress": {
+      "file": "lib/stats/levels.ts",
+      "name": "getLevelProgress",
+      "isDefault": false
+    },
+    "BoredType": {
+      "file": "lib/stats/quiz.ts",
+      "name": "BoredType",
+      "isDefault": false
+    },
+    "BoredTypeInfo": {
+      "file": "lib/stats/quiz.ts",
+      "name": "BoredTypeInfo",
+      "isDefault": false
+    },
+    "BORED_TYPES": {
+      "file": "lib/stats/quiz.ts",
+      "name": "BORED_TYPES",
+      "isDefault": false
+    },
+    "QuizQuestion": {
+      "file": "lib/stats/quiz.ts",
+      "name": "QuizQuestion",
+      "isDefault": false
+    },
+    "QuizOption": {
+      "file": "lib/stats/quiz.ts",
+      "name": "QuizOption",
+      "isDefault": false
+    },
+    "QUIZ_QUESTIONS": {
+      "file": "lib/stats/quiz.ts",
+      "name": "QUIZ_QUESTIONS",
+      "isDefault": false
+    },
+    "getBoredTypeById": {
+      "file": "lib/stats/quiz.ts",
+      "name": "getBoredTypeById",
+      "isDefault": false
+    },
+    "calculateBoredType": {
+      "file": "lib/stats/quiz.ts",
+      "name": "calculateBoredType",
+      "isDefault": false
+    },
+    "RecommendationInput": {
+      "file": "lib/stats/recommender.ts",
+      "name": "RecommendationInput",
+      "isDefault": false
+    },
+    "RecommendationResult": {
+      "file": "lib/stats/recommender.ts",
+      "name": "RecommendationResult",
+      "isDefault": false
+    },
+    "recommendTask": {
+      "file": "lib/stats/recommender.ts",
+      "name": "recommendTask",
+      "isDefault": false
+    },
+    "recommendTaskWithMeta": {
+      "file": "lib/stats/recommender.ts",
+      "name": "recommendTaskWithMeta",
+      "isDefault": false
+    },
+    "simpleRecommend": {
+      "file": "lib/stats/recommender.ts",
+      "name": "simpleRecommend",
+      "isDefault": false
+    },
+    "useStatsStore": {
+      "file": "lib/stats/store.ts",
+      "name": "useStatsStore",
+      "isDefault": false
+    },
+    "Mood": {
+      "file": "lib/stats/types.ts",
+      "name": "Mood",
+      "isDefault": false
+    },
+    "TimeOfDay": {
+      "file": "lib/stats/types.ts",
+      "name": "TimeOfDay",
+      "isDefault": false
+    },
+    "CompletedTask": {
+      "file": "lib/stats/types.ts",
+      "name": "CompletedTask",
+      "isDefault": false
+    },
+    "Level": {
+      "file": "lib/stats/types.ts",
+      "name": "Level",
+      "isDefault": false
+    },
+    "Achievement": {
+      "file": "lib/stats/types.ts",
+      "name": "Achievement",
+      "isDefault": false
+    },
+    "UserStats": {
+      "file": "lib/stats/types.ts",
+      "name": "UserStats",
+      "isDefault": false
+    },
+    "supabase": {
+      "file": "lib/supabase.ts",
+      "name": "supabase",
+      "isDefault": false
+    },
+    "isSupabaseConfigured": {
+      "file": "lib/supabase.ts",
+      "name": "isSupabaseConfigured",
+      "isDefault": false
+    },
+    "buildingTasks": {
+      "file": "lib/tasks/building.ts",
+      "name": "buildingTasks",
+      "isDefault": false
+    },
+    "CATEGORIES": {
+      "file": "lib/tasks/categories.ts",
+      "name": "CATEGORIES",
+      "isDefault": false
+    },
+    "getCategory": {
+      "file": "lib/tasks/categories.ts",
+      "name": "getCategory",
+      "isDefault": false
+    },
+    "COUPLE_TASKS": {
+      "file": "lib/tasks/couple.ts",
+      "name": "COUPLE_TASKS",
+      "isDefault": false
+    },
+    "creativeTasks": {
+      "file": "lib/tasks/creative.ts",
+      "name": "creativeTasks",
+      "isDefault": false
+    },
+    "RoutineId": {
+      "file": "lib/tasks/dailyRoutines.ts",
+      "name": "RoutineId",
+      "isDefault": false
+    },
+    "DailyRoutine": {
+      "file": "lib/tasks/dailyRoutines.ts",
+      "name": "DailyRoutine",
+      "isDefault": false
+    },
+    "getCurrentRoutineId": {
+      "file": "lib/tasks/dailyRoutines.ts",
+      "name": "getCurrentRoutineId",
+      "isDefault": false
+    },
+    "DAILY_ROUTINES": {
+      "file": "lib/tasks/dailyRoutines.ts",
+      "name": "DAILY_ROUTINES",
+      "isDefault": false
+    },
+    "discoveryTasks": {
+      "file": "lib/tasks/discovery.ts",
+      "name": "discoveryTasks",
+      "isDefault": false
+    },
+    "CategoryConfig": {
+      "file": "lib/tasks/habitCategories.ts",
+      "name": "CategoryConfig",
+      "isDefault": false
+    },
+    "HABIT_CATEGORIES": {
+      "file": "lib/tasks/habitCategories.ts",
+      "name": "HABIT_CATEGORIES",
+      "isDefault": false
+    },
+    "getHabitCategoryById": {
+      "file": "lib/tasks/habitCategories.ts",
+      "name": "getHabitCategoryById",
+      "isDefault": false
+    },
+    "HABIT_TASKS": {
+      "file": "lib/tasks/habits.ts",
+      "name": "HABIT_TASKS",
+      "isDefault": false
+    },
+    "HistoricalEvent": {
+      "file": "lib/tasks/historical.ts",
+      "name": "HistoricalEvent",
+      "isDefault": false
+    },
+    "eventToTask": {
+      "file": "lib/tasks/historical.ts",
+      "name": "eventToTask",
+      "isDefault": false
+    },
+    "ALL_TASKS": {
+      "file": "lib/tasks/index.ts",
+      "name": "ALL_TASKS",
+      "isDefault": false
+    },
+    "getTaskById": {
+      "file": "lib/tasks/index.ts",
+      "name": "getTaskById",
+      "isDefault": false
+    },
+    "TaskFilter": {
+      "file": "lib/tasks/index.ts",
+      "name": "TaskFilter",
+      "isDefault": false
+    },
+    "filterTasks": {
+      "file": "lib/tasks/index.ts",
+      "name": "filterTasks",
+      "isDefault": false
+    },
+    "ValidationIssue": {
+      "file": "lib/tasks/index.ts",
+      "name": "ValidationIssue",
+      "isDefault": false
+    },
+    "validateTasks": {
+      "file": "lib/tasks/index.ts",
+      "name": "validateTasks",
+      "isDefault": false
+    },
+    "getStats": {
+      "file": "lib/tasks/index.ts",
+      "name": "getStats",
+      "isDefault": false
+    },
+    "KIDS_TASKS": {
+      "file": "lib/tasks/kids.ts",
+      "name": "KIDS_TASKS",
+      "isDefault": false
+    },
+    "learningTasks": {
+      "file": "lib/tasks/learning.ts",
+      "name": "learningTasks",
+      "isDefault": false
+    },
+    "mentalTasks": {
+      "file": "lib/tasks/mental.ts",
+      "name": "mentalTasks",
+      "isDefault": false
+    },
+    "mindfulnessTasks": {
+      "file": "lib/tasks/mindfulness.ts",
+      "name": "mindfulnessTasks",
+      "isDefault": false
+    },
+    "physicalTasks": {
+      "file": "lib/tasks/physical.ts",
+      "name": "physicalTasks",
+      "isDefault": false
+    },
+    "BadHabitId": {
+      "file": "lib/tasks/reverseHabits.ts",
+      "name": "BadHabitId",
+      "isDefault": false
+    },
+    "ReverseHabit": {
+      "file": "lib/tasks/reverseHabits.ts",
+      "name": "ReverseHabit",
+      "isDefault": false
+    },
+    "REVERSE_HABITS": {
+      "file": "lib/tasks/reverseHabits.ts",
+      "name": "REVERSE_HABITS",
+      "isDefault": false
+    },
+    "alternativeToTask": {
+      "file": "lib/tasks/reverseHabits.ts",
+      "name": "alternativeToTask",
+      "isDefault": false
+    },
+    "Season": {
+      "file": "lib/tasks/seasonal.ts",
+      "name": "Season",
+      "isDefault": false
+    },
+    "SeasonInfo": {
+      "file": "lib/tasks/seasonal.ts",
+      "name": "SeasonInfo",
+      "isDefault": false
+    },
+    "SEASONS": {
+      "file": "lib/tasks/seasonal.ts",
+      "name": "SEASONS",
+      "isDefault": false
+    },
+    "getCurrentSeason": {
+      "file": "lib/tasks/seasonal.ts",
+      "name": "getCurrentSeason",
+      "isDefault": false
+    },
+    "SEASONAL_TASKS": {
+      "file": "lib/tasks/seasonal.ts",
+      "name": "SEASONAL_TASKS",
+      "isDefault": false
+    },
+    "getCurrentSeasonalTasks": {
+      "file": "lib/tasks/seasonal.ts",
+      "name": "getCurrentSeasonalTasks",
+      "isDefault": false
+    },
+    "getAllSeasonalTasks": {
+      "file": "lib/tasks/seasonal.ts",
+      "name": "getAllSeasonalTasks",
+      "isDefault": false
+    },
+    "Tool": {
+      "file": "lib/tasks/tools.ts",
+      "name": "Tool",
+      "isDefault": false
+    },
+    "ToolInfo": {
+      "file": "lib/tasks/tools.ts",
+      "name": "ToolInfo",
+      "isDefault": false
+    },
+    "TOOLS": {
+      "file": "lib/tasks/tools.ts",
+      "name": "TOOLS",
+      "isDefault": false
+    },
+    "TASK_TOOLS": {
+      "file": "lib/tasks/tools.ts",
+      "name": "TASK_TOOLS",
+      "isDefault": false
+    },
+    "filterTasksByTools": {
+      "file": "lib/tasks/tools.ts",
+      "name": "filterTasksByTools",
+      "isDefault": false
+    },
+    "getTaskRequiredTools": {
+      "file": "lib/tasks/tools.ts",
+      "name": "getTaskRequiredTools",
+      "isDefault": false
+    },
+    "LocalizedText": {
+      "file": "lib/tasks/types.ts",
+      "name": "LocalizedText",
+      "isDefault": false
+    },
+    "TaskCategory": {
+      "file": "lib/tasks/types.ts",
+      "name": "TaskCategory",
+      "isDefault": false
+    },
+    "TaskDuration": {
+      "file": "lib/tasks/types.ts",
+      "name": "TaskDuration",
+      "isDefault": false
+    },
+    "TaskEnergy": {
+      "file": "lib/tasks/types.ts",
+      "name": "TaskEnergy",
+      "isDefault": false
+    },
+    "Task": {
+      "file": "lib/tasks/types.ts",
+      "name": "Task",
+      "isDefault": false
+    },
+    "CategoryInfo": {
+      "file": "lib/tasks/types.ts",
+      "name": "CategoryInfo",
+      "isDefault": false
+    },
+    "tSteps": {
+      "file": "lib/tasks/types.ts",
+      "name": "tSteps",
+      "isDefault": false
+    },
+    "WeatherData": {
+      "file": "lib/tasks/weather.ts",
+      "name": "WeatherData",
+      "isDefault": false
+    },
+    "WeatherCondition": {
+      "file": "lib/tasks/weather.ts",
+      "name": "WeatherCondition",
+      "isDefault": false
+    },
+    "getWeatherCondition": {
+      "file": "lib/tasks/weather.ts",
+      "name": "getWeatherCondition",
+      "isDefault": false
+    },
+    "getWeatherLabel": {
+      "file": "lib/tasks/weather.ts",
+      "name": "getWeatherLabel",
+      "isDefault": false
+    },
+    "getWeatherEmoji": {
+      "file": "lib/tasks/weather.ts",
+      "name": "getWeatherEmoji",
+      "isDefault": false
+    },
+    "getWeatherTip": {
+      "file": "lib/tasks/weather.ts",
+      "name": "getWeatherTip",
+      "isDefault": false
+    }
+  },
+  "dependencies": [
+    {
+      "from": "app/challenges/page.tsx",
+      "to": "react"
+    },
+    {
+      "from": "app/challenges/page.tsx",
+      "to": "next/navigation"
+    },
+    {
+      "from": "app/challenges/page.tsx",
+      "to": "framer-motion"
+    },
+    {
+      "from": "app/challenges/page.tsx",
+      "to": "lucide-react"
+    },
+    {
+      "from": "app/challenges/page.tsx",
+      "to": "@/hooks/useLocale"
+    },
+    {
+      "from": "app/challenges/page.tsx",
+      "to": "@/components/LanguageSelector"
+    },
+    {
+      "from": "app/challenges/page.tsx",
+      "to": "@/hooks/useStats"
+    },
+    {
+      "from": "app/challenges/page.tsx",
+      "to": "@/lib/stats/challenges"
+    },
+    {
+      "from": "app/challenges/page.tsx",
+      "to": "@/hooks/useTasks"
+    },
+    {
+      "from": "app/challenges/page.tsx",
+      "to": "@/lib/tasks"
+    },
+    {
+      "from": "app/challenges/page.tsx",
+      "to": "clsx"
+    },
+    {
+      "from": "app/daily/page.tsx",
+      "to": "react"
+    },
+    {
+      "from": "app/daily/page.tsx",
+      "to": "next/navigation"
+    },
+    {
+      "from": "app/daily/page.tsx",
+      "to": "framer-motion"
+    },
+    {
+      "from": "app/daily/page.tsx",
+      "to": "lucide-react"
+    },
+    {
+      "from": "app/daily/page.tsx",
+      "to": "@/lib/tasks/dailyRoutines"
+    },
+    {
+      "from": "app/daily/page.tsx",
+      "to": "@/lib/stats/dailyCompletion"
+    },
+    {
+      "from": "app/daily/page.tsx",
+      "to": "@/hooks/useStats"
+    },
+    {
+      "from": "app/daily/page.tsx",
+      "to": "@/hooks/useLocale"
+    },
+    {
+      "from": "app/dev/page.tsx",
+      "to": "react"
+    },
+    {
+      "from": "app/dev/page.tsx",
+      "to": "@/lib/tasks"
+    },
+    {
+      "from": "app/dev/page.tsx",
+      "to": "@/hooks/useLocale"
+    },
+    {
+      "from": "app/dev/page.tsx",
+      "to": "@/lib/tasks/categories"
+    },
+    {
+      "from": "app/discover/page.tsx",
+      "to": "react"
+    },
+    {
+      "from": "app/discover/page.tsx",
+      "to": "next/navigation"
+    },
+    {
+      "from": "app/discover/page.tsx",
+      "to": "framer-motion"
+    },
+    {
+      "from": "app/discover/page.tsx",
+      "to": "lucide-react"
+    },
+    {
+      "from": "app/discover/page.tsx",
+      "to": "@/hooks/useLocale"
+    },
+    {
+      "from": "app/discover/page.tsx",
+      "to": "@/components/LanguageSelector"
+    },
+    {
+      "from": "app/discover/page.tsx",
+      "to": "@/lib/tasks/seasonal"
+    },
+    {
+      "from": "app/discover/page.tsx",
+      "to": "@/lib/tasks/couple"
+    },
+    {
+      "from": "app/discover/page.tsx",
+      "to": "@/lib/tasks/kids"
+    },
+    {
+      "from": "app/discover/page.tsx",
+      "to": "@/lib/tasks/historical"
+    },
+    {
+      "from": "app/discover/page.tsx",
+      "to": "@/lib/tasks/weather"
+    },
+    {
+      "from": "app/discover/page.tsx",
+      "to": "@/lib/tasks"
+    },
+    {
+      "from": "app/discover/page.tsx",
+      "to": "@/lib/tasks"
+    },
+    {
+      "from": "app/discover/page.tsx",
+      "to": "clsx"
+    },
+    {
+      "from": "app/done/page.tsx",
+      "to": "react"
+    },
+    {
+      "from": "app/done/page.tsx",
+      "to": "next/navigation"
+    },
+    {
+      "from": "app/done/page.tsx",
+      "to": "framer-motion"
+    },
+    {
+      "from": "app/done/page.tsx",
+      "to": "lucide-react"
+    },
+    {
+      "from": "app/done/page.tsx",
+      "to": "@/hooks/useLocale"
+    },
+    {
+      "from": "app/done/page.tsx",
+      "to": "@/components/LanguageSelector"
+    },
+    {
+      "from": "app/done/page.tsx",
+      "to": "@/components/Rating"
+    },
+    {
+      "from": "app/done/page.tsx",
+      "to": "@/hooks/useStats"
+    },
+    {
+      "from": "app/done/page.tsx",
+      "to": "@/components/Confetti"
+    },
+    {
+      "from": "app/done/page.tsx",
+      "to": "@/lib/tasks"
+    },
+    {
+      "from": "app/done/page.tsx",
+      "to": "@/hooks/useTasks"
+    },
+    {
+      "from": "app/done/page.tsx",
+      "to": "clsx"
+    },
+    {
+      "from": "app/energy/page.tsx",
+      "to": "next/navigation"
+    },
+    {
+      "from": "app/energy/page.tsx",
+      "to": "framer-motion"
+    },
+    {
+      "from": "app/energy/page.tsx",
+      "to": "lucide-react"
+    },
+    {
+      "from": "app/energy/page.tsx",
+      "to": "react"
+    },
+    {
+      "from": "app/energy/page.tsx",
+      "to": "@/hooks/useLocale"
+    },
+    {
+      "from": "app/energy/page.tsx",
+      "to": "@/components/LanguageSelector"
+    },
+    {
+      "from": "app/energy/page.tsx",
+      "to": "@/components/MoodSelector"
+    },
+    {
+      "from": "app/energy/page.tsx",
+      "to": "@/hooks/useStats"
+    },
+    {
+      "from": "app/energy/page.tsx",
+      "to": "@/lib/tasks"
+    },
+    {
+      "from": "app/energy/page.tsx",
+      "to": "@/components/ToolSelector"
+    },
+    {
+      "from": "app/energy/page.tsx",
+      "to": "clsx"
+    },
+    {
+      "from": "app/favorites/page.tsx",
+      "to": "next/navigation"
+    },
+    {
+      "from": "app/favorites/page.tsx",
+      "to": "framer-motion"
+    },
+    {
+      "from": "app/favorites/page.tsx",
+      "to": "lucide-react"
+    },
+    {
+      "from": "app/favorites/page.tsx",
+      "to": "@/hooks/useLocale"
+    },
+    {
+      "from": "app/favorites/page.tsx",
+      "to": "@/components/LanguageSelector"
+    },
+    {
+      "from": "app/favorites/page.tsx",
+      "to": "@/hooks/useStats"
+    },
+    {
+      "from": "app/favorites/page.tsx",
+      "to": "@/hooks/useTasks"
+    },
+    {
+      "from": "app/favorites/page.tsx",
+      "to": "@/lib/tasks"
+    },
+    {
+      "from": "app/favorites/page.tsx",
+      "to": "clsx"
+    },
+    {
+      "from": "app/history/page.tsx",
+      "to": "react"
+    },
+    {
+      "from": "app/history/page.tsx",
+      "to": "next/navigation"
+    },
+    {
+      "from": "app/history/page.tsx",
+      "to": "framer-motion"
+    },
+    {
+      "from": "app/history/page.tsx",
+      "to": "lucide-react"
+    },
+    {
+      "from": "app/history/page.tsx",
+      "to": "@/hooks/useLocale"
+    },
+    {
+      "from": "app/history/page.tsx",
+      "to": "@/components/LanguageSelector"
+    },
+    {
+      "from": "app/history/page.tsx",
+      "to": "@/hooks/useStats"
+    },
+    {
+      "from": "app/history/page.tsx",
+      "to": "@/lib/tasks"
+    },
+    {
+      "from": "app/history/page.tsx",
+      "to": "@/lib/stats/analytics"
+    },
+    {
+      "from": "app/history/page.tsx",
+      "to": "clsx"
+    },
+    {
+      "from": "app/layout.tsx",
+      "to": "next/font/google"
+    },
+    {
+      "from": "app/layout.tsx",
+      "to": "./globals.css"
+    },
+    {
+      "from": "app/layout.tsx",
+      "to": "@/components/LocaleBootstrap"
+    },
+    {
+      "from": "app/page.tsx",
+      "to": "react"
+    },
+    {
+      "from": "app/page.tsx",
+      "to": "framer-motion"
+    },
+    {
+      "from": "app/page.tsx",
+      "to": "lucide-react"
+    },
+    {
+      "from": "app/page.tsx",
+      "to": "next/navigation"
+    },
+    {
+      "from": "app/page.tsx",
+      "to": "@/hooks/useLocale"
+    },
+    {
+      "from": "app/page.tsx",
+      "to": "@/components/LanguageSelector"
+    },
+    {
+      "from": "app/page.tsx",
+      "to": "@/components/AuthButton"
+    },
+    {
+      "from": "app/page.tsx",
+      "to": "@/components/StreakBadge"
+    },
+    {
+      "from": "app/page.tsx",
+      "to": "@/components/LevelBadge"
+    },
+    {
+      "from": "app/page.tsx",
+      "to": "@/components/MotivationalQuote"
+    },
+    {
+      "from": "app/page.tsx",
+      "to": "@/components/CoachBubble"
+    },
+    {
+      "from": "app/page.tsx",
+      "to": "@/components/DailyHabitsButton"
+    },
+    {
+      "from": "app/page.tsx",
+      "to": "@/components/ReverseHabitButton"
+    },
+    {
+      "from": "app/page.tsx",
+      "to": "@/hooks/useStats"
+    },
+    {
+      "from": "app/page.tsx",
+      "to": "@/lib/auth"
+    },
+    {
+      "from": "app/quiz/page.tsx",
+      "to": "react"
+    },
+    {
+      "from": "app/quiz/page.tsx",
+      "to": "next/navigation"
+    },
+    {
+      "from": "app/quiz/page.tsx",
+      "to": "framer-motion"
+    },
+    {
+      "from": "app/quiz/page.tsx",
+      "to": "lucide-react"
+    },
+    {
+      "from": "app/quiz/page.tsx",
+      "to": "@/hooks/useLocale"
+    },
+    {
+      "from": "app/quiz/page.tsx",
+      "to": "@/components/LanguageSelector"
+    },
+    {
+      "from": "app/quiz/page.tsx",
+      "to": "@/hooks/useStats"
+    },
+    {
+      "from": "app/quiz/page.tsx",
+      "to": "@/lib/stats/quiz"
+    },
+    {
+      "from": "app/quiz/page.tsx",
+      "to": "clsx"
+    },
+    {
+      "from": "app/reverse/page.tsx",
+      "to": "react"
+    },
+    {
+      "from": "app/reverse/page.tsx",
+      "to": "next/navigation"
+    },
+    {
+      "from": "app/reverse/page.tsx",
+      "to": "framer-motion"
+    },
+    {
+      "from": "app/reverse/page.tsx",
+      "to": "lucide-react"
+    },
+    {
+      "from": "app/reverse/page.tsx",
+      "to": "@/lib/tasks/reverseHabits"
+    },
+    {
+      "from": "app/reverse/page.tsx",
+      "to": "@/hooks/useStats"
+    },
+    {
+      "from": "app/stats/page.tsx",
+      "to": "next/navigation"
+    },
+    {
+      "from": "app/stats/page.tsx",
+      "to": "framer-motion"
+    },
+    {
+      "from": "app/stats/page.tsx",
+      "to": "lucide-react"
+    },
+    {
+      "from": "app/stats/page.tsx",
+      "to": "@/hooks/useLocale"
+    },
+    {
+      "from": "app/stats/page.tsx",
+      "to": "@/components/LanguageSelector"
+    },
+    {
+      "from": "app/stats/page.tsx",
+      "to": "@/components/StreakBadge"
+    },
+    {
+      "from": "app/stats/page.tsx",
+      "to": "@/components/LevelBadge"
+    },
+    {
+      "from": "app/stats/page.tsx",
+      "to": "@/components/Heatmap"
+    },
+    {
+      "from": "app/stats/page.tsx",
+      "to": "@/components/WeeklyComparison"
+    },
+    {
+      "from": "app/stats/page.tsx",
+      "to": "@/hooks/useStats"
+    },
+    {
+      "from": "app/stats/page.tsx",
+      "to": "@/lib/tasks"
+    },
+    {
+      "from": "app/stats/page.tsx",
+      "to": "@/lib/stats/analytics"
+    },
+    {
+      "from": "app/stats/page.tsx",
+      "to": "clsx"
+    },
+    {
+      "from": "app/task/[id]/layout.tsx",
+      "to": "@/lib/tasks"
+    },
+    {
+      "from": "app/task/[id]/page.tsx",
+      "to": "next/navigation"
+    },
+    {
+      "from": "app/task/[id]/page.tsx",
+      "to": "framer-motion"
+    },
+    {
+      "from": "app/task/[id]/page.tsx",
+      "to": "react"
+    },
+    {
+      "from": "app/task/[id]/page.tsx",
+      "to": "lucide-react"
+    },
+    {
+      "from": "app/task/[id]/page.tsx",
+      "to": "@/hooks/useLocale"
+    },
+    {
+      "from": "app/task/[id]/page.tsx",
+      "to": "@/components/LanguageSelector"
+    },
+    {
+      "from": "app/task/[id]/page.tsx",
+      "to": "@/components/Timer"
+    },
+    {
+      "from": "app/task/[id]/page.tsx",
+      "to": "@/hooks/useTasks"
+    },
+    {
+      "from": "app/task/[id]/page.tsx",
+      "to": "@/lib/tasks"
+    },
+    {
+      "from": "app/task/[id]/page.tsx",
+      "to": "clsx"
+    },
+    {
+      "from": "app/time/page.tsx",
+      "to": "next/navigation"
+    },
+    {
+      "from": "app/time/page.tsx",
+      "to": "framer-motion"
+    },
+    {
+      "from": "app/time/page.tsx",
+      "to": "lucide-react"
+    },
+    {
+      "from": "app/time/page.tsx",
+      "to": "@/hooks/useLocale"
+    },
+    {
+      "from": "app/time/page.tsx",
+      "to": "@/components/LanguageSelector"
+    },
+    {
+      "from": "app/time/page.tsx",
+      "to": "clsx"
+    },
+    {
+      "from": "app/time/page.tsx",
+      "to": "@/lib/stats/doubleTasks"
+    },
+    {
+      "from": "components/AuthButton.tsx",
+      "to": "react"
+    },
+    {
+      "from": "components/AuthButton.tsx",
+      "to": "framer-motion"
+    },
+    {
+      "from": "components/AuthButton.tsx",
+      "to": "lucide-react"
+    },
+    {
+      "from": "components/AuthButton.tsx",
+      "to": "@/lib/auth"
+    },
+    {
+      "from": "components/AuthButton.tsx",
+      "to": "@/lib/sync"
+    },
+    {
+      "from": "components/AuthButton.tsx",
+      "to": "@/hooks/useLocale"
+    },
+    {
+      "from": "components/AuthButton.tsx",
+      "to": "@/lib/supabase"
+    },
+    {
+      "from": "components/AuthButton.tsx",
+      "to": "clsx"
+    },
+    {
+      "from": "components/CoachBubble.tsx",
+      "to": "react"
+    },
+    {
+      "from": "components/CoachBubble.tsx",
+      "to": "framer-motion"
+    },
+    {
+      "from": "components/CoachBubble.tsx",
+      "to": "@/hooks/useLocale"
+    },
+    {
+      "from": "components/CoachBubble.tsx",
+      "to": "@/hooks/useStats"
+    },
+    {
+      "from": "components/CoachBubble.tsx",
+      "to": "@/lib/stats/coach"
+    },
+    {
+      "from": "components/Confetti.ts",
+      "to": "canvas-confetti"
+    },
+    {
+      "from": "components/DailyHabitsButton.tsx",
+      "to": "react"
+    },
+    {
+      "from": "components/DailyHabitsButton.tsx",
+      "to": "framer-motion"
+    },
+    {
+      "from": "components/DailyHabitsButton.tsx",
+      "to": "lucide-react"
+    },
+    {
+      "from": "components/DailyHabitsButton.tsx",
+      "to": "next/navigation"
+    },
+    {
+      "from": "components/DailyHabitsButton.tsx",
+      "to": "@/lib/tasks/dailyRoutines"
+    },
+    {
+      "from": "components/DailyHabitsButton.tsx",
+      "to": "@/lib/stats/dailyCompletion"
+    },
+    {
+      "from": "components/Heatmap.tsx",
+      "to": "react"
+    },
+    {
+      "from": "components/Heatmap.tsx",
+      "to": "framer-motion"
+    },
+    {
+      "from": "components/Heatmap.tsx",
+      "to": "@/lib/stats/analytics"
+    },
+    {
+      "from": "components/Heatmap.tsx",
+      "to": "@/lib/stats/analytics"
+    },
+    {
+      "from": "components/Heatmap.tsx",
+      "to": "@/hooks/useStats"
+    },
+    {
+      "from": "components/Heatmap.tsx",
+      "to": "clsx"
+    },
+    {
+      "from": "components/LanguageSelector.tsx",
+      "to": "react"
+    },
+    {
+      "from": "components/LanguageSelector.tsx",
+      "to": "framer-motion"
+    },
+    {
+      "from": "components/LanguageSelector.tsx",
+      "to": "lucide-react"
+    },
+    {
+      "from": "components/LanguageSelector.tsx",
+      "to": "@/hooks/useLocale"
+    },
+    {
+      "from": "components/LanguageSelector.tsx",
+      "to": "@/lib/i18n"
+    },
+    {
+      "from": "components/LanguageSelector.tsx",
+      "to": "clsx"
+    },
+    {
+      "from": "components/LevelBadge.tsx",
+      "to": "framer-motion"
+    },
+    {
+      "from": "components/LevelBadge.tsx",
+      "to": "lucide-react"
+    },
+    {
+      "from": "components/LevelBadge.tsx",
+      "to": "clsx"
+    },
+    {
+      "from": "components/LocaleBootstrap.tsx",
+      "to": "react"
+    },
+    {
+      "from": "components/LocaleBootstrap.tsx",
+      "to": "@/lib/i18n/store"
+    },
+    {
+      "from": "components/LocaleBootstrap.tsx",
+      "to": "@/lib/i18n"
+    },
+    {
+      "from": "components/MoodSelector.tsx",
+      "to": "framer-motion"
+    },
+    {
+      "from": "components/MoodSelector.tsx",
+      "to": "@/lib/stats/context"
+    },
+    {
+      "from": "components/MoodSelector.tsx",
+      "to": "clsx"
+    },
+    {
+      "from": "components/MotivationalQuote.tsx",
+      "to": "react"
+    },
+    {
+      "from": "components/MotivationalQuote.tsx",
+      "to": "framer-motion"
+    },
+    {
+      "from": "components/MotivationalQuote.tsx",
+      "to": "@/lib/i18n/quotes"
+    },
+    {
+      "from": "components/MotivationalQuote.tsx",
+      "to": "@/hooks/useLocale"
+    },
+    {
+      "from": "components/Rating.tsx",
+      "to": "react"
+    },
+    {
+      "from": "components/Rating.tsx",
+      "to": "framer-motion"
+    },
+    {
+      "from": "components/Rating.tsx",
+      "to": "lucide-react"
+    },
+    {
+      "from": "components/Rating.tsx",
+      "to": "clsx"
+    },
+    {
+      "from": "components/ReverseHabitButton.tsx",
+      "to": "next/link"
+    },
+    {
+      "from": "components/ReverseHabitButton.tsx",
+      "to": "lucide-react"
+    },
+    {
+      "from": "components/StreakBadge.tsx",
+      "to": "framer-motion"
+    },
+    {
+      "from": "components/StreakBadge.tsx",
+      "to": "lucide-react"
+    },
+    {
+      "from": "components/StreakBadge.tsx",
+      "to": "clsx"
+    },
+    {
+      "from": "components/Timer.tsx",
+      "to": "react"
+    },
+    {
+      "from": "components/Timer.tsx",
+      "to": "framer-motion"
+    },
+    {
+      "from": "components/Timer.tsx",
+      "to": "lucide-react"
+    },
+    {
+      "from": "components/Timer.tsx",
+      "to": "clsx"
+    },
+    {
+      "from": "components/ToolSelector.tsx",
+      "to": "framer-motion"
+    },
+    {
+      "from": "components/ToolSelector.tsx",
+      "to": "@/lib/tasks/tools"
+    },
+    {
+      "from": "components/ToolSelector.tsx",
+      "to": "clsx"
+    },
+    {
+      "from": "components/WeeklyComparison.tsx",
+      "to": "react"
+    },
+    {
+      "from": "components/WeeklyComparison.tsx",
+      "to": "framer-motion"
+    },
+    {
+      "from": "components/WeeklyComparison.tsx",
+      "to": "lucide-react"
+    },
+    {
+      "from": "components/WeeklyComparison.tsx",
+      "to": "@/lib/stats/analytics"
+    },
+    {
+      "from": "components/WeeklyComparison.tsx",
+      "to": "@/lib/tasks"
+    },
+    {
+      "from": "components/WeeklyComparison.tsx",
+      "to": "@/hooks/useStats"
+    },
+    {
+      "from": "components/WeeklyComparison.tsx",
+      "to": "clsx"
+    },
+    {
+      "from": "hooks/useLocale.ts",
+      "to": "react"
+    },
+    {
+      "from": "hooks/useLocale.ts",
+      "to": "@/lib/i18n/store"
+    },
+    {
+      "from": "hooks/useLocale.ts",
+      "to": "@/lib/i18n"
+    },
+    {
+      "from": "hooks/useStats.ts",
+      "to": "@/lib/stats/store"
+    },
+    {
+      "from": "hooks/useStats.ts",
+      "to": "react"
+    },
+    {
+      "from": "hooks/useStats.ts",
+      "to": "@/lib/stats/levels"
+    },
+    {
+      "from": "hooks/useStats.ts",
+      "to": "@/lib/stats/achievements"
+    },
+    {
+      "from": "hooks/useStats.ts",
+      "to": "@/lib/stats/recommender"
+    },
+    {
+      "from": "hooks/useTasks.ts",
+      "to": "react"
+    },
+    {
+      "from": "hooks/useTasks.ts",
+      "to": "@/lib/tasks"
+    },
+    {
+      "from": "lib/auth.ts",
+      "to": "react"
+    },
+    {
+      "from": "lib/auth.ts",
+      "to": "@/lib/supabase"
+    },
+    {
+      "from": "lib/i18n/index.ts",
+      "to": "./en"
+    },
+    {
+      "from": "lib/i18n/index.ts",
+      "to": "./ar"
+    },
+    {
+      "from": "lib/i18n/index.ts",
+      "to": "./ar-eg"
+    },
+    {
+      "from": "lib/i18n/index.ts",
+      "to": "./ar-sa"
+    },
+    {
+      "from": "lib/i18n/index.ts",
+      "to": "./ar-levant"
+    },
+    {
+      "from": "lib/i18n/index.ts",
+      "to": "./ar-maghreb"
+    },
+    {
+      "from": "lib/i18n/store.ts",
+      "to": "zustand"
+    },
+    {
+      "from": "lib/i18n/store.ts",
+      "to": "zustand/middleware"
+    },
+    {
+      "from": "lib/i18n/store.ts",
+      "to": "./index"
+    },
+    {
+      "from": "lib/stats/achievements.ts",
+      "to": "./levels"
+    },
+    {
+      "from": "lib/stats/achievements.ts",
+      "to": "@/lib/tasks"
+    },
+    {
+      "from": "lib/stats/challenges.ts",
+      "to": "@/lib/tasks"
+    },
+    {
+      "from": "lib/stats/doubleTasks.ts",
+      "to": "@/lib/tasks"
+    },
+    {
+      "from": "lib/stats/doubleTasks.ts",
+      "to": "@/lib/tasks"
+    },
+    {
+      "from": "lib/stats/recommender.ts",
+      "to": "@/lib/tasks"
+    },
+    {
+      "from": "lib/stats/recommender.ts",
+      "to": "./context"
+    },
+    {
+      "from": "lib/stats/recommender.ts",
+      "to": "@/lib/tasks/tools"
+    },
+    {
+      "from": "lib/stats/store.ts",
+      "to": "zustand"
+    },
+    {
+      "from": "lib/stats/store.ts",
+      "to": "zustand/middleware"
+    },
+    {
+      "from": "lib/stats/store.ts",
+      "to": "@/lib/tasks"
+    },
+    {
+      "from": "lib/stats/store.ts",
+      "to": "@/lib/supabase"
+    },
+    {
+      "from": "lib/stats/store.ts",
+      "to": "./achievements"
+    },
+    {
+      "from": "lib/stats/store.ts",
+      "to": "./context"
+    },
+    {
+      "from": "lib/supabase.ts",
+      "to": "@supabase/supabase-js"
+    },
+    {
+      "from": "lib/sync.ts",
+      "to": "@/lib/supabase"
+    },
+    {
+      "from": "lib/sync.ts",
+      "to": "@/lib/stats/store"
+    },
+    {
+      "from": "lib/tasks/building.ts",
+      "to": "./types"
+    },
+    {
+      "from": "lib/tasks/categories.ts",
+      "to": "./types"
+    },
+    {
+      "from": "lib/tasks/couple.ts",
+      "to": "./types"
+    },
+    {
+      "from": "lib/tasks/creative.ts",
+      "to": "./types"
+    },
+    {
+      "from": "lib/tasks/discovery.ts",
+      "to": "./types"
+    },
+    {
+      "from": "lib/tasks/habitCategories.ts",
+      "to": "./types"
+    },
+    {
+      "from": "lib/tasks/habits.ts",
+      "to": "./types"
+    },
+    {
+      "from": "lib/tasks/index.ts",
+      "to": "./mental"
+    },
+    {
+      "from": "lib/tasks/index.ts",
+      "to": "./physical"
+    },
+    {
+      "from": "lib/tasks/index.ts",
+      "to": "./creative"
+    },
+    {
+      "from": "lib/tasks/index.ts",
+      "to": "./learning"
+    },
+    {
+      "from": "lib/tasks/index.ts",
+      "to": "./building"
+    },
+    {
+      "from": "lib/tasks/index.ts",
+      "to": "./mindfulness"
+    },
+    {
+      "from": "lib/tasks/index.ts",
+      "to": "./discovery"
+    },
+    {
+      "from": "lib/tasks/index.ts",
+      "to": "./habits"
+    },
+    {
+      "from": "lib/tasks/index.ts",
+      "to": "./couple"
+    },
+    {
+      "from": "lib/tasks/index.ts",
+      "to": "./kids"
+    },
+    {
+      "from": "lib/tasks/index.ts",
+      "to": "./seasonal"
+    },
+    {
+      "from": "lib/tasks/index.ts",
+      "to": "./categories"
+    },
+    {
+      "from": "lib/tasks/index.ts",
+      "to": "@/lib/i18n/types"
+    },
+    {
+      "from": "lib/tasks/kids.ts",
+      "to": "./types"
+    },
+    {
+      "from": "lib/tasks/learning.ts",
+      "to": "./types"
+    },
+    {
+      "from": "lib/tasks/mental.ts",
+      "to": "./types"
+    },
+    {
+      "from": "lib/tasks/mindfulness.ts",
+      "to": "./types"
+    },
+    {
+      "from": "lib/tasks/physical.ts",
+      "to": "./types"
+    },
+    {
+      "from": "lib/tasks/seasonal.ts",
+      "to": "./types"
+    }
+  ]
+}

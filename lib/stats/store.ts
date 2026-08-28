@@ -69,6 +69,8 @@ const initialState: UserStats = {
   preferredCategories: {
     mental: 1, physical: 1, creative: 1, learning: 1,
     building: 1, mindfulness: 1, discovery: 1,
+    "habit-body": 1, "habit-mind": 1, "habit-sleep": 1,
+    "habit-silah": 1, "habit-productivity": 1, "habit-deen": 1,
   } as Record<TaskCategory, number>,
   soundEnabled: true,
   availableTools: ["body", "pen", "paper", "camera", "computer"] as Tool[],  // افتراضياً: كل الأدوات
@@ -87,8 +89,9 @@ export const useStatsStore = create<StatsState>()(
         const now = Date.now();
         const today = new Date().toISOString().split("T")[0];
 
-        // حساب XP (مع مكافأة السلسلة)
-        let xpEarned = data.baseXp;
+        // حساب XP بأمان ومنع أي قيمة NaN
+        const base = typeof data.baseXp === "number" && !isNaN(data.baseXp) ? data.baseXp : 20;
+        let xpEarned = base;
         if (get().currentStreak >= 7) xpEarned = Math.floor(xpEarned * 1.5);
         else if (get().currentStreak >= 3) xpEarned = Math.floor(xpEarned * 1.25);
 
@@ -96,11 +99,15 @@ export const useStatsStore = create<StatsState>()(
         if (data.rating === 5) xpEarned += 5;
 
         // بناء سجل المهمة
+        const duration = [2, 10, 30, 60].includes(data.duration) ? data.duration : 10;
+        const energy = data.energy || "low";
+        const category = data.category || "mental";
+
         const newTask: CompletedTask = {
-          taskId: data.taskId,
-          category: data.category,
-          duration: data.duration,
-          energy: data.energy,
+          taskId: data.taskId || `task-${now}`,
+          category,
+          duration,
+          energy,
           rating: data.rating,
           mood: data.mood,
           timeOfDay: getTimeOfDay(new Date(now)),
@@ -109,7 +116,7 @@ export const useStatsStore = create<StatsState>()(
         };
 
         // تجميع المهام
-        const prev = get().completedTasks;
+        const prev = get().completedTasks || [];
         const completedTasks = [newTask, ...prev].slice(0, MAX_HISTORY);
 
         // حساب السلسلة
@@ -119,11 +126,12 @@ export const useStatsStore = create<StatsState>()(
         const newWeights = calculateCategoryWeights(completedTasks);
 
         // فحص الإنجازات الجديدة
+        const currentTotalXp = typeof get().totalXp === "number" && !isNaN(get().totalXp) ? get().totalXp : 0;
         const stats = {
           completedTasks,
           currentStreak: streak.current,
           longestStreak: streak.longest,
-          totalXp: get().totalXp + xpEarned,
+          totalXp: currentTotalXp + xpEarned,
         };
         const allAchievements = checkAchievements(stats);
         const newAchievements = allAchievements
