@@ -57,12 +57,11 @@ export default function Home() {
         <div className="flex items-center gap-2">
           <AuthButton />
         </div>
-        <div className="flex justify-center w-full pt-1">
-          <ReverseHabitButton />
-        </div>
       </header>
 
       <main className="flex flex-1 flex-col items-center justify-center px-6">
+        {/* زر عكس العادة — فوق العنوان الكبير مباشرة، في المنتصف، بدون ما يختفي */}
+        <ReverseHabitButton />
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}

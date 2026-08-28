@@ -14,6 +14,11 @@ function ReverseInner() {
   const [selectedHabit, setSelectedHabit] = useState<BadHabitId | null>(null);
   const [selectedAlt, setSelectedAlt] = useState<number | null>(null);
   const [done, setDone] = useState(false);
+  const [activeTask, setActiveTask] = useState<null | {
+    title: string;
+    description: string;
+    duration: number;
+  }>(null);
 
   useEffect(() => {
     const h = params.get("habit") as BadHabitId | null;
@@ -35,8 +40,47 @@ function ReverseInner() {
     if (!selectedHabit || selectedAlt === null) return;
     const task = alternativeToTask(selectedHabit, selectedAlt);
     if (!task) return;
-    router.push(`/task/reverse-${selectedHabit}-${selectedAlt}?title=${encodeURIComponent(task.title)}&duration=${task.duration}&description=${encodeURIComponent(task.description)}`);
+    setActiveTask({
+      title: task.title,
+      description: task.description,
+      duration: task.duration,
+    });
   };
+
+  // شاشة التايمر (داخل نفس الصفحة — بدون تنقّل لصفحة مش موجودة)
+  if (activeTask) {
+    return (
+      <div className="flex flex-col flex-1 items-center justify-center p-6 text-center">
+        <div className="text-6xl mb-4">⏱</div>
+        <h1 className="text-2xl font-bold text-foreground mb-2">{activeTask.title}</h1>
+        <p className="text-muted-foreground mb-2 max-w-xs">{activeTask.description}</p>
+        <p className="text-sm text-primary mb-8">{activeTask.duration} دقيقة</p>
+        <button
+          onClick={() => {
+            if (typeof (stats as any).completeTask === "function") {
+              (stats as any).completeTask({
+                id: `reverse-${selectedHabit}-${selectedAlt}-${Date.now()}`,
+                title: "عكس عادة سيئة",
+                category: "habit-mind",
+                duration: activeTask.duration,
+              });
+            }
+            setActiveTask(null);
+            setDone(true);
+          }}
+          className="px-8 py-3 bg-primary text-primary-foreground rounded-full font-medium hover:scale-105 transition-transform"
+        >
+          خلّصت المهمة ✓
+        </button>
+        <button
+          onClick={() => setActiveTask(null)}
+          className="mt-3 text-xs text-muted-foreground hover:text-foreground"
+        >
+          رجوع
+        </button>
+      </div>
+    );
+  }
 
   // شاشة النجاح
   if (done) {
