@@ -12,6 +12,7 @@ import { LevelBadge } from "@/components/LevelBadge";
 import { MotivationalQuote } from "@/components/MotivationalQuote";
 import { CoachBubble } from "@/components/CoachBubble";
 import { DailyHabitsButton } from "@/components/DailyHabitsButton";
+import { ReverseHabitButton } from "@/components/ReverseHabitButton";
 import { useStats } from "@/hooks/useStats";
 import { useAuth } from "@/lib/auth";
 
@@ -55,6 +56,9 @@ export default function Home() {
         </div>
         <div className="flex items-center gap-2">
           <AuthButton />
+        </div>
+        <div className="flex justify-center w-full pt-1">
+          <ReverseHabitButton />
         </div>
       </header>
 
